@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/star1t"
+        android:title="Login" />
+    <item
+        android:id="@+id/gallery1"
+        android:title="Register" />
+    <item
+        android:id="@+id/start"
+        android:title="Our Tennis" />
+    <item
+        android:id="@+id/gallery"
+        android:title="Gallery" />
+    <item
+        android:id="@+id/priceList"
+        android:title="Price-List" />
+    <item
+        android:id="@+id/contact"
+        android:title="Contact" />
+
+</menu>

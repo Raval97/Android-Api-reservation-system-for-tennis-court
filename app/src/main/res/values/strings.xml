@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TennisCourtReservation</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="signUpHere">You already have an account? Log in</string>
+    <string name="loginHere">You don\'t have an account yet? Sign up</string>
+    <string name="mainTextContent">Do you want to play tennis with your friends \n and you are looking for a tennis court? \nGreat choice, log in or register now, book a court \nand enjoy playing together on a professional tennis surface.</string>
+</resources>

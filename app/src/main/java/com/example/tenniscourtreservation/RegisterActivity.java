@@ -9,19 +9,19 @@ import android.widget.TextView;
 
 public class RegisterActivity extends Activity {
 
-    TextView signUpText;
+    TextView loginText;
     Button back;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        getActionBar().hide();
+//        getActionBar().hide();
 
-        signUpText =  (TextView) findViewById(R.id.signUpText);
+        loginText =  (TextView) findViewById(R.id.loginText);
         back = (Button) findViewById(R.id.back);
 
-        signUpText.setOnClickListener(new View.OnClickListener() {
+        loginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), LoginInActivity.class);

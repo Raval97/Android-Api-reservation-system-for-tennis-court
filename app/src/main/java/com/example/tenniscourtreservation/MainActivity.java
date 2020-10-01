@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.util.Linkify;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
@@ -33,7 +30,7 @@ public class MainActivity extends Activity {
         login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), LoginInActivity.class);
+                Intent myIntent = new Intent(view.getContext(), LogInActivity.class);
                 startActivityForResult(myIntent, 0);
             }
         });

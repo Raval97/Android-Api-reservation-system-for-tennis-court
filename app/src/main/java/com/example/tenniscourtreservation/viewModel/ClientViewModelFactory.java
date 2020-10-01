@@ -7,20 +7,21 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.tenniscourtreservation.LogInActivity;
-import com.example.tenniscourtreservation.model.User;
+import com.example.tenniscourtreservation.RegisterActivity;
+import com.example.tenniscourtreservation.model.Client;
 
-public class UserViewModelFactory extends ViewModelProvider.NewInstanceFactory {
-    private User user;
+public class ClientViewModelFactory extends ViewModelProvider.NewInstanceFactory {
+    private Client client;
     private Context context;
 
-    public UserViewModelFactory(LogInActivity activity, User user) {
+    public ClientViewModelFactory(RegisterActivity activity, Client client) {
         this.context = activity;
-        this.user = user;
+        this.client = client;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T)new UserViewModel(context,user);
+        return (T)new ClientViewModel(context, client);
     }
 }

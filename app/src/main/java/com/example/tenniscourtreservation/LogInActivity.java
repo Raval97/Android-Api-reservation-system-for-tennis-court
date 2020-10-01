@@ -15,7 +15,7 @@ import com.example.tenniscourtreservation.model.User;
 import com.example.tenniscourtreservation.viewModel.UserViewModel;
 import com.example.tenniscourtreservation.viewModel.UserViewModelFactory;
 
-public class LoginInActivity extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity {
 
     TextView signUpText;
     Button back;

@@ -7,7 +7,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class RegisterActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.example.tenniscourtreservation.databinding.ActivityLoginBinding;
+import com.example.tenniscourtreservation.databinding.ActivitySignupBinding;
+import com.example.tenniscourtreservation.model.Client;
+import com.example.tenniscourtreservation.model.User;
+import com.example.tenniscourtreservation.viewModel.ClientViewModel;
+import com.example.tenniscourtreservation.viewModel.ClientViewModelFactory;
+import com.example.tenniscourtreservation.viewModel.UserViewModel;
+import com.example.tenniscourtreservation.viewModel.UserViewModelFactory;
+
+public class RegisterActivity extends AppCompatActivity {
 
     TextView loginText;
     Button back;
@@ -15,8 +28,9 @@ public class RegisterActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
-//        getActionBar().hide();
+        ActivitySignupBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_signup);
+        ClientViewModel clientViewModel = ViewModelProviders.of(this, new ClientViewModelFactory(this, new Client())).get(ClientViewModel.class);
+        binding.setClientModel(clientViewModel);
 
         loginText =  (TextView) findViewById(R.id.loginText);
         back = (Button) findViewById(R.id.back);
@@ -24,7 +38,7 @@ public class RegisterActivity extends Activity {
         loginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoginInActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
                 startActivity(intent);
                 finish();
             }

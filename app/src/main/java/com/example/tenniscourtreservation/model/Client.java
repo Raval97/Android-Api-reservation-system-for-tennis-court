@@ -6,7 +6,7 @@ import android.util.Patterns;
 public class Client {
     private String name;
     private String surname;
-    private String phoneNumber;
+    private Long phoneNumber;
     private String emailAddress;
 
     public String getName() {
@@ -25,11 +25,11 @@ public class Client {
         this.surname = surname;
     }
 
-    public String getPhoneNumber() {
+    public Long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(Long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -41,10 +41,16 @@ public class Client {
         this.emailAddress = emailAddress;
     }
 
-    public boolean isValid() {
-        if (this.emailAddress != null && !TextUtils.isEmpty(emailAddress) && Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()){
-            return true;
-        }else
-            return false;
+    public String isValid() {
+        if (this.name == null || TextUtils.isEmpty(name) || TextUtils.isDigitsOnly(name)) {
+            return "Incorrect Name";
+        } else if (this.surname == null || TextUtils.isEmpty(surname) || TextUtils.isDigitsOnly(surname)) {
+            return "Incorrect Surname";
+        } else if (this.emailAddress == null || TextUtils.isEmpty(emailAddress) || !Patterns.EMAIL_ADDRESS.matcher(emailAddress).matches()) {
+            return "Incorrect Email Address";
+        } else if (this.phoneNumber == null || Patterns.PHONE.matcher(phoneNumber.toString()).matches()) {
+            return "Incorrect Phone Number";
+        } else
+            return "Correct";
     }
 }

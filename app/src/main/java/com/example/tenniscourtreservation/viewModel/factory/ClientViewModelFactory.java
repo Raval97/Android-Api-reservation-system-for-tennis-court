@@ -1,4 +1,4 @@
-package com.example.tenniscourtreservation.viewModel;
+package com.example.tenniscourtreservation.viewModel.factory;
 
 import android.content.Context;
 
@@ -6,9 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.tenniscourtreservation.LogInActivity;
-import com.example.tenniscourtreservation.RegisterActivity;
+import com.example.tenniscourtreservation.view.RegisterActivity;
 import com.example.tenniscourtreservation.model.Client;
+import com.example.tenniscourtreservation.viewModel.ClientViewModel;
 
 public class ClientViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     private Client client;

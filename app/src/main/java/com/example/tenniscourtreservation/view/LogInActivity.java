@@ -1,6 +1,5 @@
-package com.example.tenniscourtreservation;
+package com.example.tenniscourtreservation.view;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,34 +10,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.tenniscourtreservation.R;
 import com.example.tenniscourtreservation.databinding.ActivityLoginBinding;
-import com.example.tenniscourtreservation.databinding.ActivitySignupBinding;
-import com.example.tenniscourtreservation.model.Client;
 import com.example.tenniscourtreservation.model.User;
-import com.example.tenniscourtreservation.viewModel.ClientViewModel;
-import com.example.tenniscourtreservation.viewModel.ClientViewModelFactory;
 import com.example.tenniscourtreservation.viewModel.UserViewModel;
-import com.example.tenniscourtreservation.viewModel.UserViewModelFactory;
+import com.example.tenniscourtreservation.viewModel.factory.UserViewModelFactory;
 
-public class RegisterActivity extends AppCompatActivity {
+public class LogInActivity extends AppCompatActivity {
 
-    TextView loginText;
+    TextView signUpText;
     Button back;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivitySignupBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_signup);
-        ClientViewModel clientViewModel = ViewModelProviders.of(this, new ClientViewModelFactory(this, new Client())).get(ClientViewModel.class);
-        binding.setClientModel(clientViewModel);
+        ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        UserViewModel userViewModel = ViewModelProviders.of(this, new UserViewModelFactory(this, new User())).get(UserViewModel.class);
+        binding.setUserModel(userViewModel);
 
-        loginText =  (TextView) findViewById(R.id.loginText);
+        signUpText =  (TextView) findViewById(R.id.signUpText);
         back = (Button) findViewById(R.id.back);
 
-        loginText.setOnClickListener(new View.OnClickListener() {
+        signUpText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LogInActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -51,6 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
         });
-
     }
+
 }

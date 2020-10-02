@@ -44,7 +44,7 @@ public class ClientViewModel extends ViewModel {
                 Toast.makeText(context, "please enter valid phone number", Toast.LENGTH_LONG).show();
                 break;
             case "Incorrect Email Address":
-                Toast.makeText(context, "please enter valid email address", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "please  enter valid email address", Toast.LENGTH_LONG).show();
                 break;
             default:
                 Toast.makeText(context, "Successful create account for:"+client.getName(), Toast.LENGTH_LONG).show();

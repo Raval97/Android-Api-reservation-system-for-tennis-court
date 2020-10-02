@@ -1,4 +1,4 @@
-package com.example.tenniscourtreservation;
+package com.example.tenniscourtreservation.view;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
+
+import com.example.tenniscourtreservation.R;
 
 public class MainActivity extends Activity {
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="10dp"
-    tools:context=".RegisterActivity"
+    tools:context=".view.RegisterActivity"
     tools:ignore="ExtraText">
 
     <data>

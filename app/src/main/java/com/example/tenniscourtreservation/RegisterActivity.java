@@ -15,7 +15,7 @@ public class RegisterActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.signup);
         getActionBar().hide();
 
         signUpText =  (TextView) findViewById(R.id.signUpText);
@@ -32,7 +32,7 @@ public class RegisterActivity extends Activity {
 
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), MainActivity.class);
+                Intent myIntent = new Intent(view.getContext(), StartPageActivity.class);
                 startActivityForResult(myIntent, 0);
             }
 

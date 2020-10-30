@@ -1,10 +1,7 @@
 package com.example.tenniscourtreservation;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.util.Log;
@@ -12,40 +9,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+
 import androidx.annotation.RequiresApi;
+
 import com.example.tenniscourtreservation.model.PriceList;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
 import java.net.URL;
 
-public class MainActivity extends Activity {
+public class MenuTools extends Activity {
 
-    LinearLayout menu;
-    Button login;
-    Button menuButton;
-    ViewGroup tContainer;
+     LinearLayout menu;
+     Button menuButton;
+     ViewGroup tContainer;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        getActionBar().hide();
+    public MenuTools(final LinearLayout menu, final Button menuButton, final ViewGroup tContainer) {
+        this.menu = menu;
+        this.menuButton = menuButton;
+        this.tContainer = tContainer;
 
-
-        // Login Clicked
-        login = (Button) findViewById(R.id.login);
-        login.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), LoginInActivity.class);
-                startActivityForResult(myIntent, 0);
-            }
-        });
-
-        // Menu Clicked
-        tContainer = (ViewGroup) findViewById(R.id.container);
-        menu = findViewById(R.id.menu);
-        menuButton = (Button) findViewById(R.id.menuButton);
         menuButton.setOnClickListener(new View.OnClickListener() {
             boolean visible;
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)

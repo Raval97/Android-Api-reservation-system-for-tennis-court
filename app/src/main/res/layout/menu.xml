@@ -1,0 +1,104 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2F3336"
+    android:orientation="vertical"
+    tools:ignore="ExtraText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="30sp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="250sp"
+            android:layout_height="80sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/logo" />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="80sp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50sp"
+            android:background="@drawable/gradient_button"
+            android:text="Log In"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/menuButton"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/button_menu_bg"
+        android:text="Menu"
+        android:textColor="#fff"
+        android:textSize="35sp" />
+
+    <LinearLayout
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5sp"
+            android:background="@drawable/gradient_button"
+            android:text="Start Page"
+            android:textColor="#fff"
+            android:textSize="35sp" />
+
+        <Button
+            android:id="@+id/gallery"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5sp"
+            android:background="@drawable/gradient_button"
+            android:text="Gallery"
+            android:textColor="#fff"
+            android:textSize="35sp" />
+
+        <Button
+            android:id="@+id/priceList"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5sp"
+            android:background="@drawable/gradient_button"
+            android:text="Price - List"
+            android:textColor="#fff"
+            android:textSize="35sp" />
+
+        <Button
+            android:id="@+id/contact"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5sp"
+            android:background="@drawable/gradient_button"
+            android:text="Contact"
+            android:textColor="#fff"
+            android:textSize="35sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

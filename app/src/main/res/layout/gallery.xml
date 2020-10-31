@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2F3336"
-    tools:context=".StartPageActivity"
+    tools:context=".GalleryActivity"
     tools:ignore="ExtraText">
 
     <LinearLayout
@@ -22,27 +22,28 @@
         <TextView
             android:id="@+id/title"
             style="@style/headerText"
-            android:text="Tennis is our passion" />
-
-        <TextView
-            android:id="@+id/contextText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20sp"
-            android:gravity="center"
-            android:text="@string/mainTextContent"
-            android:textColor="#9F86CC"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:text="Gallery"/>
 
         <ImageView
-            android:id="@+id/image4"
+        android:layout_width="380sp"
+        android:layout_height="260sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20sp"
+        android:src="@drawable/image1" />
+
+        <ImageView
             android:layout_width="380sp"
             android:layout_height="260sp"
             android:layout_gravity="center"
-            android:layout_marginTop="10sp"
-            android:src="@drawable/image4" />
+            android:layout_marginTop="20sp"
+            android:src="@drawable/image2" />
+
+        <ImageView
+            android:layout_width="380sp"
+            android:layout_height="260sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20sp"
+            android:src="@drawable/image3" />
 
     </LinearLayout>
 

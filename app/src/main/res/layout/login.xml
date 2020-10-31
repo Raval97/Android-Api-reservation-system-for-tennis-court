@@ -30,7 +30,7 @@
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_marginLeft="40sp"
-            android:background="@drawable/gradient_button"
+            android:background="@drawable/button_menu_bg"
             android:text="BACK"
             android:textColor="#fff"
             android:textSize="18sp" />

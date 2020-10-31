@@ -4,17 +4,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 
-public class StartPageActivity extends Activity {
+public class GalleryActivity extends Activity {
 
     MenuTools menuTools;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.start_page);
+        setContentView(R.layout.gallery);
         getActionBar().hide();
 
-        menuTools = new MenuTools(this, (Button) findViewById(R.id.startMenu));
+        menuTools = new MenuTools(this, (Button) findViewById(R.id.galleryMenu));
         menuTools.done();
     }
 

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2F3336"
+    tools:context=".ContactActivity"
+    tools:ignore="ExtraText">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <include href="menu.xml"
+            layout="@layout/menu"
+            xmlns="http://www.w3.org/2001/XInclude" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/headerText"
+            android:text="Contact" />
+
+        <TableRow
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20dp"
+            android:weightSum="100"
+            android:background="#224265">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_height="wrap_content"
+                android:text="Address:"
+                android:textColor="#F0EDF4"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:layout_weight="30"
+                android:layout_height="wrap_content"
+                android:text="Chrząszczyrzewoszyce  \nul. Wesoła 12"
+                android:textColor="#F0EDF4"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20dp"
+            android:weightSum="100"
+            android:background="#224265">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_height="wrap_content"
+                android:text="Email:"
+                android:textColor="#F0EDF4"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_weight="30"
+                android:layout_height="wrap_content"
+                android:text="+48 12 384 56 78"
+                android:textColor="#F0EDF4"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:layout_marginTop="20sp"
+            android:layout_marginBottom="20dp"
+            android:weightSum="100"
+            android:background="#224265">
+
+            <TextView
+                android:layout_weight="70"
+                android:layout_height="wrap_content"
+                android:text="Email:"
+                android:textColor="#F0EDF4"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_weight="30"
+                android:layout_height="wrap_content"
+                android:text="ourTennis@tennis.com"
+                android:textColor="#F0EDF4"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+        </TableRow>
+
+
+    </LinearLayout>
+
+</ScrollView>

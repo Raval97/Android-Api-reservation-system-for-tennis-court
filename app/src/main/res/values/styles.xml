@@ -12,4 +12,36 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="menuButton">
+        <item name="android:layout_width">400dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">5sp</item>
+        <item name="android:background">@drawable/button_menu_bg</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">35sp</item>
+    </style>
+
+    <style name="headerText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">30sp</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:textColor">#A3AA3E</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="normalText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">30sp</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:textColor">#A3AA3E</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

@@ -14,15 +14,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            href="menu.xml"
+        <include href="menu.xml"
             layout="@layout/menu"
-            xmlns="http://www.w3.org/2001/XInclude"/>
+            xmlns="http://www.w3.org/2001/XInclude" />
 
         <TextView
             android:id="@+id/title"
             style="@style/headerText"
-            android:text="Price List"/>
+            android:text="Price List" />
 
     </LinearLayout>
 

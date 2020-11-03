@@ -11,4 +11,5 @@
     <string name="loginHere">You don\'t have an account yet? Sign up</string>
     <string name="mainTextContent">Do you want to play tennis with your friends \n and you are looking for a tennis court? \nGreat choice, log in or register now, book a court \nand enjoy playing together on a professional tennis surface.</string>
     <string name="tournaments_events"><![CDATA[Tournaments & Events]]></string>
+    <string name="game_equipment"><![CDATA[Game &\n Equipment]]></string>
 </resources>

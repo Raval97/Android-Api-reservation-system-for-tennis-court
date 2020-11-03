@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ViewGroup;
+import android.view.ContextThemeWrapper;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -26,6 +25,10 @@ public class PriceListActivity extends Activity {
     Boolean isAdmin;
     PriceList[] priceList;
     LinearLayout context;
+    TextView cellTitle;
+    TextView cellTime;
+    TextView cellPrice;
+    TableRow tableRow;
 
 
     @Override
@@ -39,13 +42,8 @@ public class PriceListActivity extends Activity {
 
         new PriceListActivity.HttpReqTask(this).execute();
 
-        LinearLayout context2 = (LinearLayout) findViewById(R.id.container);
-        TextView price2 = new TextView(this);
-        price2.setText("sfds");
-        price2.setBackgroundColor(Color.parseColor("#aaa333"));
-        context2.addView(price2);
-    }
 
+    }
 
 
     private class HttpReqTask extends AsyncTask<Void, Void, PriceList[]> {
@@ -73,31 +71,41 @@ public class PriceListActivity extends Activity {
         @Override
         protected void onPostExecute(PriceList[] priceList) {
             super.onPostExecute(priceList);
-            context = (LinearLayout) findViewById(R.id.container);
-            context.addView(createTable(activity, priceList));
+            context = (TableLayout) findViewById(R.id.table);
+            cellTitle = (TextView) findViewById(R.id.one);
+            cellTime = (TextView) findViewById(R.id.two);
+            cellPrice = (TextView) findViewById(R.id.three);
+            tableRow = (TableRow) findViewById(R.id.example);
+            int iter = 0;
+            for (PriceList p : priceList) {
+                if(iter %2 ==0)
+                    context.addView(createTableRow(activity, p, R.style.tableCell, R.style.tableRow, "#776074"));
+                else
+                    context.addView(createTableRow(activity, p, R.style.tableCell, R.style.tableRow, "#913860"));
+                iter++;
+                context.removeView(tableRow);
+            }
         }
     }
 
-    private TableRow createTableRow(Activity activity, PriceList p){
-        TableRow tableRow = new TableRow(activity);
-        TextView title = new TextView(activity);
-        TextView time = new TextView(activity);
-        TextView price = new TextView(activity);
+    private TableRow createTableRow(Activity activity, PriceList p, int cellStyle, int rowStyle, String cellColor) {
+        TableRow tableRow = new TableRow(new ContextThemeWrapper(activity, rowStyle));
+        tableRow.setBackgroundColor(Color.parseColor(cellColor));
+        TextView title = new TextView(new ContextThemeWrapper(activity, cellStyle));
+        TextView time = new TextView(new ContextThemeWrapper(activity, cellStyle));
+        TextView price = new TextView(new ContextThemeWrapper(activity, cellStyle));
+
+        LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) cellTitle.getLayoutParams();
+        LinearLayout.LayoutParams params2 = (LinearLayout.LayoutParams) cellTime.getLayoutParams();
+        LinearLayout.LayoutParams params3 = (LinearLayout.LayoutParams) cellPrice.getLayoutParams();
+
         title.setText(String.valueOf(p.getType()));
         time.setText(String.valueOf(p.getTime()));
         price.setText(String.valueOf(p.getPrice()));
-        tableRow.addView(title);
-        tableRow.addView(time);
-        tableRow.addView(price);
+        tableRow.addView(title, params1);
+        tableRow.addView(time, params2);
+        tableRow.addView(price, params3);
         return tableRow;
-    }
-
-    private TableLayout createTable(Activity activity, PriceList[] priceList){
-        TableLayout table = new TableLayout(activity);
-        for (PriceList p : priceList) {
-            table.addView(createTableRow(activity, p));
-        }
-        return table;
     }
 
 }

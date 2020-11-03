@@ -24,49 +24,6 @@
             style="@style/headerText"
             android:text="@string/tournaments_events"/>
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20sp"
-            android:layout_marginBottom="20dp"
-            android:padding="10dp">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".50"
-                        android:text="Game:"
-                        android:textColor="#F0EDF4"
-                        android:textSize="20sp" />
-
-                    <Button
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".30"
-                        android:text="+48 12 384 ;56 78"
-                        android:textColor="#F0EDF4"
-                        android:textSize="20sp" />
-
-                    <Button
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".20"
-                        android:text="+48 12 384 56 78"
-                        android:textColor="#F0EDF4"
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-            </TableRow>
-
-        </TableLayout>
-
     </LinearLayout>
 
 </ScrollView>

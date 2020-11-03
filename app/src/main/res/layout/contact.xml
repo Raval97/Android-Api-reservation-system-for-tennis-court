@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="#2F3336"
     tools:context=".ContactActivity"
-    tools:ignore="ExtraText">
+    tools:ignore="ExtraText"
+    android:paddingBottom="20dp">
 
     <LinearLayout
         android:id="@+id/container"

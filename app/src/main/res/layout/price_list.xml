@@ -23,6 +23,62 @@
             style="@style/headerText"
             android:text="Price List" />
 
+
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="20dp">
+
+            <TableRow
+                android:background="#111737"
+                android:padding="5dp"
+                android:layout_marginBottom="10dp">
+                <TextView
+                    style="@style/tableCell"
+                    android:textColor = "#fff"
+                    android:layout_weight = "0.35"
+                    android:text="@string/game_equipment" />
+                <TextView
+                    style="@style/tableCell"
+                    android:textColor = "#fff"
+                    android:layout_weight = "0.6"
+                    android:text="Time" />
+                <TextView
+                    style="@style/tableCell"
+                    android:textColor = "#fff"
+                    android:layout_weight = "0.15"
+                    android:text="Price \n[PLN]" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/example"
+                android:background="#776074"
+                android:padding="5dp">
+                <TextView
+                    android:id="@+id/one"
+                    style="@style/tableCell"
+                    android:layout_weight = "0.35"
+                    android:text="From monday to Friday[1h]" />
+
+                <TextView
+                    android:id="@+id/two"
+                    style="@style/tableCell"
+                    android:layout_weight = "0.6"
+                    android:text="5 or more hors Tennis Pass" />
+
+                <TextView
+                    android:id="@+id/three"
+                    style="@style/tableCell"
+                    android:layout_weight = "0.15"
+                    android:text="35" />
+            </TableRow>
+
+        </TableLayout>
+
     </LinearLayout>
 
 </ScrollView>

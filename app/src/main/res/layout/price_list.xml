@@ -38,17 +38,17 @@
                 android:padding="5dp"
                 android:layout_marginBottom="10dp">
                 <TextView
-                    style="@style/tableCell"
+                    style="@style/priceListTableCell"
                     android:textColor = "#fff"
                     android:layout_weight = "0.35"
                     android:text="@string/game_equipment" />
                 <TextView
-                    style="@style/tableCell"
+                    style="@style/priceListTableCell"
                     android:textColor = "#fff"
                     android:layout_weight = "0.6"
                     android:text="Time" />
                 <TextView
-                    style="@style/tableCell"
+                    style="@style/priceListTableCell"
                     android:textColor = "#fff"
                     android:layout_weight = "0.15"
                     android:text="Price \n[PLN]" />
@@ -60,19 +60,19 @@
                 android:padding="5dp">
                 <TextView
                     android:id="@+id/one"
-                    style="@style/tableCell"
+                    style="@style/priceListTableCell"
                     android:layout_weight = "0.35"
                     android:text="From monday to Friday[1h]" />
 
                 <TextView
                     android:id="@+id/two"
-                    style="@style/tableCell"
+                    style="@style/priceListTableCell"
                     android:layout_weight = "0.6"
                     android:text="5 or more hors Tennis Pass" />
 
                 <TextView
                     android:id="@+id/three"
-                    style="@style/tableCell"
+                    style="@style/priceListTableCell"
                     android:layout_weight = "0.15"
                     android:text="35" />
             </TableRow>

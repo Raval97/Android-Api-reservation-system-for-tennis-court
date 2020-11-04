@@ -14,15 +14,165 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            href="menu.xml"
+        <include href="menu.xml"
             layout="@layout/menu"
-            xmlns="http://www.w3.org/2001/XInclude"/>
+            xmlns="http://www.w3.org/2001/XInclude" />
 
         <TextView
             android:id="@+id/title"
             style="@style/headerText"
-            android:text="@string/tournaments_events"/>
+            android:text="@string/tournaments_events" />
+
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="20dp">
+
+            <TableRow
+                style="@style/eventsListTableRow"
+                android:layout_marginBottom="10dp"
+                android:background="#111737"
+                android:padding="5dp">
+
+                <TextView
+                    style="@style/eventsListTableCell"
+                    android:layout_weight="0.4"
+                    android:text="Title"
+                    android:textColor="#fff" />
+
+                <TextView
+                    style="@style/eventsListTableCell"
+                    android:layout_weight="0.4"
+                    android:text="Event Date"
+                    android:textColor="#fff" />
+
+                <TextView
+                    style="@style/priceListTableCell"
+                    android:layout_weight="0.2" />
+            </TableRow>
+
+            <TableLayout
+                android:id="@+id/event"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="10dp">
+
+                <TableRow
+                    android:id="@+id/eventRow"
+                    style="@style/eventsListTableRow"
+                    android:background="#776074"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/eventTitle"
+                        style="@style/eventsListTableCell"
+                        android:layout_weight="0.4"
+                        android:text="Cracow Open" />
+
+                    <TextView
+                        android:id="@+id/eventDate"
+                        style="@style/eventsListTableCell"
+                        android:layout_weight="0.4"
+                        android:text="Terminated" />
+
+                    <Button
+                        android:id="@+id/showDetails"
+                        style="@style/priceListTableCell"
+                        android:layout_weight="0.2"
+                        android:text="V" />
+
+                </TableRow>
+
+                <TableLayout
+                    android:id="@+id/eventDetails"
+                    style="@style/eventDetails">
+
+                    <TableRow
+                        android:id="@+id/dateOfStartedRow"
+                        android:padding="5dp">
+                        <TextView
+                            android:id="@+id/firstCellDateOfStartedRow"
+                            style="@style/eventTableCell"
+                            android:layout_weight="0.4"
+                            android:text="Date of started:" />
+
+                        <TextView
+                            android:id="@+id/secondCellDateOfStartedRow"
+                            style="@style/eventTableCell"
+                            android:layout_weight="0.4"
+                            android:text="2020-08-18" />
+                    </TableRow>
+                    <TableRow
+                        android:id="@+id/dateOfEndedRow"
+                        android:padding="5dp">
+                        <TextView
+                            android:id="@+id/firstCellDateOfEndedRow"
+                            style="@style/eventTableCell"
+                            android:layout_weight="0.4"
+                            android:text="Date of ended:" />
+
+                        <TextView
+                            android:id="@+id/secondCellDateOfEndedRow"
+                            style="@style/eventTableCell"
+                            android:layout_weight="0.4"
+                            android:text="2020-08-20" />
+                    </TableRow>
+                    <TableRow
+                        android:id="@+id/maxParticipantsRow"
+                        android:padding="5dp">
+                        <TextView
+                            android:id="@+id/firstCellMaxParticipantsRow"
+                            style="@style/eventTableCell"
+                            android:layout_weight="0.4"
+                            android:text="Max count of participants:" />
+
+                        <TextView
+                            android:id="@+id/secondCellMaxParticipantsRow"
+                            style="@style/eventTableCell"
+                            android:layout_weight="0.4"
+                            android:text="4" />
+                    </TableRow>
+                    <TableRow
+                        android:id="@+id/actualParticipantsRow"
+                        android:padding="5dp">
+                        <TextView
+                            android:id="@+id/firstCellActualParticipantsRow"
+                            style="@style/eventTableCell"
+                            android:layout_weight="0.4"
+                            android:text="Actual registered participants:" />
+
+                        <TextView
+                            android:id="@+id/secondCellActualParticipantsRow"
+                            style="@style/eventTableCell"
+                            android:layout_weight="0.4"
+                            android:text="1" />
+                    </TableRow>
+                    <TableRow
+                        android:id="@+id/entryFeeRow"
+                        android:padding="5dp">
+                        <TextView
+                            android:id="@+id/firstCellEntryFee"
+                            style="@style/eventTableCell"
+                            android:layout_weight="0.4"
+                            android:text="Entry fee:" />
+
+                        <TextView
+                            android:id="@+id/secondCellEntryFee"
+                            style="@style/eventTableCell"
+                            android:layout_weight="0.4"
+                            android:text="20.0 PLN" />
+                    </TableRow>
+
+                </TableLayout>
+
+            </TableLayout>
+
+        </TableLayout>
+
 
     </LinearLayout>
 

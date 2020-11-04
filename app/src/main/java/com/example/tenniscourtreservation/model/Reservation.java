@@ -1,5 +1,10 @@
 package com.example.tenniscourtreservation.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import java.time.LocalDate;
 
 import lombok.Data;
@@ -9,12 +14,16 @@ public class Reservation {
 
     private Long id;
     private boolean byAdmin;
+    @JsonDeserialize(using= LocalDateDeserializer.class)
+    @JsonSerialize(using= LocalDateSerializer.class)
     private LocalDate dateOfReservation;
     private float price;
     private float finalPrice;
     private boolean discount;
     private String statusOfReservation;
     private String typeOfPaying;
+    @JsonDeserialize(using= LocalDateDeserializer.class)
+    @JsonSerialize(using= LocalDateSerializer.class)
     private LocalDate finalPaymentDate;
     private String statusPaying;
 

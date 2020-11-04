@@ -41,8 +41,6 @@ public class PriceListActivity extends Activity {
         menuTools.done();
 
         new PriceListActivity.HttpReqTask(this).execute();
-
-
     }
 
 
@@ -79,9 +77,9 @@ public class PriceListActivity extends Activity {
             int iter = 0;
             for (PriceList p : priceList) {
                 if(iter %2 ==0)
-                    context.addView(createTableRow(activity, p, R.style.tableCell, R.style.tableRow, "#776074"));
+                    context.addView(createTableRow(activity, p, R.style.priceListTableCell, R.style.priceListTableRow, "#776074"));
                 else
-                    context.addView(createTableRow(activity, p, R.style.tableCell, R.style.tableRow, "#913860"));
+                    context.addView(createTableRow(activity, p, R.style.priceListTableCell, R.style.priceListTableRow, "#913860"));
                 iter++;
                 context.removeView(tableRow);
             }

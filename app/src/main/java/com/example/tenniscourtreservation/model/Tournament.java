@@ -1,7 +1,10 @@
 package com.example.tenniscourtreservation.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import java.time.LocalDate;
-
 import lombok.Data;
 
 @Data
@@ -12,7 +15,11 @@ public class Tournament {
     private String title;
     private int maxCountOFParticipant;
     private int countOFRegisteredParticipant;
+    @JsonDeserialize(using= LocalDateDeserializer.class)
+    @JsonSerialize(using= LocalDateSerializer.class)
     private LocalDate dateOfStarted;
+    @JsonDeserialize(using= LocalDateDeserializer.class)
+    @JsonSerialize(using= LocalDateSerializer.class)
     private LocalDate dateOfEnded;
     private float entryFee;
 
@@ -29,4 +36,16 @@ public class Tournament {
         this.entryFee = entryFee;
     }
 
+    @Override
+    public String toString() {
+        return "Tournament{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", maxCountOFParticipant=" + maxCountOFParticipant +
+                ", countOFRegisteredParticipant=" + countOFRegisteredParticipant +
+                ", dateOfStarted=" + dateOfStarted +
+                ", dateOfEnded=" + dateOfEnded +
+                ", entryFee=" + entryFee +
+                '}';
+    }
 }

@@ -10,6 +10,8 @@ public class User {
     private String password;
     private String role;
 
+    public static boolean isLogged = false;
+
     public User() {
     }
 

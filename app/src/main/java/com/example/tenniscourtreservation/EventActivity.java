@@ -3,13 +3,18 @@ package com.example.tenniscourtreservation;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.tenniscourtreservation.model.Tournament;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -17,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+
 
 public class EventActivity extends Activity {
 
@@ -28,13 +35,23 @@ public class EventActivity extends Activity {
 
     TableLayout contextTable;
     TableLayout eventExample;
-    TableRow eventRowExample;
-    TextView eventTitleExample;
-    TextView eventDateExample;
-    Button showDetailsExample;
-    TableLayout eventDetailsExample;
-    TableRow eventDetailsRowExample;
-    TextView cellOfEventDetailsRowExample;
+    int eventDetailsStyle;
+    int eventsCellStyle;
+    int eventsRowStyle;
+    int eventCellStyle;
+    int eventInfoTextStyle;
+    int eventActionButtonStyle;
+    LinearLayout.LayoutParams cellOfRowEventDetailsParam;
+    LinearLayout.LayoutParams eventRowParam;
+    LinearLayout.LayoutParams eventCellRowParam;
+    LinearLayout.LayoutParams showDetailsParam;
+    LinearLayout.LayoutParams eventDetailsParam;
+    LinearLayout.LayoutParams rowEventDetailsParam;
+    LinearLayout.LayoutParams infoEventParam;
+    LinearLayout.LayoutParams actionEventParam;
+    String infoEventText="";
+    String actionEventText="";
+    String actionEventText2="";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +65,6 @@ public class EventActivity extends Activity {
         new EventActivity.HttpReqTask(this).execute();
 
     }
-
 
     private class HttpReqTask extends AsyncTask<Void, Void, Tournament[]> {
         Activity activity;
@@ -73,87 +89,162 @@ public class EventActivity extends Activity {
             return null;
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected void onPostExecute(Tournament[] tournaments) {
             super.onPostExecute(tournaments);
             contextTable = (TableLayout) findViewById(R.id.table);
             eventExample = (TableLayout) findViewById(R.id.event);
-            eventRowExample = (TableRow) findViewById(R.id.eventRow);
-            eventTitleExample = (TextView) findViewById(R.id.eventTitle);
-            eventDateExample = (TextView) findViewById(R.id.eventDate);
-            showDetailsExample = (Button) findViewById(R.id.showDetails);
-            eventDetailsExample = (TableLayout) findViewById(R.id.eventDetails);
-            eventDetailsRowExample = (TableRow) findViewById(R.id.dateOfStartedRow);
-            cellOfEventDetailsRowExample = (TextView) findViewById(R.id.firstCellDateOfStartedRow);
+            eventDetailsStyle = R.style.eventDetails;
+            eventsCellStyle = R.style.eventsListTableCell;
+            eventsRowStyle = R.style.eventsListTableRow;
+            eventCellStyle = R.style.eventTableCell;
+            eventInfoTextStyle = R.style.infoText;
+            eventActionButtonStyle = R.style.actionButton;
+            eventRowParam = (LinearLayout.LayoutParams) findViewById(R.id.eventRow).getLayoutParams();
+            eventCellRowParam = (LinearLayout.LayoutParams) findViewById(R.id.eventTitle).getLayoutParams();
+            showDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.showDetails).getLayoutParams();
+            eventDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.eventDetails).getLayoutParams();
+            rowEventDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.dateOfStartedRow).getLayoutParams();
+            cellOfRowEventDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.firstCellDateOfStartedRow).getLayoutParams();
+            infoEventParam = (LinearLayout.LayoutParams) findViewById(R.id.infoText).getLayoutParams();
+            actionEventParam = (LinearLayout.LayoutParams) findViewById(R.id.actionButton).getLayoutParams();
+
             int iter = 0;
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) eventExample.getLayoutParams();
+            params.setMargins(0, 0, 0, 20);
             for (Tournament t : tournaments) {
+                if (t.getDateOfStarted().isAfter(LocalDate.now())) {
+                    if (logged) {
+                        if (userStatusList[iter].equals("Accepted")) {
+                            infoEventText = "You are a participant of the event.\n" +
+                                    "Here you can cancel your participation";
+                            actionEventText = "Cancel from participation";
+                        }
+                        if (userStatusList[iter].equals("Delivered")) {
+                            infoEventText = "You have sent your application for participation\n" +
+                                    "Currently under review by the admin";
+                            actionEventText = "Cancel from participation";
+                        }
+                        if (userStatusList[iter].equals("To Pay")) {
+                            infoEventText = "Your application has been approved by the admin.\n" +
+                                    "To fully confirm participation, pay the fee";
+                            actionEventText = "Pay Fee Of Participant";
+                            actionEventText2 = "Cancel your application";
+                        }
+                        if (userStatusList[iter].equals("without_application") ||
+                                userStatusList[iter].equals("Rejected") ||
+                                userStatusList[iter].equals("Canceled")) {
+                            if (t.getMaxCountOFParticipant() == t.getCountOFRegisteredParticipant())
+                                infoEventText = "Full set of participants,\n you cannot register";
+                            else {
+                                if (userStatusList[iter].equals("Rejected"))
+                                    actionEventText = "Your application has been rejected.\n" +
+                                            "There is free space left. You can re-apply";
+                                if (userStatusList[iter].equals("without_application"))
+                                    actionEventText = "There is free space left.\n" +
+                                            "You can register for the event below";
+                            }
+                            actionEventText = "Take Part In This Event";
+                        }
+                    } else {
+                        infoEventText = "Login required to join";
+                        actionEventText = "Log In";
+                    }
+                } else
+                    infoEventText = "The Event is terminated";
+
                 if (iter % 2 == 0)
-                    contextTable.addView(createTableForEvent(activity, t, "#776074", R.style.eventDetails,
-                            R.style.eventsListTableCell, R.style.eventsListTableRow, R.style.eventTableCell), params);
+                    contextTable.addView(createTableForEvent(activity, t, "#776074"), params);
                 else
-                    contextTable.addView(createTableForEvent(activity, t, "#913860", R.style.eventDetails,
-                            R.style.eventsListTableCell, R.style.eventsListTableRow, R.style.eventTableCell), params);
+                    contextTable.addView(createTableForEvent(activity, t, "#913860"), params);
                 iter++;
                 contextTable.removeView(eventExample);
             }
         }
+
     }
 
-    private TableLayout createTableForEvent(Activity activity, Tournament t, String cellColor, int  eventDetailsStyle,
-                                            int eventsCellStyle, int EventsRowStyle, int EventCellStyle) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private TableLayout createTableForEvent(Activity activity, Tournament t, String cellColor) {
         TableLayout event = new TableLayout(activity);
-        TableRow eventRow = new TableRow(new ContextThemeWrapper(activity, EventsRowStyle));
+        TableRow eventRow = new TableRow(new ContextThemeWrapper(activity, eventsRowStyle));
+        Button showDetails = new Button(this);
+        TableRow emptyRow = new TableRow(activity);
         TextView eventTitle = new TextView(new ContextThemeWrapper(activity, eventsCellStyle));
         TextView eventDate = new TextView(new ContextThemeWrapper(activity, eventsCellStyle));
-        Button showDetails = new Button(activity);
         TableLayout eventDetails = new TableLayout(new ContextThemeWrapper(activity, eventDetailsStyle));
+        TableRow eventInfo = new TableRow(activity);
+        TextView eventInfoText = new TextView(new ContextThemeWrapper(activity, eventInfoTextStyle));
+        TableRow eventAction = new TableRow(activity);
+        Button eventActionButton = new Button(activity, null, 0, eventActionButtonStyle);
 
         eventRow.setBackgroundColor(Color.parseColor(cellColor));
-        showDetails.setBackgroundColor(Color.parseColor(cellColor));
-
-        LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) eventRowExample.getLayoutParams();
-        LinearLayout.LayoutParams params2 = (LinearLayout.LayoutParams) eventTitleExample.getLayoutParams();
-        LinearLayout.LayoutParams params3 = (LinearLayout.LayoutParams) showDetailsExample.getLayoutParams();
-        LinearLayout.LayoutParams params4 = (LinearLayout.LayoutParams) eventDetailsExample.getLayoutParams();
-        LinearLayout.LayoutParams params5 = (LinearLayout.LayoutParams) eventDetailsRowExample.getLayoutParams();
+        eventDetails.setBackgroundColor(Color.parseColor(cellColor));
 
         eventTitle.setText(String.valueOf(t.getTitle()));
-        eventDate.setText(String.valueOf(t.getDateOfStarted()));
-        showDetails.setText("V");
-        eventRow.addView(eventTitle, params2);
-        eventRow.addView(eventDate, params3);
-        eventRow.addView(showDetails, params3);
+        String eventDateText = t.getDateOfStarted().isBefore(LocalDate.now()) ? "Terminated" : t.getDateOfStarted().toString();
+        eventDate.setText(eventDateText);
+        showDetails.setText("-> <-");
+        eventRow.addView(eventTitle, eventCellRowParam);
+        eventRow.addView(eventDate, eventCellRowParam);
+        eventRow.addView(showDetails, showDetailsParam);
+        emptyRow.setBackgroundColor(Color.parseColor("#BC1319"));
+        emptyRow.setPadding(0, 0, 0, 3);
 
         eventDetails.addView(createRowOfTable(activity, "Date of started:",
-                String.valueOf(t.getDateOfStarted()), EventCellStyle), params5);
+                String.valueOf(t.getDateOfStarted())), rowEventDetailsParam);
         eventDetails.addView(createRowOfTable(activity, "Date of ended:",
-                String.valueOf(t.getDateOfEnded()), EventCellStyle), params5);
+                String.valueOf(t.getDateOfEnded())), rowEventDetailsParam);
         eventDetails.addView(createRowOfTable(activity, "Max count of participants:",
-                String.valueOf(t.getMaxCountOFParticipant()), EventCellStyle), params5);
+                String.valueOf(t.getMaxCountOFParticipant())), rowEventDetailsParam);
         eventDetails.addView(createRowOfTable(activity, "Date of started:",
-                String.valueOf(t.getDateOfStarted()), EventCellStyle), params5);
+                String.valueOf(t.getDateOfStarted())), rowEventDetailsParam);
         eventDetails.addView(createRowOfTable(activity, "Actual registered participants:",
-                String.valueOf(t.getCountOFRegisteredParticipant()), EventCellStyle), params5);
+                String.valueOf(t.getCountOFRegisteredParticipant())), rowEventDetailsParam);
         eventDetails.addView(createRowOfTable(activity, "Entry fee:",
-                String.valueOf(t.getEntryFee()), EventCellStyle), params5);
+                String.valueOf(t.getEntryFee())), rowEventDetailsParam);
 
-        event.addView(eventRow, params1);
-        event.addView(eventDetails, params4);
-        event.setPadding(0, 0 ,0, 5);
+        eventInfoText.setText(infoEventText);
+        eventInfo.addView(eventInfoText, infoEventParam);
+        eventInfo.setGravity(Gravity.CENTER);
+        eventInfo.setPadding(0, 50, 0, 30);
+        eventActionButton.setText(actionEventText);
+        eventAction.addView(eventActionButton);
+        eventAction.setGravity(Gravity.CENTER);
+        eventDetails.addView(eventInfo, rowEventDetailsParam);
+        eventDetails.addView(eventAction, rowEventDetailsParam);
+        eventDetails.setVisibility(View.GONE);
+
+        showDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventDetails.setVisibility((eventDetails.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE);
+                showDetails.setText((eventDetails.getVisibility() == View.GONE) ? "<- ->" : "-> <-");
+            }
+        });
+
+        event.addView(eventRow, eventRowParam);
+        event.addView(emptyRow);
+        event.addView(eventDetails, eventDetailsParam);
+        event.setPadding(0, 0, 0, 5);
 
         return event;
     }
 
-    private TableRow createRowOfTable(Activity activity, String text1, String text2, int cellStyle) {
+    private TableRow createRowOfTable(Activity activity, String text1, String text2) {
         TableRow row = new TableRow(activity);
-        TextView cell1 = new TextView(new ContextThemeWrapper(activity, cellStyle));
-        TextView cell2 = new TextView(new ContextThemeWrapper(activity, cellStyle));
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) cellOfEventDetailsRowExample.getLayoutParams();
+        TextView cell1 = new TextView(new ContextThemeWrapper(activity, eventCellStyle));
+        TextView cell2 = new TextView(new ContextThemeWrapper(activity, eventCellStyle));
         cell1.setText(text1);
         cell2.setText(text2);
-        row.addView(cell1, params);
-        row.addView(cell2, params);
+        row.addView(cell1, cellOfRowEventDetailsParam);
+        row.addView(cell2, cellOfRowEventDetailsParam);
+        row.setPadding(5, 5, 5, 5);
         return row;
     }
 }
+
+//private HashMap<String, Integer> idMap= new HashMap<String, Integer>();
+//idMap.put("showButton" + index, index*10);
+//showDetails.setId(index);

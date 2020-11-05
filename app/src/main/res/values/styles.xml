@@ -91,13 +91,30 @@
         <item name="android:padding">5dp</item>
         <item name="android:layout_width">match_parent</item>
     </style>
-
+commit -a -m
     <style name="eventDetails">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">#776074</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:paddingLeft">40dp</item>
+    </style>
+
+    <style name="infoText">
+        <item name="android:background">#176A1A</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">#D7D9E1</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="actionButton">
+        <item name="android:background">@xml/textview_border</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#8AAF04</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 

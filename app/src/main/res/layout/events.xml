@@ -87,6 +87,10 @@
 
                 </TableRow>
 
+                <TableRow
+                    android:background="#BC1319"
+                    android:paddingBottom="3dp"></TableRow>
+
                 <TableLayout
                     android:id="@+id/eventDetails"
                     style="@style/eventDetails">
@@ -94,6 +98,7 @@
                     <TableRow
                         android:id="@+id/dateOfStartedRow"
                         android:padding="5dp">
+
                         <TextView
                             android:id="@+id/firstCellDateOfStartedRow"
                             style="@style/eventTableCell"
@@ -106,9 +111,11 @@
                             android:layout_weight="0.4"
                             android:text="2020-08-18" />
                     </TableRow>
+
                     <TableRow
                         android:id="@+id/dateOfEndedRow"
                         android:padding="5dp">
+
                         <TextView
                             android:id="@+id/firstCellDateOfEndedRow"
                             style="@style/eventTableCell"
@@ -121,9 +128,11 @@
                             android:layout_weight="0.4"
                             android:text="2020-08-20" />
                     </TableRow>
+
                     <TableRow
                         android:id="@+id/maxParticipantsRow"
                         android:padding="5dp">
+
                         <TextView
                             android:id="@+id/firstCellMaxParticipantsRow"
                             style="@style/eventTableCell"
@@ -136,9 +145,11 @@
                             android:layout_weight="0.4"
                             android:text="4" />
                     </TableRow>
+
                     <TableRow
                         android:id="@+id/actualParticipantsRow"
                         android:padding="5dp">
+
                         <TextView
                             android:id="@+id/firstCellActualParticipantsRow"
                             style="@style/eventTableCell"
@@ -151,9 +162,11 @@
                             android:layout_weight="0.4"
                             android:text="1" />
                     </TableRow>
+
                     <TableRow
                         android:id="@+id/entryFeeRow"
                         android:padding="5dp">
+
                         <TextView
                             android:id="@+id/firstCellEntryFee"
                             style="@style/eventTableCell"
@@ -165,6 +178,30 @@
                             style="@style/eventTableCell"
                             android:layout_weight="0.4"
                             android:text="20.0 PLN" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/info"
+                        android:gravity="center"
+                        android:paddingTop="20dp">
+
+                        <TextView
+                            android:id="@+id/infoText"
+                            style="@style/infoText"
+                            android:text="The Event is terminated" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/action"
+                        android:gravity="center"
+                        android:padding="10dp">
+
+                        <Button
+                            android:id="@+id/actionButton"
+                            style="@style/actionButton"
+                            android:text="The Event is terminated" />
+
                     </TableRow>
 
                 </TableLayout>

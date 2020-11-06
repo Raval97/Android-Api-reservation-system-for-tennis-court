@@ -1,4 +1,6 @@
 package com.example.tenniscourtreservation.model;
+import android.text.Editable;
+
 import lombok.Data;
 
 @Data
@@ -12,13 +14,12 @@ public class User {
 
     public static boolean isLogged = false;
 
-    public User() {
+    public User(Editable text, Editable passwordText) {
     }
 
-    public User(String username, String password, String role) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.role = role;
     }
 
 //    public void setPassword(String password) {

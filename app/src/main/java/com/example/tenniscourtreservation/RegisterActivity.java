@@ -87,14 +87,14 @@ public class RegisterActivity extends Activity {
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "User create successful! \n Now you can log in on your account",
                         Toast.LENGTH_LONG);
-                ((TextView)((LinearLayout)toast.getView()).getChildAt(0))
+                ((TextView) ((LinearLayout) toast.getView()).getChildAt(0))
                         .setGravity(Gravity.CENTER_HORIZONTAL);
                 toast.show();
             }
         };
     }
 
-    private class AsyncT extends AsyncTask<Void,Void,Void> {
+    private class AsyncT extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -119,8 +119,7 @@ public class RegisterActivity extends Activity {
                 wr.flush();
                 wr.close();
 
-                System.out.println("STATUS " + httpURLConnection.getResponseCode());
-                if(httpURLConnection.getResponseCode()==200){
+                if (httpURLConnection.getResponseCode() == 200) {
                     Message message = mHandler.obtainMessage();
                     message.sendToTarget();
                 }

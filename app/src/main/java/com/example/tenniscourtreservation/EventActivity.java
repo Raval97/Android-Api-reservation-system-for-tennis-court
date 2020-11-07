@@ -20,6 +20,16 @@ import com.example.tenniscourtreservation.model.Tournament;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.http.HttpAuthentication;
+import org.springframework.http.HttpBasicAuthentication;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestTemplate;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -28,8 +38,6 @@ import java.time.LocalDate;
 public class EventActivity extends Activity {
 
     MenuTools menuTools;
-    Boolean logged;
-    Boolean isAdmin;
     Tournament[] tournaments;
     String[] userStatusList;
 
@@ -49,9 +57,9 @@ public class EventActivity extends Activity {
     LinearLayout.LayoutParams rowEventDetailsParam;
     LinearLayout.LayoutParams infoEventParam;
     LinearLayout.LayoutParams actionEventParam;
-    String infoEventText="";
-    String actionEventText="";
-    String actionEventText2="";
+    String infoEventText = "";
+    String actionEventText = "";
+    String actionEventText2 = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,12 +85,23 @@ public class EventActivity extends Activity {
         protected Tournament[] doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                JsonNode jsonNode = mapper.readTree(new URL("http://10.0.2.2:8080/ourTennis/events.json"));
-                tournaments = mapper.convertValue(jsonNode.get("tournaments"), Tournament[].class);
-                userStatusList = mapper.convertValue(jsonNode.get("userStatusList"), String[].class);
-                logged = mapper.convertValue(jsonNode.get("logged"), Boolean.class);
-                isAdmin = mapper.convertValue(jsonNode.get("isAdmin"), Boolean.class);
-                return tournaments;
+                if (LoginInActivity.isLogged) {
+                    final String url = "http://10.0.2.2:8080/ourTennis/events.json";
+                    HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
+                    HttpHeaders requestHeaders = new HttpHeaders();
+                    requestHeaders.setAuthorization(authHeader);
+                    RestTemplate restTemplate = new RestTemplate();
+                    MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+                    restTemplate.getMessageConverters().add(messageConverter);
+                    ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), JsonNode.class);
+                    tournaments = mapper.convertValue(response.getBody().get("tournaments"), Tournament[].class);
+                    userStatusList = mapper.convertValue(response.getBody().get("userStatusList"), String[].class);
+
+                } else {
+                    JsonNode jsonNode = mapper.readTree(new URL("http://10.0.2.2:8080/ourTennis/events.json"));
+                    tournaments = mapper.convertValue(jsonNode.get("tournaments"), Tournament[].class);
+                    return tournaments;
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -115,7 +134,7 @@ public class EventActivity extends Activity {
             params.setMargins(0, 0, 0, 20);
             for (Tournament t : tournaments) {
                 if (t.getDateOfStarted().isAfter(LocalDate.now())) {
-                    if (logged) {
+                    if (LoginInActivity.isLogged) {
                         if (userStatusList[iter].equals("Accepted")) {
                             infoEventText = "You are a participant of the event.\n" +
                                     "Here you can cancel your participation";

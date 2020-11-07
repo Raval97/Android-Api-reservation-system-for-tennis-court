@@ -9,6 +9,10 @@ import android.widget.TextView;
 
 public class LoginInActivity extends Activity {
 
+    static String username = "admin";
+    static String password = "admin";
+    static Boolean isLogged = false;
+
     TextView loginText;
     Button back;
 

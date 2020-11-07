@@ -27,8 +27,8 @@ public class ReservationActivity extends Activity {
         noLogged = (TextView) findViewById(R.id.noLogged);
         logged = (LinearLayout) findViewById(R.id.logged);
 
-        noLogged.setVisibility(User.isLogged ? View.GONE : View.VISIBLE);
-        logged.setVisibility(User.isLogged ? View.VISIBLE : View.GONE);
+        noLogged.setVisibility(LoginInActivity.isLogged ? View.GONE : View.VISIBLE);
+        logged.setVisibility(LoginInActivity.isLogged ? View.VISIBLE : View.GONE);
     }
 
 }

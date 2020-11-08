@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,17 +26,417 @@
 
 
         <LinearLayout
-            android:id="@+id/logged"
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                style="@style/headerText"
-                android:background="@xml/textview_border"
-                android:text="Content"
-                android:textColor="#919AC8"
-                android:textSize="22dp" />
+            <LinearLayout
+                android:id="@+id/options"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/editDateOption"
+                    style="@style/headerText"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:width="0dp"
+                    android:background="@drawable/border_style_1"
+                    android:text="Edit\nData"
+                    android:textColor="#919AC8"
+                    android:textSize="15dp" />
+
+                <Button
+                    android:id="@+id/changePasswordOption"
+                    style="@style/headerText"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:width="0dp"
+                    android:background="@drawable/border_style_1"
+                    android:text="Change Password"
+                    android:textColor="#919AC8"
+                    android:textSize="15dp" />
+
+                <Button
+                    android:id="@+id/deleteAccountOption"
+                    style="@style/headerText"
+                    android:layout_margin="15dp"
+                    android:layout_weight="1"
+                    android:width="0dp"
+                    android:background="@drawable/border_style_1"
+                    android:text="Delete Account"
+                    android:textColor="#919AC8"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/editDataContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="0.75"
+                        android:padding="10dp"
+                        android:textSize="20dp"
+                        android:textColor="#CDBBBB"
+                        android:text="First Name:" />
+
+                    <EditText
+                        android:id="@+id/name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#2F2A4E"
+                        android:drawableEnd="@drawable/ic_name"
+                        android:drawableRight="@drawable/ic_name"
+                        android:text="First Name"
+                        android:padding="10dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#877676" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="0.75"
+                        android:padding="10dp"
+                        android:textSize="20dp"
+                        android:textColor="#CDBBBB"
+                        android:text="Second Name:" />
+
+                    <EditText
+                        android:id="@+id/surname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#2F2A4E"
+                        android:drawableEnd="@drawable/ic_name"
+                        android:drawableRight="@drawable/ic_name"
+                        android:text="Second Name"
+                        android:padding="10dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#877676" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="0.75"
+                        android:padding="10dp"
+                        android:textSize="20dp"
+                        android:textColor="#CDBBBB"
+                        android:text="Email:"/>
+
+
+                    <EditText
+                        android:id="@+id/email"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#2F2A4E"
+                        android:drawableEnd="@drawable/ic_email"
+                        android:drawableRight="@drawable/ic_email"
+                        android:text="Email"
+                        android:padding="10dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#877676" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="0.75"
+                        android:padding="10dp"
+                        android:textSize="20dp"
+                        android:textColor="#CDBBBB"
+                        android:text="Phone Number:" />
+
+                    <EditText
+                        android:id="@+id/phone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#2F2A4E"
+                        android:drawableEnd="@drawable/ic_phone"
+                        android:drawableRight="@drawable/ic_phone"
+                        android:text="Phone Number"
+                        android:padding="10dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#877676" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="0.75"
+                        android:padding="10dp"
+                        android:textSize="20dp"
+                        android:textColor="#CDBBBB"
+                        android:text="Username:" />
+
+                    <EditText
+                        android:id="@+id/username"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#2F2A4E"
+                        android:drawableEnd="@drawable/ic_user"
+                        android:drawableRight="@drawable/ic_user"
+                        android:text="Username"
+                        android:padding="10dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#877676" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/editData"
+                    style="@style/headerText"
+                    android:layout_margin="15dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/border_style_2"
+                    android:text="Edit Personal Data"
+                    android:textColor="#8C93A3"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/changePasswordContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:layout_margin="15dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="0.9"
+                        android:padding="10dp"
+                        android:textSize="20dp"
+                        android:textColor="#CDBBBB"
+                        android:text="Actual Password:"/>
+
+
+                    <EditText
+                        android:id="@+id/actualPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#2F2A4E"
+                        android:drawableEnd="@drawable/ic_pass"
+                        android:drawableRight="@drawable/ic_pass"
+                        android:hint="password"
+                        android:inputType="textPassword"
+                        android:padding="10dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#877676" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="0.9"
+                        android:padding="10dp"
+                        android:textSize="20dp"
+                        android:textColor="#CDBBBB"
+                        android:text="New Password:" />
+
+                    <EditText
+                        android:id="@+id/newPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#2F2A4E"
+                        android:drawableEnd="@drawable/ic_pass"
+                        android:drawableRight="@drawable/ic_pass"
+                        android:hint="password"
+                        android:inputType="textPassword"
+                        android:padding="10dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#877676" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="0.9"
+                        android:padding="10dp"
+                        android:textSize="20dp"
+                        android:textColor="#CDBBBB"
+                        android:text="Repat Password:" />
+
+                    <EditText
+                        android:id="@+id/repeatPassword"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#2F2A4E"
+                        android:drawableEnd="@drawable/ic_pass"
+                        android:drawableRight="@drawable/ic_pass"
+                        android:hint="password"
+                        android:inputType="textPassword"
+                        android:padding="10dp"
+                        android:textColor="#fff"
+                        android:textColorHint="#877676" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/changePassword"
+                    style="@style/headerText"
+                    android:layout_margin="15dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/border_style_2"
+                    android:text="Change Password"
+                    android:textColor="#8C93A3"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/deleteAccountContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/normalText"
+                    android:gravity="center"
+                    android:text="Are you sure you want to\ndelete account"
+                    android:textColor="#ADB1B6C3"
+                    android:textSize="18dp" />
+
+                <Switch
+                    android:id="@+id/deleteSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:thumb="@drawable/switch_thumb_custom"
+                    android:track="@drawable/switch_track_custom" />
+
+                <LinearLayout
+                    android:id="@+id/deleteAfterSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:gravity="center"
+                        android:text="Please confirm your password"
+                        android:textColor="#ADECEDEF"
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/passwordCheck"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="5dp"
+                        android:background="#2F2A4E"
+                        android:drawableEnd="@drawable/ic_pass"
+                        android:drawableRight="@drawable/ic_pass"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:textColor="#fff"
+                        android:textColorHint="#877676" />
+
+                    <Button
+                        android:id="@+id/delete"
+                        style="@style/headerText"
+                        android:layout_margin="15dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/border_style_2"
+                        android:text="Delete Account"
+                        android:textColor="#8C93A3"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

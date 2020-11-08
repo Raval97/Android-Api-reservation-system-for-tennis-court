@@ -32,7 +32,7 @@
 
             <TextView
                 style="@style/headerText"
-                android:background="@xml/textview_border"
+                android:background="@drawable/border_style_1"
                 android:text="Content"
                 android:textColor="#919AC8"
                 android:textSize="22dp" />

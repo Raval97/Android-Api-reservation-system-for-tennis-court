@@ -21,6 +21,10 @@ public class MenuTools extends Activity {
     public MenuTools(Activity activity, Button actualSite) {
         this.activity = activity;
         this.actualSite = actualSite;
+        if(LoginInActivity.isLogged) {
+            Button login = (Button) activity.findViewById(R.id.login);
+            login.setText("Account");
+        }
     }
 
     public void done(){
@@ -38,8 +42,13 @@ public class MenuTools extends Activity {
         Button login = (Button) activity.findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(activity, LoginInActivity.class);
-                activity.startActivityForResult(myIntent, 0);
+                if(LoginInActivity.isLogged) {
+                    Intent myIntent = new Intent(activity, UserAccountActivity.class);
+                    activity.startActivityForResult(myIntent, 0);
+                } else {
+                    Intent myIntent = new Intent(activity, LoginInActivity.class);
+                    activity.startActivityForResult(myIntent, 0);
+                }
             }
         });
     }

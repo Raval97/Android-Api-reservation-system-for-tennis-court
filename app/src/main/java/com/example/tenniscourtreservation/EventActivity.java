@@ -27,9 +27,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -70,33 +69,34 @@ public class EventActivity extends Activity {
         menuTools = new MenuTools(this, (Button) findViewById(R.id.eventsMenu));
         menuTools.done();
 
-        new EventActivity.HttpReqTask(this).execute();
+        new EventActivity.HttpReqTask().execute();
 
     }
 
     private class HttpReqTask extends AsyncTask<Void, Void, Tournament[]> {
-        Activity activity;
-
-        public HttpReqTask(Activity activity) {
-            this.activity = activity;
-        }
 
         @Override
         protected Tournament[] doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
                 if (LoginInActivity.isLogged) {
-                    final String url = "http://10.0.2.2:8080/ourTennis/events.json";
-                    HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
-                    HttpHeaders requestHeaders = new HttpHeaders();
-                    requestHeaders.setAuthorization(authHeader);
-                    RestTemplate restTemplate = new RestTemplate();
-                    MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-                    restTemplate.getMessageConverters().add(messageConverter);
-                    ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), JsonNode.class);
-                    tournaments = mapper.convertValue(response.getBody().get("tournaments"), Tournament[].class);
-                    userStatusList = mapper.convertValue(response.getBody().get("userStatusList"), String[].class);
-
+                    try {
+                        final String url = "http://10.0.2.2:8080/ourTennis/events.json";
+                        HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
+                        HttpHeaders requestHeaders = new HttpHeaders();
+                        requestHeaders.setAuthorization(authHeader);
+                        RestTemplate restTemplate = new RestTemplate();
+                        MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+                        restTemplate.getMessageConverters().add(messageConverter);
+                        ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), JsonNode.class);
+                        tournaments = mapper.convertValue(response.getBody().get("tournaments"), Tournament[].class);
+                        userStatusList = mapper.convertValue(response.getBody().get("userStatusList"), String[].class);
+                        return tournaments;
+                    } catch (RestClientException e) {
+                        e.printStackTrace();
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     JsonNode jsonNode = mapper.readTree(new URL("http://10.0.2.2:8080/ourTennis/events.json"));
                     tournaments = mapper.convertValue(jsonNode.get("tournaments"), Tournament[].class);
@@ -158,10 +158,10 @@ public class EventActivity extends Activity {
                                 infoEventText = "Full set of participants,\n you cannot register";
                             else {
                                 if (userStatusList[iter].equals("Rejected"))
-                                    actionEventText = "Your application has been rejected.\n" +
+                                    infoEventText = "Your application has been rejected.\n" +
                                             "There is free space left. You can re-apply";
                                 if (userStatusList[iter].equals("without_application"))
-                                    actionEventText = "There is free space left.\n" +
+                                    infoEventText = "There is free space left.\n" +
                                             "You can register for the event below";
                             }
                             actionEventText = "Take Part In This Event";
@@ -174,9 +174,9 @@ public class EventActivity extends Activity {
                     infoEventText = "The Event is terminated";
 
                 if (iter % 2 == 0)
-                    contextTable.addView(createTableForEvent(activity, t, "#776074"), params);
+                    contextTable.addView(createTableForEvent(t, "#776074"), params);
                 else
-                    contextTable.addView(createTableForEvent(activity, t, "#913860"), params);
+                    contextTable.addView(createTableForEvent(t, "#913860"), params);
                 iter++;
                 contextTable.removeView(eventExample);
             }
@@ -185,18 +185,18 @@ public class EventActivity extends Activity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private TableLayout createTableForEvent(Activity activity, Tournament t, String cellColor) {
-        TableLayout event = new TableLayout(activity);
-        TableRow eventRow = new TableRow(new ContextThemeWrapper(activity, eventsRowStyle));
+    private TableLayout createTableForEvent(Tournament t, String cellColor) {
+        TableLayout event = new TableLayout(getApplicationContext());
+        TableRow eventRow = new TableRow(new ContextThemeWrapper(getApplicationContext(), eventsRowStyle));
         Button showDetails = new Button(this);
-        TableRow emptyRow = new TableRow(activity);
-        TextView eventTitle = new TextView(new ContextThemeWrapper(activity, eventsCellStyle));
-        TextView eventDate = new TextView(new ContextThemeWrapper(activity, eventsCellStyle));
-        TableLayout eventDetails = new TableLayout(new ContextThemeWrapper(activity, eventDetailsStyle));
-        TableRow eventInfo = new TableRow(activity);
-        TextView eventInfoText = new TextView(new ContextThemeWrapper(activity, eventInfoTextStyle));
-        TableRow eventAction = new TableRow(activity);
-        Button eventActionButton = new Button(activity, null, 0, eventActionButtonStyle);
+        TableRow emptyRow = new TableRow(getApplicationContext());
+        TextView eventTitle = new TextView(new ContextThemeWrapper(getApplicationContext(), eventsCellStyle));
+        TextView eventDate = new TextView(new ContextThemeWrapper(getApplicationContext(), eventsCellStyle));
+        TableLayout eventDetails = new TableLayout(new ContextThemeWrapper(getApplicationContext(), eventDetailsStyle));
+        TableRow eventInfo = new TableRow(getApplicationContext());
+        TextView eventInfoText = new TextView(new ContextThemeWrapper(getApplicationContext(), eventInfoTextStyle));
+        TableRow eventAction = new TableRow(getApplicationContext());
+        Button eventActionButton = new Button(getApplicationContext(), null, 0, eventActionButtonStyle);
 
         eventRow.setBackgroundColor(Color.parseColor(cellColor));
         eventDetails.setBackgroundColor(Color.parseColor(cellColor));
@@ -211,20 +211,21 @@ public class EventActivity extends Activity {
         emptyRow.setBackgroundColor(Color.parseColor("#BC1319"));
         emptyRow.setPadding(0, 0, 0, 3);
 
-        eventDetails.addView(createRowOfTable(activity, "Date of started:",
+        eventDetails.addView(createRowOfTable("Date of started:",
                 String.valueOf(t.getDateOfStarted())), rowEventDetailsParam);
-        eventDetails.addView(createRowOfTable(activity, "Date of ended:",
+        eventDetails.addView(createRowOfTable("Date of ended:",
                 String.valueOf(t.getDateOfEnded())), rowEventDetailsParam);
-        eventDetails.addView(createRowOfTable(activity, "Max count of participants:",
+        eventDetails.addView(createRowOfTable("Max count of participants:",
                 String.valueOf(t.getMaxCountOFParticipant())), rowEventDetailsParam);
-        eventDetails.addView(createRowOfTable(activity, "Date of started:",
+        eventDetails.addView(createRowOfTable("Date of started:",
                 String.valueOf(t.getDateOfStarted())), rowEventDetailsParam);
-        eventDetails.addView(createRowOfTable(activity, "Actual registered participants:",
+        eventDetails.addView(createRowOfTable("Actual registered participants:",
                 String.valueOf(t.getCountOFRegisteredParticipant())), rowEventDetailsParam);
-        eventDetails.addView(createRowOfTable(activity, "Entry fee:",
+        eventDetails.addView(createRowOfTable("Entry fee:",
                 String.valueOf(t.getEntryFee())), rowEventDetailsParam);
 
         eventInfoText.setText(infoEventText);
+        eventInfoText.setGravity(Gravity.CENTER);
         eventInfo.addView(eventInfoText, infoEventParam);
         eventInfo.setGravity(Gravity.CENTER);
         eventInfo.setPadding(0, 50, 0, 30);
@@ -251,10 +252,10 @@ public class EventActivity extends Activity {
         return event;
     }
 
-    private TableRow createRowOfTable(Activity activity, String text1, String text2) {
-        TableRow row = new TableRow(activity);
-        TextView cell1 = new TextView(new ContextThemeWrapper(activity, eventCellStyle));
-        TextView cell2 = new TextView(new ContextThemeWrapper(activity, eventCellStyle));
+    private TableRow createRowOfTable(String text1, String text2) {
+        TableRow row = new TableRow(getApplicationContext());
+        TextView cell1 = new TextView(new ContextThemeWrapper(getApplicationContext(), eventCellStyle));
+        TextView cell2 = new TextView(new ContextThemeWrapper(getApplicationContext(), eventCellStyle));
         cell1.setText(text1);
         cell2.setText(text2);
         row.addView(cell1, cellOfRowEventDetailsParam);

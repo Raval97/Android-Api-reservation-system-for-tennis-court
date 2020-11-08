@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2F3336"
+    tools:context=".ReservationActivity"
+    tools:ignore="ExtraText">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include href="menu.xml"
+            layout="@layout/menu_user_account"
+            xmlns="http://www.w3.org/2001/XInclude" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/headerText"
+            android:text="Your Payments" />
+
+
+        <LinearLayout
+            android:id="@+id/logged"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/headerText"
+                android:background="@xml/textview_border"
+                android:text="Content"
+                android:textColor="#919AC8"
+                android:textSize="22dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

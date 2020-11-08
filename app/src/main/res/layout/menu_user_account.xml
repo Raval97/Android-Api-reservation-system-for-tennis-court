@@ -29,7 +29,7 @@
             android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/login"
+                android:id="@+id/back"
                 android:layout_width="80sp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
@@ -37,7 +37,7 @@
                 android:layout_marginRight="20sp"
                 android:layout_marginTop="20sp"
                 android:background="@drawable/button_menu_bg"
-                android:text="Log In"
+                android:text="Back"
                 android:textColor="#fff"
                 android:textSize="18sp" />
         </RelativeLayout>
@@ -58,34 +58,30 @@
         android:visibility="gone">
 
         <Button
-            android:id="@+id/startMenu"
+            android:id="@+id/personalDataMenu"
             style="@style/menuButton"
-            android:text="Start Page" />
+            android:text="Personal Data" />
 
         <Button
-            android:id="@+id/reservationMenu"
+            android:id="@+id/myReservationMenu"
             style="@style/menuButton"
-            android:text="Reservation" />
+            android:text="My Reservation"/>
 
         <Button
-            android:id="@+id/eventsMenu"
+            android:id="@+id/clubAssociationMenu"
             style="@style/menuButton"
-            android:text="@string/tournaments_events" />
+            android:text="Club Association" />
 
         <Button
-            android:id="@+id/priceListMenu"
+            android:id="@+id/paymentMenu"
             style="@style/menuButton"
-            android:text="Price - List" />
+            android:text="Payment" />
 
         <Button
-            android:id="@+id/galleryMenu"
+            android:id="@+id/logOutMenu"
             style="@style/menuButton"
-            android:text="Gallery" />
+            android:text="Log Out" />
 
-        <Button
-            android:id="@+id/contactMenu"
-            style="@style/menuButton"
-            android:text="Contact" />
 
     </LinearLayout>
 

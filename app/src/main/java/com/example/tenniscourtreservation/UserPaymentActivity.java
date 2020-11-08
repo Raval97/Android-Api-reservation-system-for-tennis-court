@@ -4,18 +4,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 
-public class StartPageActivity extends Activity {
+public class UserPaymentActivity extends Activity {
 
-    MenuTools menuTools;
-    protected static final String TAG = StartPageActivity.class.getSimpleName();
+    MenuUserAccountTools menuTools;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.start_page);
+        setContentView(R.layout.user_payment);
         getActionBar().hide();
 
-        menuTools = new MenuTools(this, (Button) findViewById(R.id.startMenu));
+        menuTools = new MenuUserAccountTools(this, (Button) findViewById(R.id.paymentMenu));
         menuTools.done();
     }
 

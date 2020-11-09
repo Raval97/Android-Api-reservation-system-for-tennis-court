@@ -19,12 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.RequiresApi;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpAuthentication;
@@ -36,17 +33,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
-
-
 import lombok.SneakyThrows;
 
 public class UserAccountActivity extends Activity {
@@ -254,7 +245,6 @@ public class UserAccountActivity extends Activity {
                 wr.writeBytes(jsonObject.toString());
                 wr.flush();
                 wr.close();
-                System.out.println(httpURLConnection.getResponseCode());
 
                 if (httpURLConnection.getResponseCode() == 200) {
                     message = "Successful update data";
@@ -279,9 +269,10 @@ public class UserAccountActivity extends Activity {
                         .appendQueryParameter("newPassword", newPassword.getText().toString())
                         .appendQueryParameter("repeatNewPassword", repeatPassword.getText().toString())
                         .appendQueryParameter("oldPassword", actualPassword.getText().toString());
-                String requestParam = builder.build().getEncodedQuery();
+                String queryParams = builder.build().getEncodedQuery();
+                System.out.println(queryParams);
 
-                URL url = new URL("http://10.0.2.2:8080/OurTennis/client/changePassword/" + userID);
+                URL url = new URL("http://10.0.2.2:8080/OurTennis/client/changePassword/" + userID);//+"newPassword=admin2&repeatNewPassword=admin2&oldPassword=admin");
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
                 String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());
@@ -289,15 +280,14 @@ public class UserAccountActivity extends Activity {
                 httpURLConnection.setRequestProperty("Authorization", authHeaderValue);
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setRequestProperty("Content-Type", "application/json");
                 httpURLConnection.connect();
 
                 DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
-                wr.writeBytes(requestParam);
+                wr.writeBytes(queryParams);
                 wr.flush();
                 wr.close();
 
-                if (httpURLConnection.getResponseCode() == 200) {
+                if (httpURLConnection.getResponseCode() == 401) {
                     message = "Successful change password";
                     Message message = mHandler.obtainMessage();
                     message.sendToTarget();
@@ -323,7 +313,7 @@ public class UserAccountActivity extends Activity {
                 RestTemplate restTemplate = new RestTemplate();
                 MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
                 restTemplate.getMessageConverters().add(messageConverter);
-                ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), JsonNode.class);
+                ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object.class);
             } catch (RestClientException e) {
                 e.printStackTrace();
             }

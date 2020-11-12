@@ -2,11 +2,19 @@ package com.example.tenniscourtreservation;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +28,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import lombok.SneakyThrows;
 
 public class UserClubAssociationActivity extends Activity {
 
@@ -40,6 +50,14 @@ public class UserClubAssociationActivity extends Activity {
     Boolean isRejectedApplication;
     Boolean hasActiveApplicationResponse;
     int daysOfActiveMembership;
+    LinearLayout content;
+    LinearLayout bank;
+    Button cancel;
+    Button payInBank;
+    TextView counterOfDays;
+
+    Handler mHandler;
+    String message;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,12 +79,72 @@ public class UserClubAssociationActivity extends Activity {
         payMembershipFee = (Button) findViewById(R.id.payMembershipFee);
         applyForMembership = (Button) findViewById(R.id.applyForMembership);
         applyForMembership2 = (Button) findViewById(R.id.applyForMembership2);
+        TextView description = (TextView) findViewById(R.id.description);
+        description.setText(Html.fromHtml(getString(R.string.membership_description)));
+        TextView decision = (TextView) findViewById(R.id.decision);
+        decision.setText(Html.fromHtml(getString(R.string.decisionClubAssociation)));
+        bank = (LinearLayout) findViewById(R.id.bank);
+        content = (LinearLayout) findViewById(R.id.content);
+        cancel = (Button) findViewById(R.id.cancel);
+        payInBank = (Button) findViewById(R.id.payFee);
+        counterOfDays = (TextView) findViewById(R.id.counterOfDays);
 
-        new HttpReqTask().execute();
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                bank.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+        });
+
+        extendMembershipValidity.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                bank.setVisibility(View.VISIBLE);
+                content.setVisibility(View.GONE);
+            }
+        });
+
+        payMembershipFee.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                bank.setVisibility(View.VISIBLE);
+                content.setVisibility(View.GONE);
+            }
+        });
+
+        payInBank.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                new HttpReqTaskPayFee().execute();
+            }
+        });
+
+        applyForMembership.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                new HttpReqTaskApply().execute();
+            }
+        });
+
+        applyForMembership2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                new HttpReqTaskApply().execute();
+            }
+        });
+
+        new HttpReqTaskGetData().execute();
+
+        mHandler = new Handler(Looper.getMainLooper()) {
+            @SneakyThrows
+            @Override
+            public void handleMessage(Message message2) {
+                Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                ((TextView) ((LinearLayout) toast.getView()).getChildAt(0)).setGravity(Gravity.CENTER_HORIZONTAL);
+                toast.show();
+                bank.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+        };
 
     }
 
-    private class HttpReqTask extends AsyncTask<Void, Void, Boolean> {
+    private class HttpReqTaskGetData extends AsyncTask<Void, Void, Boolean> {
         @SuppressLint("SetTextI18n")
         @Override
         protected Boolean doInBackground(Void... voids) {
@@ -82,7 +160,7 @@ public class UserClubAssociationActivity extends Activity {
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), JsonNode.class);
                 isClubMenResponse = mapper.convertValue(response.getBody().get("isClubMen"), Boolean.class);
                 isActiveClubMenResponse = mapper.convertValue(response.getBody().get("isActiveClubMen"), Boolean.class);
-                isRejectedApplication = mapper.convertValue(response.getBody().get("isRejectedApplication"), Boolean.class);
+                isRejectedApplication = mapper.convertValue(response.getBody().get("hasRejectedApplication"), Boolean.class);
                 hasActiveApplicationResponse = mapper.convertValue(response.getBody().get("hasActiveApplication"), Boolean.class);
                 daysOfActiveMembership = mapper.convertValue(response.getBody().get("daysOfActiveMembership"), int.class);
             } catch (RestClientException e) {
@@ -96,8 +174,10 @@ public class UserClubAssociationActivity extends Activity {
 
             if (isClubMenResponse) {
                 isNotClubMen.setVisibility(View.GONE);
-                if (isActiveClubMenResponse)
+                if (isActiveClubMenResponse) {
                     isNotActiveClubMen.setVisibility(View.GONE);
+                    counterOfDays.setText("Your club activity will expire in: \n"+ daysOfActiveMembership + " days");
+                }
                 else
                     isActiveClubMen.setVisibility(View.GONE);
             } else {
@@ -117,4 +197,53 @@ public class UserClubAssociationActivity extends Activity {
         }
     }
 
+    private class HttpReqTaskPayFee extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                String url = "http://10.0.2.2:8080/bankSimulatorForMembershipFee.json";
+                HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                requestHeaders.setAuthorization(authHeader);
+                RestTemplate restTemplate = new RestTemplate();
+                MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+                restTemplate.getMessageConverters().add(messageConverter);
+                ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), JsonNode.class);
+                int id = mapper.convertValue(response.getBody().get("ID"), int.class);
+                System.out.println("id = " + id);
+                url = "http://10.0.2.2:8080/OurTennis/payMembershipFee/" + id;
+                ResponseEntity<Object> response2 = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object.class);
+            } catch (RestClientException e) {
+                e.printStackTrace();
+            }
+            message = "The payment has been made";
+            Message message = mHandler.obtainMessage();
+            message.sendToTarget();
+            return null;
+        }
+    }
+
+    private class HttpReqTaskApply extends AsyncTask<Void, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            try {
+                final String url = "http://10.0.2.2:8080/OurTennis/applyForMembership";
+                HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
+                HttpHeaders requestHeaders = new HttpHeaders();
+                requestHeaders.setAuthorization(authHeader);
+                RestTemplate restTemplate = new RestTemplate();
+                MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+                restTemplate.getMessageConverters().add(messageConverter);
+                ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object.class);
+            } catch (RestClientException e) {
+                e.printStackTrace();
+            }
+            message = "The application has been sent";
+            Message message = mHandler.obtainMessage();
+            message.sendToTarget();
+            return null;
+        }
+    }
 }
+

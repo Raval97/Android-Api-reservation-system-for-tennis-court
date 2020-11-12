@@ -12,7 +12,9 @@
     <string name="mainTextContent">Do you want to play tennis with your friends \n and you are looking for a tennis court? \nGreat choice, log in or register now, book a court \nand enjoy playing together on a professional tennis surface.</string>
     <string name="tournaments_events"><![CDATA[Tournaments & Events]]></string>
     <string name="game_equipment"><![CDATA[Game &\n Equipment]]></string>
-    <string name="membership_description">As a active club member you have a ***15% discount***
-        on reservation\n*A active club member is a person hwo pay regular membership fee\n
-        Monthly membership fee is 30 PLN</string>
+    <string name="membership_description">
+        <![CDATA[ As a active club member you have <br> <b> a 15% discount
+        </b> on reservation <br> *A active club member is a person hwo pay
+        regular membership fee <br> Monthly membership fee is 30 PLN ]]> </string>
+    <string name="decisionClubAssociation"><![CDATA[ Application status: <br> <b>Waiting for decision<b>]]></string>
 </resources>

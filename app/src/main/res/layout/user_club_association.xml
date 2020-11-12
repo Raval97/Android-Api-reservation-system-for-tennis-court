@@ -14,205 +14,264 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include href="menu.xml"
-            layout="@layout/menu_user_account"
-            xmlns="http://www.w3.org/2001/XInclude" />
-
-        <TextView
-            android:id="@+id/title"
-            style="@style/headerText"
-            android:text="Club Association" />
-
-
         <LinearLayout
-            android:id="@+id/logged"
+            android:id="@+id/bank"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#2E2828"
-            android:layout_margin="10dp"
-            android:orientation="vertical">
+            android:background="#600667"
+            android:paddingBottom="600dp"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <LinearLayout
-                android:id="@+id/isClubMen"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/normalText"
-                    android:text="You are in club association"
-                    android:textColor="#BDA6CC"
-                    android:textSize="18dp"/>
-
-                <LinearLayout
-                    android:id="@+id/isActiveClubMen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/normalText"
-                        android:text="You have paid membership fee.\n So you can take full advantage of the club member's benefits"
-                        android:textColor="#BDA6CC"
-                        android:gravity="center"
-                        android:layout_margin="0dp"
-                        android:textSize="18dp"/>
-
-                    <TextView
-                        style="@style/normalText"
-                        android:text="Your club activity will expire in: \n 30days"
-                        android:textColor="#BDA6CC"
-                        android:gravity="center"
-                        android:layout_margin="0dp"
-                        android:background="#C56767"
-                        android:textSize="18dp"/>
-
-                    <TextView
-                        style="@style/normalText"
-                        android:text="Here you can extend the validity of an active account \n for another 30 days [30 PLN]"
-                        android:textColor="#BDA6CC"
-                        android:gravity="center"
-                        android:layout_margin="0dp"
-                        android:textSize="18dp"/>
-
-                    <Button
-                        android:id="@+id/extendMembershipValidity"
-                        style="@style/headerText"
-                        android:background="@drawable/border_style_1"
-                        android:text="Extend your \nmembership validity"
-                        android:textColor="#919AC8"
-                        android:textSize="22dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/isNotActiveClubMen"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/normalText"
-                        android:text="Here you can pay monthly membership fee [30 PLN]"
-                        android:textColor="#BDA6CC"
-                        android:gravity="center"
-                        android:layout_margin="0dp"
-                        android:textSize="18dp"/>
-
-                    <Button
-                        android:id="@+id/payMembershipFee"
-                        style="@style/headerText"
-                        android:background="@drawable/border_style_1"
-                        android:text="Pay membership fee"
-                        android:textColor="#919AC8"
-                        android:textSize="22dp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/isNotClubMen"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/normalText"
-                    android:text="You aren't in club association"
-                    android:textColor="#BDA6CC"
-                    android:textSize="18dp"/>
-
-                <LinearLayout
-                    android:id="@+id/notHasActiveApplication"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/normalText"
-                        android:text="Here you can apply for membership"
-                        android:textColor="#BDA6CC"
-                        android:gravity="center"
-                        android:layout_margin="0dp"
-                        android:textSize="18dp"/>
-
-                    <Button
-                        android:id="@+id/applyForMembership"
-                        style="@style/headerText"
-                        android:background="@drawable/border_style_1"
-                        android:text="Apply for membership"
-                        android:textColor="#919AC8"
-                        android:textSize="22dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/hasActiveApplication"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/normalText"
-                        android:text="You have already submitted your application."
-                        android:textColor="#BDA6CC"
-                        android:gravity="center"
-                        android:layout_margin="0dp"
-                        android:textSize="18dp"/>
-
-                    <TextView
-                        style="@style/normalText"
-                        android:text="Application status: \nWaiting for decision"
-                        android:textColor="#BDA6CC"
-                        android:gravity="center"
-                        android:layout_margin="0dp"
-                        android:textSize="18dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/hasRejectedApplication"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        style="@style/normalText"
-                        android:text="Unfortunately, your last application was denied by the administrator :("
-                        android:textColor="#BDA6CC"
-                        android:gravity="center"
-                        android:layout_margin="0dp"
-                        android:textSize="18dp"/>
-
-                    <TextView
-                        style="@style/normalText"
-                        android:text="Here you can reapply for membership"
-                        android:textColor="#BDA6CC"
-                        android:gravity="center"
-                        android:layout_margin="0dp"
-                        android:textSize="18dp"/>
-
-                    <Button
-                        android:id="@+id/applyForMembership2"
-                        style="@style/headerText"
-                        android:background="@drawable/border_style_1"
-                        android:text="Apply for membership"
-                        android:textColor="#919AC8"
-                        android:textSize="22dp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_style_2"
+                android:padding="10dp"
+                android:text="Cancel"
+                android:textColor="#09EFB5"
+                android:textSize="20dp" />
 
             <TextView
-                style="@style/normalText"
-                android:text="@string/membership_description"
-                android:textColor="#BDA6CC"
-                android:gravity="center"
-                android:layout_margin="0dp"
-                android:textSize="18dp"/>
+                style="@style/headerText"
+                android:text="Bank Simulator"
+                android:textSize="35dp" />
+
+            <Button
+                android:id="@+id/payFee"
+                style="@style/headerText"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/border_style_1"
+                android:text="Pay Fee"
+                android:textColor="#919AC8"
+                android:textSize="30dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include href="menu.xml"
+                layout="@layout/menu_user_account"
+                xmlns="http://www.w3.org/2001/XInclude" />
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/headerText"
+                android:text="Club Association" />
+
+            <LinearLayout
+                android:id="@+id/context"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="#2E2828"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/isClubMen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:text="You are in club association"
+                        android:textColor="#D3920F"
+                        android:textSize="18dp" />
+
+                    <LinearLayout
+                        android:id="@+id/isActiveClubMen"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/normalText"
+                            android:layout_margin="0dp"
+                            android:gravity="center"
+                            android:text="You have paid membership fee.\n So you can take full advantage of the club member's benefits"
+                            android:textColor="#BDA6CC"
+                            android:textSize="18dp"
+                            android:textStyle="normal" />
+
+                        <TextView
+                            android:id="@+id/counterOfDays"
+                            style="@style/normalText"
+                            android:layout_margin="0dp"
+                            android:background="#684D3E"
+                            android:gravity="center"
+                            android:text="Your club activity will expire in: \n 30 days"
+                            android:textColor="#BDA6CC"
+                            android:textSize="22dp" />
+
+                        <TextView
+                            style="@style/normalText"
+                            android:layout_marginTop="30dp"
+                            android:gravity="center"
+                            android:text="Here you can extend the validity \nof an active account \n for another 30 days [30 PLN]"
+                            android:textColor="#EFEBF1"
+                            android:textSize="18dp"
+                            android:textStyle="normal" />
+
+                        <Button
+                            android:id="@+id/extendMembershipValidity"
+                            style="@style/headerText"
+                            android:layout_marginTop="0dp"
+                            android:background="@drawable/border_style_1"
+                            android:text="Extend your \nmembership validity"
+                            android:textColor="#919AC8"
+                            android:textSize="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/isNotActiveClubMen"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/normalText"
+                            android:layout_marginTop="30dp"
+                            android:gravity="center"
+                            android:text="Here you can pay\n monthly membership fee\n [30 PLN]"
+                            android:textColor="#EFEBF1"
+                            android:textSize="18dp"
+                            android:textStyle="normal" />
+
+                        <Button
+                            android:id="@+id/payMembershipFee"
+                            style="@style/headerText"
+                            android:layout_marginTop="0dp"
+                            android:background="@drawable/border_style_1"
+                            android:text="Pay membership fee"
+                            android:textColor="#919AC8"
+                            android:textSize="20dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/isNotClubMen"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:text="You aren't in club association"
+                        android:textColor="#82B609"
+                        android:textSize="18dp" />
+
+                    <LinearLayout
+                        android:id="@+id/notHasActiveApplication"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/normalText"
+                            android:layout_marginTop="30dp"
+                            android:gravity="center"
+                            android:text="Here you can apply for membership"
+                            android:textColor="#EFEBF1"
+                            android:textSize="18dp"
+                            android:textStyle="normal" />
+
+                        <Button
+                            android:id="@+id/applyForMembership"
+                            style="@style/headerText"
+                            android:layout_margin="0dp"
+                            android:background="@drawable/border_style_1"
+                            android:text="Apply for membership"
+                            android:textColor="#919AC8"
+                            android:textSize="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/hasActiveApplication"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/normalText"
+                            android:layout_margin="0dp"
+                            android:gravity="center"
+                            android:text="You have already submitted your application."
+                            android:textColor="#BDA6CC"
+                            android:textSize="18dp"
+                            android:textStyle="normal" />
+
+                        <TextView
+                            android:id="@+id/decision"
+                            style="@style/normalText"
+                            android:layout_margin="0dp"
+                            android:gravity="center"
+                            android:text="@string/decisionClubAssociation"
+                            android:textColor="#EFEBF1"
+                            android:textSize="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/hasRejectedApplication"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/normalText"
+                            android:layout_margin="0dp"
+                            android:gravity="center"
+                            android:text="Unfortunately, your last application was denied by the administrator :("
+                            android:textColor="#BDA6CC"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            style="@style/normalText"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center"
+                            android:text="Here you can reapply for membership"
+                            android:textColor="#EFEBF1"
+                            android:textSize="18dp"
+                            android:textStyle="normal" />
+
+                        <Button
+                            android:id="@+id/applyForMembership2"
+                            style="@style/headerText"
+                            android:layout_margin="0dp"
+                            android:background="@drawable/border_style_1"
+                            android:text="Apply for membership"
+                            android:textColor="#919AC8"
+                            android:textSize="20dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/description"
+                    style="@style/normalText"
+                    android:layout_margin="0dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center"
+                    android:text="@string/membership_description"
+                    android:textColor="#BDA6CC"
+                    android:textSize="15dp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

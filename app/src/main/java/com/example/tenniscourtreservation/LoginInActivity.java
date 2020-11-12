@@ -37,8 +37,8 @@ import lombok.SneakyThrows;
 
 public class LoginInActivity extends Activity {
 
-    static String username = "admin";
-    static String password = "admin";
+    static String username = "user";
+    static String password = "user";
     static Boolean isLogged = true;
 
     TextView loginText;

@@ -28,14 +28,163 @@
             android:id="@+id/logged"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            android:background="#4C2828"
             android:orientation="vertical">
 
-            <TextView
-                style="@style/headerText"
-                android:background="@drawable/border_style_1"
-                android:text="Content"
-                android:textColor="#919AC8"
-                android:textSize="22dp" />
+            <TableLayout
+                android:id="@+id/table"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="20dp">
+
+                <TableRow
+                    style="@style/eventsListTableRow"
+                    android:layout_marginBottom="10dp"
+                    android:background="#111737"
+                    android:padding="5dp">
+
+                    <TextView
+                        style="@style/eventsListTableCell"
+                        android:layout_weight="0.2"
+                        android:text="ID"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        style="@style/eventsListTableCell"
+                        android:layout_weight="0.5"
+                        android:text="Kind Of Payment"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        style="@style/eventsListTableCell"
+                        android:layout_weight="0.4"
+                        android:text="Price [PLN]"
+                        android:textColor="#fff" />
+
+                    <TextView
+                        style="@style/priceListTableCell"
+                        android:layout_weight="0.2" />
+                </TableRow>
+
+                <TableLayout
+                    android:id="@+id/payment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="40dp">
+
+                    <TableRow
+                        android:id="@+id/paymentRow"
+                        style="@style/eventsListTableRow"
+                        android:background="#776074"
+                        android:padding="5dp">
+
+                        <TextView
+                            android:id="@+id/id"
+                            style="@style/eventsListTableCell"
+                            android:layout_weight="0.2"
+                            android:text="11_R" />
+
+                        <TextView
+                            android:id="@+id/kindOfPayment"
+                            style="@style/eventsListTableCell"
+                            android:layout_weight="0.5"
+                            android:text="2020-11-15" />
+
+                        <TextView
+                            android:id="@+id/price"
+                            style="@style/eventsListTableCell"
+                            android:layout_weight="0.4"
+                            android:text="186.34" />
+
+                        <Button
+                            android:id="@+id/showDetails"
+                            style="@style/priceListTableCell"
+                            android:layout_weight="0.2"
+                            android:text="V" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:background="#21175E"
+                        android:paddingBottom="3dp"></TableRow>
+
+                    <TableLayout
+                        android:id="@+id/paymentDetails"
+                        style="@style/eventDetails">
+
+                        <TableRow
+                            android:id="@+id/titlePay"
+                            android:padding="5dp">
+
+                            <TextView
+                                style="@style/eventTableCell"
+                                android:layout_weight="0.4"
+                                android:text="Title of paying:" />
+
+                            <TextView
+                                android:id="@+id/titlePayValue"
+                                style="@style/eventTableCell"
+                                android:layout_weight="0.4"
+                                android:text="Reservation payment" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/dateOfPaying"
+                            android:padding="5dp">
+
+                            <TextView
+                                style="@style/eventTableCell"
+                                android:layout_weight="0.4"
+                                android:text="Date of paying:" />
+
+                            <TextView
+                                android:id="@+id/dateOfPayingValue"
+                                style="@style/eventTableCell"
+                                android:layout_weight="0.4"
+                                android:text="2020-08-18" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/statusOfPaying"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/firstCellDateOfEndedRow"
+                                style="@style/eventTableCell"
+                                android:layout_weight="0.4"
+                                android:text="Status of paying:" />
+
+                            <TextView
+                                android:id="@+id/statusOfPayingValue"
+                                style="@style/eventTableCell"
+                                android:layout_weight="0.4"
+                                android:text="To Pay" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/action"
+                            android:gravity="center"
+                            android:padding="10dp">
+
+                            <Button
+                                android:id="@+id/payBill"
+                                style="@style/actionButton"
+                                android:text="Pay this bill" />
+
+                        </TableRow>
+
+                    </TableLayout>
+
+                </TableLayout>
+
+            </TableLayout>
+
 
         </LinearLayout>
 

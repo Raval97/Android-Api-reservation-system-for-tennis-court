@@ -23,34 +23,40 @@ public class Payment {
     private LocalDate finalPaymentDate;
     private Float price;
     private String statusPaying;
-    private User user;
+    private String typeOfPaying = "online";
+    private Object user;
 
     public Payment() {
     }
 
-    public Payment(String title, LocalDate dateOfPaying, LocalDate finalPaymentDate,
-                   Float price, String statusPaying, User user) {
+    public Payment(Long id, String title, LocalDate dateOfPaying, LocalDate finalPaymentDate,
+                   Float price, String statusPaying) {
+        this.id = id;
         this.title = title;
         this.dateOfPaying = dateOfPaying;
         this.finalPaymentDate = finalPaymentDate;
         this.price = price;
         this.statusPaying = statusPaying;
-        this.user = user;
     }
 
-    public Payment(String title, LocalDate finalPaymentDate, Float price, String statusPaying, User user) {
-        this.title = title;
-        this.finalPaymentDate = finalPaymentDate;
-        this.price = price;
-        this.statusPaying = statusPaying;
-        this.user = user;
-    }
-
-    public Payment(String title, Float price, LocalDate dateOfPaying, String statusPaying, User user) {
+    public Payment(Long id, String title, LocalDate dateOfPaying,
+                   Float price, String statusPaying, String typeOfPaying) {
+        this.id = id;
         this.title = title;
         this.dateOfPaying = dateOfPaying;
         this.price = price;
         this.statusPaying = statusPaying;
-        this.user = user;
+        this.typeOfPaying = typeOfPaying;
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", finalPaymentDate=" + finalPaymentDate +
+                ", price=" + price +
+                ", statusPaying='" + statusPaying + '\'' +
+                '}';
     }
 }

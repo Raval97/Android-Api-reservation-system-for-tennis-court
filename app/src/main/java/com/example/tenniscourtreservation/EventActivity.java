@@ -178,8 +178,8 @@ public class EventActivity extends Activity {
                 else
                     contextTable.addView(createTableForEvent(t, "#913860"), params);
                 iter++;
-                contextTable.removeView(eventExample);
             }
+            contextTable.removeView(eventExample);
         }
 
     }
@@ -200,6 +200,8 @@ public class EventActivity extends Activity {
 
         eventRow.setBackgroundColor(Color.parseColor(cellColor));
         eventDetails.setBackgroundColor(Color.parseColor(cellColor));
+        eventInfo.setBackgroundColor(Color.parseColor(cellColor));
+        eventAction.setBackgroundColor(Color.parseColor(cellColor));
 
         eventTitle.setText(String.valueOf(t.getTitle()));
         String eventDateText = t.getDateOfStarted().isBefore(LocalDate.now()) ? "Terminated" : t.getDateOfStarted().toString();
@@ -208,8 +210,8 @@ public class EventActivity extends Activity {
         eventRow.addView(eventTitle, eventCellRowParam);
         eventRow.addView(eventDate, eventCellRowParam);
         eventRow.addView(showDetails, showDetailsParam);
-        emptyRow.setBackgroundColor(Color.parseColor("#BC1319"));
-        emptyRow.setPadding(0, 0, 0, 3);
+        emptyRow.setBackgroundColor(Color.parseColor("#21175E"));
+        emptyRow.setPadding(0, 0, 0, 8);
 
         eventDetails.addView(createRowOfTable("Date of started:",
                 String.valueOf(t.getDateOfStarted())), rowEventDetailsParam);
@@ -223,23 +225,29 @@ public class EventActivity extends Activity {
                 String.valueOf(t.getCountOFRegisteredParticipant())), rowEventDetailsParam);
         eventDetails.addView(createRowOfTable("Entry fee:",
                 String.valueOf(t.getEntryFee())), rowEventDetailsParam);
+        eventDetails.setVisibility(View.GONE);
 
         eventInfoText.setText(infoEventText);
         eventInfoText.setGravity(Gravity.CENTER);
         eventInfo.addView(eventInfoText, infoEventParam);
         eventInfo.setGravity(Gravity.CENTER);
         eventInfo.setPadding(0, 50, 0, 30);
+        eventInfo.setVisibility(View.GONE);
+
         eventActionButton.setText(actionEventText);
         eventAction.addView(eventActionButton);
         eventAction.setGravity(Gravity.CENTER);
-        eventDetails.addView(eventInfo, rowEventDetailsParam);
-        eventDetails.addView(eventAction, rowEventDetailsParam);
-        eventDetails.setVisibility(View.GONE);
+        eventAction.setPadding(0, 50, 0, 20);
+        eventAction.setVisibility(View.GONE);
+
 
         showDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 eventDetails.setVisibility((eventDetails.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE);
+                emptyRow.setVisibility((emptyRow.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE);
+                eventInfo.setVisibility((eventInfo.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE);
+                eventAction.setVisibility((eventAction.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE);
                 showDetails.setText((eventDetails.getVisibility() == View.GONE) ? "<- ->" : "-> <-");
             }
         });
@@ -247,6 +255,8 @@ public class EventActivity extends Activity {
         event.addView(eventRow, eventRowParam);
         event.addView(emptyRow);
         event.addView(eventDetails, eventDetailsParam);
+        event.addView(eventInfo, rowEventDetailsParam);
+        event.addView(eventAction, rowEventDetailsParam);
         event.setPadding(0, 0, 0, 5);
 
         return event;

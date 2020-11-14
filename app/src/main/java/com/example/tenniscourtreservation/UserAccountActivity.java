@@ -194,13 +194,8 @@ public class UserAccountActivity extends Activity {
             ObjectMapper mapper = new ObjectMapper();
             try {
                 final String url = "http://10.0.2.2:8080/OurTennis/account/1.json";
-                HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                requestHeaders.setAuthorization(authHeader);
-                RestTemplate restTemplate = new RestTemplate();
-                MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-                restTemplate.getMessageConverters().add(messageConverter);
-                ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), JsonNode.class);
+                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
+                ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 userName = mapper.convertValue(response.getBody().get("client").get("name"), String.class);
                 userSurname = mapper.convertValue(response.getBody().get("client").get("surname"), String.class);
                 userEmail = mapper.convertValue(response.getBody().get("client").get("emailAddress"), String.class);
@@ -306,14 +301,9 @@ public class UserAccountActivity extends Activity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                final String url = "http://10.0.2.2:8080/OurTennis/client/deleteAccount/" + userID;
-                HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                requestHeaders.setAuthorization(authHeader);
-                RestTemplate restTemplate = new RestTemplate();
-                MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-                restTemplate.getMessageConverters().add(messageConverter);
-                ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object.class);
+                final String url = "http://10.0.2.2:8080/OurTennis/client/deleteAccount/" + userID + ".json";
+                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
+                ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException e) {
                 e.printStackTrace();
             }

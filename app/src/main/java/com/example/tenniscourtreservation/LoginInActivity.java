@@ -105,13 +105,9 @@ public class LoginInActivity extends Activity {
             ObjectMapper mapper = new ObjectMapper();
             try {
                 final String url = "http://10.0.2.2:8080/OurTennis/login.json";
-                HttpAuthentication authHeader = new HttpBasicAuthentication(username, password);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                requestHeaders.setAuthorization(authHeader);
-                RestTemplate restTemplate = new RestTemplate();
-                MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-                restTemplate.getMessageConverters().add(messageConverter);
-                ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), JsonNode.class);
+                MenuTools menuTools = new MenuTools();
+                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
+                ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 isLogged = mapper.convertValue(response.getBody().get("authorization"), Boolean.class);
                 Intent myIntent = new Intent(getApplicationContext(), StartPageActivity.class);
                 startActivityForResult(myIntent, 0);

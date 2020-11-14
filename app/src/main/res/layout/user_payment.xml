@@ -14,177 +14,222 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include href="menu.xml"
-            layout="@layout/menu_user_account"
-            xmlns="http://www.w3.org/2001/XInclude" />
-
-        <TextView
-            android:id="@+id/title"
-            style="@style/headerText"
-            android:text="Your Payments" />
-
-
         <LinearLayout
-            android:id="@+id/logged"
+            android:id="@+id/bank"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="20dp"
-            android:background="#4C2828"
+            android:background="#600667"
+            android:orientation="vertical"
+            android:paddingBottom="600dp"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_style_2"
+                android:padding="10dp"
+                android:text="Cancel"
+                android:textColor="#09EFB5"
+                android:textSize="20dp" />
+
+            <TextView
+                style="@style/headerText"
+                android:text="Bank Simulator"
+                android:textSize="35dp" />
+
+            <Button
+                android:id="@+id/payFee"
+                style="@style/headerText"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/border_style_1"
+                android:text="Pay Fee"
+                android:textColor="#919AC8"
+                android:textSize="30dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TableLayout
-                android:id="@+id/table"
+            <include href="menu.xml"
+                layout="@layout/menu_user_account"
+                xmlns="http://www.w3.org/2001/XInclude" />
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/headerText"
+                android:text="Your Payments" />
+
+
+            <LinearLayout
+                android:id="@+id/logged"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="20dp">
-
-                <TableRow
-                    style="@style/eventsListTableRow"
-                    android:layout_marginBottom="10dp"
-                    android:background="#111737"
-                    android:padding="5dp">
-
-                    <TextView
-                        style="@style/eventsListTableCell"
-                        android:layout_weight="0.2"
-                        android:text="ID"
-                        android:textColor="#fff" />
-
-                    <TextView
-                        style="@style/eventsListTableCell"
-                        android:layout_weight="0.5"
-                        android:text="Kind Of Payment"
-                        android:textColor="#fff" />
-
-                    <TextView
-                        style="@style/eventsListTableCell"
-                        android:layout_weight="0.4"
-                        android:text="Price [PLN]"
-                        android:textColor="#fff" />
-
-                    <TextView
-                        style="@style/priceListTableCell"
-                        android:layout_weight="0.2" />
-                </TableRow>
+                android:background="#4C2828"
+                android:orientation="vertical"
+                android:paddingTop="20dp">
 
                 <TableLayout
-                    android:id="@+id/payment"
+                    android:id="@+id/table"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="40dp">
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="20dp">
 
                     <TableRow
-                        android:id="@+id/paymentRow"
                         style="@style/eventsListTableRow"
-                        android:background="#776074"
+                        android:layout_marginBottom="10dp"
+                        android:background="#111737"
                         android:padding="5dp">
 
                         <TextView
-                            android:id="@+id/id"
                             style="@style/eventsListTableCell"
                             android:layout_weight="0.2"
-                            android:text="11_R" />
+                            android:text="ID"
+                            android:textColor="#fff" />
 
                         <TextView
-                            android:id="@+id/kindOfPayment"
                             style="@style/eventsListTableCell"
                             android:layout_weight="0.5"
-                            android:text="2020-11-15" />
+                            android:text="Kind Of Payment"
+                            android:textColor="#fff" />
 
                         <TextView
-                            android:id="@+id/price"
                             style="@style/eventsListTableCell"
                             android:layout_weight="0.4"
-                            android:text="186.34" />
+                            android:text="Price [PLN]"
+                            android:textColor="#fff" />
 
-                        <Button
-                            android:id="@+id/showDetails"
+                        <TextView
                             style="@style/priceListTableCell"
-                            android:layout_weight="0.2"
-                            android:text="V" />
-
+                            android:layout_weight="0.2" />
                     </TableRow>
 
-                    <TableRow
-                        android:background="#21175E"
-                        android:paddingBottom="3dp"></TableRow>
-
                     <TableLayout
-                        android:id="@+id/paymentDetails"
-                        style="@style/eventDetails">
+                        android:id="@+id/payment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="40dp">
 
                         <TableRow
-                            android:id="@+id/titlePay"
+                            android:id="@+id/paymentRow"
+                            style="@style/eventsListTableRow"
+                            android:background="#776074"
                             android:padding="5dp">
 
                             <TextView
-                                style="@style/eventTableCell"
-                                android:layout_weight="0.4"
-                                android:text="Title of paying:" />
+                                android:id="@+id/id"
+                                style="@style/eventsListTableCell"
+                                android:layout_weight="0.2"
+                                android:text="11_R" />
 
                             <TextView
-                                android:id="@+id/titlePayValue"
-                                style="@style/eventTableCell"
-                                android:layout_weight="0.4"
-                                android:text="Reservation payment" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:id="@+id/dateOfPaying"
-                            android:padding="5dp">
+                                android:id="@+id/kindOfPayment"
+                                style="@style/eventsListTableCell"
+                                android:layout_weight="0.5"
+                                android:text="2020-11-15" />
 
                             <TextView
-                                style="@style/eventTableCell"
+                                android:id="@+id/price"
+                                style="@style/eventsListTableCell"
                                 android:layout_weight="0.4"
-                                android:text="Date of paying:" />
-
-                            <TextView
-                                android:id="@+id/dateOfPayingValue"
-                                style="@style/eventTableCell"
-                                android:layout_weight="0.4"
-                                android:text="2020-08-18" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:id="@+id/statusOfPaying"
-                            android:padding="5dp">
-
-                            <TextView
-                                android:id="@+id/firstCellDateOfEndedRow"
-                                style="@style/eventTableCell"
-                                android:layout_weight="0.4"
-                                android:text="Status of paying:" />
-
-                            <TextView
-                                android:id="@+id/statusOfPayingValue"
-                                style="@style/eventTableCell"
-                                android:layout_weight="0.4"
-                                android:text="To Pay" />
-
-                        </TableRow>
-
-                        <TableRow
-                            android:id="@+id/action"
-                            android:gravity="center"
-                            android:padding="10dp">
+                                android:text="186.34" />
 
                             <Button
-                                android:id="@+id/payBill"
-                                style="@style/actionButton"
-                                android:text="Pay this bill" />
+                                android:id="@+id/showDetails"
+                                style="@style/priceListTableCell"
+                                android:layout_weight="0.2"
+                                android:text="V" />
 
                         </TableRow>
+
+                        <TableRow
+                            android:background="#21175E"
+                            android:paddingBottom="3dp"></TableRow>
+
+                        <TableLayout
+                            android:id="@+id/paymentDetails"
+                            style="@style/eventDetails">
+
+                            <TableRow
+                                android:id="@+id/titlePay"
+                                android:padding="5dp">
+
+                                <TextView
+                                    style="@style/eventTableCell"
+                                    android:layout_weight="0.4"
+                                    android:text="Title of paying:" />
+
+                                <TextView
+                                    android:id="@+id/titlePayValue"
+                                    style="@style/eventTableCell"
+                                    android:layout_weight="0.4"
+                                    android:text="Reservation payment" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/dateOfPaying"
+                                android:padding="5dp">
+
+                                <TextView
+                                    style="@style/eventTableCell"
+                                    android:layout_weight="0.4"
+                                    android:text="Date of paying:" />
+
+                                <TextView
+                                    android:id="@+id/dateOfPayingValue"
+                                    style="@style/eventTableCell"
+                                    android:layout_weight="0.4"
+                                    android:text="2020-08-18" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/statusOfPaying"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:id="@+id/firstCellDateOfEndedRow"
+                                    style="@style/eventTableCell"
+                                    android:layout_weight="0.4"
+                                    android:text="Status of paying:" />
+
+                                <TextView
+                                    android:id="@+id/statusOfPayingValue"
+                                    style="@style/eventTableCell"
+                                    android:layout_weight="0.4"
+                                    android:text="To Pay" />
+
+                            </TableRow>
+
+                            <TableRow
+                                android:id="@+id/action"
+                                android:gravity="center"
+                                android:padding="10dp">
+
+                                <Button
+                                    android:id="@+id/payBill"
+                                    style="@style/actionButton"
+                                    android:text="Pay this bill" />
+
+                            </TableRow>
+
+                        </TableLayout>
 
                     </TableLayout>
 
                 </TableLayout>
 
-            </TableLayout>
-
+            </LinearLayout>
 
         </LinearLayout>
 

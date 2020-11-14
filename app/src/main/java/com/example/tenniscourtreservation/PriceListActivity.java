@@ -47,6 +47,15 @@ public class PriceListActivity extends Activity {
     private class HttpReqTask extends AsyncTask<Void, Void, PriceList[]> {
         Activity activity;
 
+        @Override
+        protected void onPreExecute() {
+            context = (TableLayout) findViewById(R.id.table);
+            cellTitle = (TextView) findViewById(R.id.one);
+            cellTime = (TextView) findViewById(R.id.two);
+            cellPrice = (TextView) findViewById(R.id.three);
+            tableRow = (TableRow) findViewById(R.id.example);
+        }
+
         public HttpReqTask(Activity activity) {
             this.activity = activity;
         }
@@ -69,11 +78,7 @@ public class PriceListActivity extends Activity {
         @Override
         protected void onPostExecute(PriceList[] priceList) {
             super.onPostExecute(priceList);
-            context = (TableLayout) findViewById(R.id.table);
-            cellTitle = (TextView) findViewById(R.id.one);
-            cellTime = (TextView) findViewById(R.id.two);
-            cellPrice = (TextView) findViewById(R.id.three);
-            tableRow = (TableRow) findViewById(R.id.example);
+
             int iter = 0;
             for (PriceList p : priceList) {
                 if(iter %2 ==0)

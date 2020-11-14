@@ -15,14 +15,22 @@ import androidx.annotation.RequiresApi;
 
 import com.example.tenniscourtreservation.model.UserReservation;
 
+import org.springframework.http.HttpAuthentication;
+import org.springframework.http.HttpBasicAuthentication;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
 public class MenuUserAccountTools extends Activity {
 
     Activity activity;
     Button actualSite;
+    static HttpHeaders requestHeaders;
 
     public MenuUserAccountTools(Activity activity, Button actualSite) {
         this.activity = activity;
         this.actualSite = actualSite;
+        setRequestHeaders();
     }
 
     public void done() {
@@ -121,6 +129,19 @@ public class MenuUserAccountTools extends Activity {
                 activity.startActivityForResult(myIntent, 0);
             }
         });
+    }
+
+    public RestTemplate getDefaultRestTemplate(){
+        RestTemplate restTemplate = new RestTemplate();
+        MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+        restTemplate.getMessageConverters().add(messageConverter);
+        return restTemplate;
+    }
+
+    public void setRequestHeaders(){
+        HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
+        requestHeaders = new HttpHeaders();
+        requestHeaders.setAuthorization(authHeader);
     }
 
 }

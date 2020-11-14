@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 
-public class Payment {
+public class Payment implements Comparable<Payment>{
 
     private Long id;
     private String title;
@@ -50,13 +50,10 @@ public class Payment {
     }
 
     @Override
-    public String toString() {
-        return "Payment{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", finalPaymentDate=" + finalPaymentDate +
-                ", price=" + price +
-                ", statusPaying='" + statusPaying + '\'' +
-                '}';
+    public int compareTo(Payment p) {
+        if (getDateOfPaying() == null || p.getDateOfPaying() == null) {
+            return 0;
+        }
+        return getDateOfPaying().compareTo(p.getDateOfPaying());
     }
 }

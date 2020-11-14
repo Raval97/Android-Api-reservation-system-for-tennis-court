@@ -1,10 +1,14 @@
 package com.example.tenniscourtreservation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
@@ -13,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -29,9 +34,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+
+import lombok.SneakyThrows;
 
 
 public class EventActivity extends Activity {
@@ -59,6 +67,13 @@ public class EventActivity extends Activity {
     String infoEventText = "";
     String actionEventText = "";
     String actionEventText2 = "";
+    LinearLayout content;
+    LinearLayout bank;
+    Button cancel;
+    Button payInBank;
+    Long objectOfPaymentId;
+    Handler mHandler;
+    String mHandlerMessage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,11 +84,63 @@ public class EventActivity extends Activity {
         menuTools = new MenuTools(this, (Button) findViewById(R.id.eventsMenu));
         menuTools.done();
 
+        bank = (LinearLayout) findViewById(R.id.bank);
+        content = (LinearLayout) findViewById(R.id.content);
+        cancel = (Button) findViewById(R.id.cancel);
+        payInBank = (Button) findViewById(R.id.payFee);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                bank.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+        });
+
+        payInBank.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                new HttpReqTaskButtonAction(objectOfPaymentId,
+                        "http://10.0.2.2:8080/OurTennis/payEventApplicationFee/",
+                        "The payment has been made").execute();
+                bank.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+        });
+
         new EventActivity.HttpReqTask().execute();
+
+        mHandler = new Handler(Looper.getMainLooper()) {
+            @SneakyThrows
+            @Override
+            public void handleMessage(Message message2) {
+                Toast toast = Toast.makeText(getApplicationContext(), mHandlerMessage, Toast.LENGTH_LONG);
+                ((TextView) ((LinearLayout) toast.getView()).getChildAt(0)).setGravity(Gravity.CENTER_HORIZONTAL);
+                toast.show();
+            }
+        };
 
     }
 
     private class HttpReqTask extends AsyncTask<Void, Void, Tournament[]> {
+
+        @Override
+        protected void onPreExecute() {
+            contextTable = (TableLayout) findViewById(R.id.table);
+            eventExample = (TableLayout) findViewById(R.id.event);
+            eventDetailsStyle = R.style.eventDetails;
+            eventsCellStyle = R.style.eventsListTableCell;
+            eventsRowStyle = R.style.eventsListTableRow;
+            eventCellStyle = R.style.eventTableCell;
+            eventInfoTextStyle = R.style.infoText;
+            eventActionButtonStyle = R.style.actionButton;
+            eventRowParam = (LinearLayout.LayoutParams) findViewById(R.id.eventRow).getLayoutParams();
+            eventCellRowParam = (LinearLayout.LayoutParams) findViewById(R.id.eventTitle).getLayoutParams();
+            showDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.showDetails).getLayoutParams();
+            eventDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.eventDetails).getLayoutParams();
+            rowEventDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.dateOfStartedRow).getLayoutParams();
+            cellOfRowEventDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.firstCellDateOfStartedRow).getLayoutParams();
+            infoEventParam = (LinearLayout.LayoutParams) findViewById(R.id.infoText).getLayoutParams();
+            actionEventParam = (LinearLayout.LayoutParams) findViewById(R.id.actionButton).getLayoutParams();
+        }
 
         @Override
         protected Tournament[] doInBackground(Void... voids) {
@@ -112,22 +179,6 @@ public class EventActivity extends Activity {
         @Override
         protected void onPostExecute(Tournament[] tournaments) {
             super.onPostExecute(tournaments);
-            contextTable = (TableLayout) findViewById(R.id.table);
-            eventExample = (TableLayout) findViewById(R.id.event);
-            eventDetailsStyle = R.style.eventDetails;
-            eventsCellStyle = R.style.eventsListTableCell;
-            eventsRowStyle = R.style.eventsListTableRow;
-            eventCellStyle = R.style.eventTableCell;
-            eventInfoTextStyle = R.style.infoText;
-            eventActionButtonStyle = R.style.actionButton;
-            eventRowParam = (LinearLayout.LayoutParams) findViewById(R.id.eventRow).getLayoutParams();
-            eventCellRowParam = (LinearLayout.LayoutParams) findViewById(R.id.eventTitle).getLayoutParams();
-            showDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.showDetails).getLayoutParams();
-            eventDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.eventDetails).getLayoutParams();
-            rowEventDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.dateOfStartedRow).getLayoutParams();
-            cellOfRowEventDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.firstCellDateOfStartedRow).getLayoutParams();
-            infoEventParam = (LinearLayout.LayoutParams) findViewById(R.id.infoText).getLayoutParams();
-            actionEventParam = (LinearLayout.LayoutParams) findViewById(R.id.actionButton).getLayoutParams();
 
             int iter = 0;
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) eventExample.getLayoutParams();
@@ -142,12 +193,12 @@ public class EventActivity extends Activity {
                         }
                         if (userStatusList[iter].equals("Delivered")) {
                             infoEventText = "You have sent your application for participation\n" +
-                                    "Currently under review by the admin";
-                            actionEventText = "Cancel from participation";
+                                    "Currently under review by the admin.\n Also you can cancel";
+                            actionEventText = "Cancel your application";
                         }
                         if (userStatusList[iter].equals("To Pay")) {
                             infoEventText = "Your application has been approved by the admin.\n" +
-                                    "To fully confirm participation, pay the fee";
+                                    "To fully confirm participation, pay the fee. \n Also you can cancel";
                             actionEventText = "Pay Fee Of Participant";
                             actionEventText2 = "Cancel your application";
                         }
@@ -160,11 +211,12 @@ public class EventActivity extends Activity {
                                 if (userStatusList[iter].equals("Rejected"))
                                     infoEventText = "Your application has been rejected.\n" +
                                             "There is free space left. You can re-apply";
-                                if (userStatusList[iter].equals("without_application"))
+                                if (userStatusList[iter].equals("without_application")||
+                                        userStatusList[iter].equals("Canceled"))
                                     infoEventText = "There is free space left.\n" +
                                             "You can register for the event below";
+                                actionEventText = "Take Part In This Event";
                             }
-                            actionEventText = "Take Part In This Event";
                         }
                     } else {
                         infoEventText = "Login required to join";
@@ -212,6 +264,7 @@ public class EventActivity extends Activity {
         eventRow.addView(showDetails, showDetailsParam);
         emptyRow.setBackgroundColor(Color.parseColor("#21175E"));
         emptyRow.setPadding(0, 0, 0, 8);
+        emptyRow.setVisibility(View.GONE);
 
         eventDetails.addView(createRowOfTable("Date of started:",
                 String.valueOf(t.getDateOfStarted())), rowEventDetailsParam);
@@ -240,15 +293,49 @@ public class EventActivity extends Activity {
         eventAction.setPadding(0, 50, 0, 20);
         eventAction.setVisibility(View.GONE);
 
+        eventActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(eventActionButton.getText());
+                switch (eventActionButton.getText().toString()) {
+                    case "Take Part In This Event":
+                        new HttpReqTaskButtonAction(t.getId(),
+                                "http://10.0.2.2:8080/OurTennis/applyForParticipantEvent/",
+                                "Application has been submitted").execute();
+                        break;
+                    case "Cancel your application":
+                        new HttpReqTaskButtonAction(t.getId(),
+                                "http://10.0.2.2:8080/OurTennis/cancelApplicationEvent/",
+                                "The application was dropped").execute();
+                        break;
+                    case "Pay Fee Of Participant": {
+                        objectOfPaymentId = t.getId();
+                        bank.setVisibility(View.VISIBLE);
+                        content.setVisibility(View.GONE);
+                        break;
+                    }
+                    case "Cancel from participation":
+                        new HttpReqTaskButtonAction(t.getId(),
+                                "http://10.0.2.2:8080/OurTennis/cancelParticipantEvent/",
+                                "Resignation from participation").execute();
+                        break;
+                    case "Log In":
+                        Intent intent = new Intent(getApplicationContext(), LoginInActivity.class);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
+            }
+        });
 
         showDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showDetails.setText((eventDetails.getVisibility() == View.GONE) ? "<- ->" : "-> <-");
                 eventDetails.setVisibility((eventDetails.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE);
                 emptyRow.setVisibility((emptyRow.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE);
                 eventInfo.setVisibility((eventInfo.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE);
                 eventAction.setVisibility((eventAction.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE);
-                showDetails.setText((eventDetails.getVisibility() == View.GONE) ? "<- ->" : "-> <-");
             }
         });
 
@@ -258,6 +345,27 @@ public class EventActivity extends Activity {
         event.addView(eventInfo, rowEventDetailsParam);
         event.addView(eventAction, rowEventDetailsParam);
         event.setPadding(0, 0, 0, 5);
+
+        if (eventActionButton.getText().toString().equals("Pay Fee Of Participant")) {
+            TableRow eventActionSecond = new TableRow(getApplicationContext());
+            Button eventActionSecondButton = new Button(getApplicationContext(), null, 0, eventActionButtonStyle);
+            eventActionSecondButton.setText("Cancel from participation");
+            eventActionSecond.addView(eventActionSecondButton);
+            eventActionSecond.setGravity(Gravity.CENTER);
+            eventActionSecond.setPadding(0, 30, 0, 20);
+            eventActionSecond.setVisibility(View.GONE);
+
+            eventActionSecondButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new HttpReqTaskButtonAction(t.getId(),
+                            "http://10.0.2.2:8080/OurTennis/cancelApplicationEvent/",
+                            "The application was dropped").execute();
+                }
+            });
+
+            event.addView(eventActionSecond, rowEventDetailsParam);
+        }
 
         return event;
     }
@@ -272,6 +380,34 @@ public class EventActivity extends Activity {
         row.addView(cell2, cellOfRowEventDetailsParam);
         row.setPadding(5, 5, 5, 5);
         return row;
+    }
+
+    private class HttpReqTaskButtonAction extends AsyncTask<Void, Void, Void> {
+        Long eventId;
+        String url;
+        String message;
+
+        public HttpReqTaskButtonAction(Long id, String url, String message) {
+            this.eventId = id;
+            this.url = url;
+            this.message = message;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                String endpoint = url + eventId + ".json";
+                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
+                ResponseEntity<Object> response2 = restTemplate.exchange(endpoint, HttpMethod.GET,
+                        new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
+            } catch (RestClientException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+            mHandlerMessage = message;
+            Message message = mHandler.obtainMessage();
+            message.sendToTarget();
+            return null;
+        }
     }
 }
 

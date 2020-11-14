@@ -13,10 +13,17 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 
+import org.springframework.http.HttpAuthentication;
+import org.springframework.http.HttpBasicAuthentication;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
 public class MenuTools extends Activity {
 
     Activity activity;
     Button actualSite;
+    static HttpHeaders requestHeaders = null;
 
     public MenuTools(Activity activity, Button actualSite) {
         this.activity = activity;
@@ -25,6 +32,10 @@ public class MenuTools extends Activity {
             Button login = (Button) activity.findViewById(R.id.login);
             login.setText("Account");
         }
+        setRequestHeaders();
+    }
+
+    public MenuTools() {
     }
 
     public void done(){
@@ -137,6 +148,19 @@ public class MenuTools extends Activity {
                 activity.startActivityForResult(myIntent, 0);
             }
         });
+    }
+
+    public RestTemplate getDefaultRestTemplate(){
+        RestTemplate restTemplate = new RestTemplate();
+        MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+        restTemplate.getMessageConverters().add(messageConverter);
+        return restTemplate;
+    }
+
+    public void setRequestHeaders(){
+        HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
+        requestHeaders = new HttpHeaders();
+        requestHeaders.setAuthorization(authHeader);
     }
 
 }

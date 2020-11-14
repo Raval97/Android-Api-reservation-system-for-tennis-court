@@ -151,13 +151,8 @@ public class UserClubAssociationActivity extends Activity {
             ObjectMapper mapper = new ObjectMapper();
             try {
                 final String url = "http://10.0.2.2:8080/OurTennis/clubAssociation.json";
-                HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                requestHeaders.setAuthorization(authHeader);
-                RestTemplate restTemplate = new RestTemplate();
-                MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-                restTemplate.getMessageConverters().add(messageConverter);
-                ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), JsonNode.class);
+                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
+                ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 isClubMenResponse = mapper.convertValue(response.getBody().get("isClubMen"), Boolean.class);
                 isActiveClubMenResponse = mapper.convertValue(response.getBody().get("isActiveClubMen"), Boolean.class);
                 isRejectedApplication = mapper.convertValue(response.getBody().get("hasRejectedApplication"), Boolean.class);
@@ -203,17 +198,14 @@ public class UserClubAssociationActivity extends Activity {
             ObjectMapper mapper = new ObjectMapper();
             try {
                 String url = "http://10.0.2.2:8080/bankSimulatorForMembershipFee.json";
-                HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                requestHeaders.setAuthorization(authHeader);
-                RestTemplate restTemplate = new RestTemplate();
-                MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-                restTemplate.getMessageConverters().add(messageConverter);
-                ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), JsonNode.class);
+                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
+                ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET,
+                        new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 int id = mapper.convertValue(response.getBody().get("ID"), int.class);
                 System.out.println("id = " + id);
-                url = "http://10.0.2.2:8080/OurTennis/payMembershipFee/" + id;
-                ResponseEntity<Object> response2 = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object.class);
+                url = "http://10.0.2.2:8080/OurTennis/payMembershipFee/" + id + ".json";
+                ResponseEntity<Object> response2 = restTemplate.exchange(url, HttpMethod.GET,
+                        new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException e) {
                 e.printStackTrace();
             }
@@ -228,14 +220,9 @@ public class UserClubAssociationActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
-                final String url = "http://10.0.2.2:8080/OurTennis/applyForMembership";
-                HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
-                HttpHeaders requestHeaders = new HttpHeaders();
-                requestHeaders.setAuthorization(authHeader);
-                RestTemplate restTemplate = new RestTemplate();
-                MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-                restTemplate.getMessageConverters().add(messageConverter);
-                ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(requestHeaders), Object.class);
+                final String url = "http://10.0.2.2:8080/OurTennis/applyForMembership.json";
+                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
+                ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException e) {
                 e.printStackTrace();
             }

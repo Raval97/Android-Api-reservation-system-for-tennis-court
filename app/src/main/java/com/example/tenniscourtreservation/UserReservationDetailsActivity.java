@@ -1,6 +1,5 @@
 package com.example.tenniscourtreservation;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,7 +18,6 @@ import androidx.annotation.RequiresApi;
 
 import com.example.tenniscourtreservation.model.Reservation;
 import com.example.tenniscourtreservation.model.Services;
-import com.example.tenniscourtreservation.model.UserReservation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -38,6 +36,24 @@ public class UserReservationDetailsActivity extends Activity {
     Reservation reservation;
     Services[] services;
 
+    TextView id;
+    TextView dateOfReservation;
+    TextView statusOfReservation;
+    TextView price;
+    TextView clubAssociation;
+    TextView finalPrice;
+    TextView typeOfPaying;
+    TextView statusOfPaying;
+
+    TableLayout tableContext;
+    TableLayout servicesExample;
+    LinearLayout.LayoutParams rowDataParam;
+    LinearLayout.LayoutParams rowAdditionsParam;
+    int cellOfRowStyle;
+    LinearLayout.LayoutParams cel_015_param;
+    LinearLayout.LayoutParams cel_025_param;
+    LinearLayout.LayoutParams cel_033_param;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +63,15 @@ public class UserReservationDetailsActivity extends Activity {
         menuTools = new MenuUserAccountTools();
 
         back = (Button) findViewById(R.id.back);
+        id = (TextView) findViewById(R.id.id);
+        dateOfReservation = (TextView) findViewById(R.id.dateOfReservation);
+        statusOfReservation = (TextView) findViewById(R.id.statusOfReservation);
+        price = (TextView) findViewById(R.id.price);
+        clubAssociation = (TextView) findViewById(R.id.clubAssociation);
+        finalPrice = (TextView) findViewById(R.id.finalPrice);
+        typeOfPaying = (TextView) findViewById(R.id.typeOfPaying);
+        statusOfPaying = (TextView) findViewById(R.id.statusOfPaying);
+
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), UserReservationActivity.class);
@@ -60,20 +85,17 @@ public class UserReservationDetailsActivity extends Activity {
 
     private class HttpReqTask extends AsyncTask<Void, Void, Services[]> {
 
-//        @Override
-//        protected void onPreExecute() {
-//            tableContext = (TableLayout) findViewById(R.id.table);
-//            reservationExample = (TableLayout) findViewById(R.id.reservation);
-//            rowStyle = R.style.eventsListTableRow;
-//            cellOfRowStyle = R.style.eventsListTableCell;
-//            tableContextParam = (LinearLayout.LayoutParams) reservationExample.getLayoutParams();
-//            tableContextParam.setMargins(0, 0, 0, 20);
-//            rowParam = (LinearLayout.LayoutParams) findViewById(R.id.reservationRow).getLayoutParams();
-//            idParam = (LinearLayout.LayoutParams) findViewById(R.id.id).getLayoutParams();
-//            dateParam = (LinearLayout.LayoutParams) findViewById(R.id.date).getLayoutParams();
-//            priceParam = (LinearLayout.LayoutParams) findViewById(R.id.price).getLayoutParams();
-//            showDetailsParam = (LinearLayout.LayoutParams) findViewById(R.id.showDetails).getLayoutParams();
-//        }
+        @Override
+        protected void onPreExecute() {
+            tableContext = (TableLayout) findViewById(R.id.servicesList);
+            servicesExample = (TableLayout) findViewById(R.id.servicesExample);
+            rowDataParam = (LinearLayout.LayoutParams) findViewById(R.id.dataServices).getLayoutParams();
+            rowAdditionsParam = (LinearLayout.LayoutParams) findViewById(R.id.additionsServices).getLayoutParams();
+            cellOfRowStyle =  R.style.reservationDetailsTableCell;
+            cel_015_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceId).getLayoutParams();
+            cel_025_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceData).getLayoutParams();
+            cel_033_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceAdditionBalls).getLayoutParams();
+         }
 
         @Override
         protected Services[] doInBackground(Void... voids) {
@@ -95,56 +117,82 @@ public class UserReservationDetailsActivity extends Activity {
         @Override
         protected void onPostExecute(Services[] services) {
             super.onPostExecute(services);
-            System.out.println(reservation.toString());
+
+            id.setText(String.valueOf(reservation.getId()));
+            dateOfReservation.setText(reservation.getDateOfReservation().toString());
+            statusOfReservation.setText(reservation.getStatusOfReservation());
+            price.setText(String.valueOf(reservation.getPrice()));
+            clubAssociation.setText(reservation.isDiscount() ? "Yes" : "No");
+            finalPrice.setText(String.valueOf(reservation.getFinalPrice()));
+            typeOfPaying.setText(reservation.getTypeOfPaying());
+            statusOfPaying.setText(reservation.getStatusPaying());
+
             int iter = 0;
             for (Services s : services) {
                 System.out.println(s);
-//                if (iter % 2 == 0)
-//                    tableContext.addView(createTableForReservation(r, "#776074"), tableContextParam);
-//                else
-//                    tableContext.addView(createTableForReservation(r, "#913860"), tableContextParam);
+                if (iter % 2 == 0) {
+                    tableContext.addView(createDataServiceRowTable(s, "#670A6A"), rowDataParam);
+                    tableContext.addView(createAdditionsServiceRowTable(s, "#840888"), rowAdditionsParam);
+                }
+                else {
+                    tableContext.addView(createDataServiceRowTable(s, "#24334A"), rowDataParam);
+                    tableContext.addView(createAdditionsServiceRowTable(s, "#35445B"), rowAdditionsParam);
+                }
                 iter++;
             }
-//            tableContext.removeView(reservationExample);
+            tableContext.removeView(servicesExample);
         }
     }
 
-//    @SuppressLint("SetTextI18n")
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    private TableLayout createTableForReservation(Reservation r, String cellColor) {
-//        TableLayout reservation = new TableLayout(getApplicationContext());
-//        TableRow reservationMainData = new TableRow(new ContextThemeWrapper(getApplicationContext(), rowStyle));
-//        TextView id = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
-//        TextView date = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
-//        TextView price = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
-//        Button showDetails = new Button(this);
-//        TableRow emptyRow = new TableRow(getApplicationContext());
-//
-//        reservationMainData.setBackgroundColor(Color.parseColor(cellColor));
-//
-//        id.setText(r.getId().toString());
-//        date.setText(r.getDateOfReservation().toString());
-//        price.setText(String.valueOf(r.getFinalPrice()));
-//        showDetails.setText("-> <-");
-//        reservationMainData.addView(id, idParam);
-//        reservationMainData.addView(date, dateParam);
-//        reservationMainData.addView(price, priceParam);
-//        reservationMainData.addView(showDetails, showDetailsParam);
-//
-//        showDetails.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                UserReservationDetailsActivity.reservationId = r.getId();
-//                Intent intent = new Intent(getApplicationContext(), UserReservationDetailsActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-//
-//        reservation.addView(reservationMainData, rowParam);
-//        reservation.setPadding(0, 0, 0, 5);
-//
-//        return reservation;
-//    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private TableRow createDataServiceRowTable(Services s, String color) {
+        TableRow dataRow = new TableRow(getApplicationContext());
+        TextView court = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
+        TextView date = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
+        TextView startTime = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
+        TextView time = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
+        TextView cost = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
+        TextView price = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
+
+        court.setText(String.valueOf(s.getCourt().getId()));
+        date.setText(s.getDate().toString());
+        startTime.setText(s.getTime().toString());
+        time.setText(String.valueOf(s.getNumberOfHours()));
+        cost.setText(String.valueOf(s.getUnitCost()));
+        price.setText(String.valueOf(s.getPrice()));
+
+        dataRow.addView(court, cel_015_param);
+        dataRow.addView(date, cel_025_param);
+        dataRow.addView(startTime, cel_015_param);
+        dataRow.addView(time, cel_015_param);
+        dataRow.addView(cost, cel_015_param);
+        dataRow.addView(price, cel_015_param);
+
+        dataRow.setPadding(5, 5, 5, 5);
+        dataRow.setBackgroundColor(Color.parseColor(color));
+
+        return dataRow;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private TableRow createAdditionsServiceRowTable(Services s, String color) {
+        TableRow dataRow = new TableRow(getApplicationContext());
+        TextView balls = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
+        TextView rocket = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
+        TextView shoes = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
+
+        balls.setText(s.getIfBalls()? "Balls: YES" : "Balls: NO");
+        rocket.setText(s.getIfRocket()? "Rocket: YES" : "Rocket: NO");
+        shoes.setText(s.getIfShoes()? "Shoes: YES" : "Shoes: NO");
+
+        dataRow.addView(balls, cel_033_param);
+        dataRow.addView(rocket, cel_033_param);
+        dataRow.addView(shoes, cel_033_param);
+
+        dataRow.setPadding(5, 5, 5, 5);
+        dataRow.setBackgroundColor(Color.parseColor(color));
+
+        return dataRow;
+    }
 
 }

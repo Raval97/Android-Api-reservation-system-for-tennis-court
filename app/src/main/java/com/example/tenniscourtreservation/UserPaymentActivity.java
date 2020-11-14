@@ -166,7 +166,7 @@ public class UserPaymentActivity extends Activity {
             paymentList.addAll(Arrays.asList(payments));
             for (Reservation r : reservations) {
                 paymentList.add(new Payment(r.getId(), "Reservation fee", r.getFinalPaymentDate(),
-                        r.getPrice(), r.getStatusPaying(), r.getTypeOfPaying()));
+                        r.getFinalPrice(), r.getStatusPaying(), r.getTypeOfPaying()));
             }
             Collections.sort(paymentList);
             Collections.reverse(paymentList);

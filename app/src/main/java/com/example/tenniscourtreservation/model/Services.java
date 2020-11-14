@@ -1,5 +1,14 @@
 package com.example.tenniscourtreservation.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -9,7 +18,11 @@ import lombok.Data;
 public class Services {
 
     private Long id;
+    @JsonDeserialize(using= LocalDateDeserializer.class)
+    @JsonSerialize(using= LocalDateSerializer.class)
     private LocalDate date;
+    @JsonDeserialize(using= LocalTimeDeserializer.class)
+    @JsonSerialize(using= LocalTimeSerializer.class)
     private LocalTime time;
     private float numberOfHours;
     private float unitCost;
@@ -41,4 +54,5 @@ public class Services {
         this.time = time;
         this.court = court;
     }
+
 }

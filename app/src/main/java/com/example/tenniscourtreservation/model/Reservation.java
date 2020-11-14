@@ -49,4 +49,5 @@ public class Reservation {
         this.dateOfReservation = dateOfReservation;
         this.statusOfReservation = statusOfReservation;
     }
+
 }

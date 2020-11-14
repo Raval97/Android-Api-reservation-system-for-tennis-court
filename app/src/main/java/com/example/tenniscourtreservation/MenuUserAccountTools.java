@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.tenniscourtreservation.model.Services;
 import com.example.tenniscourtreservation.model.UserReservation;
 
 import org.springframework.http.HttpAuthentication;
@@ -30,6 +31,10 @@ public class MenuUserAccountTools extends Activity {
     public MenuUserAccountTools(Activity activity, Button actualSite) {
         this.activity = activity;
         this.actualSite = actualSite;
+        setRequestHeaders();
+    }
+
+    public MenuUserAccountTools(){
         setRequestHeaders();
     }
 

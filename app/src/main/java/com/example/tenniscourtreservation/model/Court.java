@@ -17,4 +17,7 @@ public class Court {
         this.status = status;
     }
 
+    public Court() {
+    }
+
 }

@@ -6,18 +6,24 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
 import com.example.tenniscourtreservation.model.Reservation;
 import com.example.tenniscourtreservation.model.Services;
+import com.example.tenniscourtreservation.model.UserReservation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -27,11 +33,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import lombok.SneakyThrows;
+
 public class UserReservationDetailsActivity extends Activity {
 
     static Long reservationId;
+    Handler mHandler;
+    String message;
     MenuUserAccountTools menuTools;
     Button back;
+    LinearLayout content;
+    LinearLayout bank;
+    Button cancel;
+    Button payInBank;
+    TableRow action;
+    Button payReservation;
+    Button cancelReservation;
 
     Reservation reservation;
     Services[] services;
@@ -71,6 +88,39 @@ public class UserReservationDetailsActivity extends Activity {
         finalPrice = (TextView) findViewById(R.id.finalPrice);
         typeOfPaying = (TextView) findViewById(R.id.typeOfPaying);
         statusOfPaying = (TextView) findViewById(R.id.statusOfPaying);
+        bank = (LinearLayout) findViewById(R.id.bank);
+        content = (LinearLayout) findViewById(R.id.content);
+        cancel = (Button) findViewById(R.id.cancel);
+        payInBank = (Button) findViewById(R.id.payFee);
+        action = (TableRow) findViewById(R.id.action);
+        payReservation = (Button) findViewById(R.id.payReservation);
+        cancelReservation = (Button) findViewById(R.id.cancelReservation);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                bank.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+        });
+
+        payInBank.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                new HttpReqTaskPayReservationFee().execute();
+            }
+        });
+
+        payReservation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                bank.setVisibility(View.VISIBLE);
+                content.setVisibility(View.GONE);
+            }
+        });
+
+        cancelReservation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                new HttpReqTaskCancelReservation().execute();
+            }
+        });
 
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -79,6 +129,18 @@ public class UserReservationDetailsActivity extends Activity {
                 finish();
             }
         });
+
+        mHandler = new Handler(Looper.getMainLooper()) {
+            @SneakyThrows
+            @Override
+            public void handleMessage(Message message2) {
+                Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+                ((TextView) ((LinearLayout) toast.getView()).getChildAt(0)).setGravity(Gravity.CENTER_HORIZONTAL);
+                toast.show();
+                bank.setVisibility(View.GONE);
+                content.setVisibility(View.VISIBLE);
+            }
+        };
 
         new HttpReqTask().execute();
     }
@@ -91,17 +153,17 @@ public class UserReservationDetailsActivity extends Activity {
             servicesExample = (TableLayout) findViewById(R.id.servicesExample);
             rowDataParam = (LinearLayout.LayoutParams) findViewById(R.id.dataServices).getLayoutParams();
             rowAdditionsParam = (LinearLayout.LayoutParams) findViewById(R.id.additionsServices).getLayoutParams();
-            cellOfRowStyle =  R.style.reservationDetailsTableCell;
+            cellOfRowStyle = R.style.reservationDetailsTableCell;
             cel_015_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceId).getLayoutParams();
             cel_025_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceData).getLayoutParams();
             cel_033_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceAdditionBalls).getLayoutParams();
-         }
+        }
 
         @Override
         protected Services[] doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                final String url = "http://10.0.2.2:8080/OurTennis/clientReservation/"+reservationId+".json";
+                final String url = "http://10.0.2.2:8080/OurTennis/clientReservation/" + reservationId + ".json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET,
                         new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
@@ -126,6 +188,8 @@ public class UserReservationDetailsActivity extends Activity {
             finalPrice.setText(String.valueOf(reservation.getFinalPrice()));
             typeOfPaying.setText(reservation.getTypeOfPaying());
             statusOfPaying.setText(reservation.getStatusPaying());
+            if(reservation.getStatusPaying().equals("Paid"))
+                action.setVisibility(View.GONE);
 
             int iter = 0;
             for (Services s : services) {
@@ -133,8 +197,7 @@ public class UserReservationDetailsActivity extends Activity {
                 if (iter % 2 == 0) {
                     tableContext.addView(createDataServiceRowTable(s, "#670A6A"), rowDataParam);
                     tableContext.addView(createAdditionsServiceRowTable(s, "#840888"), rowAdditionsParam);
-                }
-                else {
+                } else {
                     tableContext.addView(createDataServiceRowTable(s, "#24334A"), rowDataParam);
                     tableContext.addView(createAdditionsServiceRowTable(s, "#35445B"), rowAdditionsParam);
                 }
@@ -181,9 +244,9 @@ public class UserReservationDetailsActivity extends Activity {
         TextView rocket = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
         TextView shoes = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
 
-        balls.setText(s.getIfBalls()? "Balls: YES" : "Balls: NO");
-        rocket.setText(s.getIfRocket()? "Rocket: YES" : "Rocket: NO");
-        shoes.setText(s.getIfShoes()? "Shoes: YES" : "Shoes: NO");
+        balls.setText(s.getIfBalls() ? "Balls: YES" : "Balls: NO");
+        rocket.setText(s.getIfRocket() ? "Rocket: YES" : "Rocket: NO");
+        shoes.setText(s.getIfShoes() ? "Shoes: YES" : "Shoes: NO");
 
         dataRow.addView(balls, cel_033_param);
         dataRow.addView(rocket, cel_033_param);
@@ -193,6 +256,48 @@ public class UserReservationDetailsActivity extends Activity {
         dataRow.setBackgroundColor(Color.parseColor(color));
 
         return dataRow;
+    }
+
+    private class HttpReqTaskPayReservationFee extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                final String url = "http://10.0.2.2:8080/payForReservation/" + reservationId;
+                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
+                ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
+            } catch (RestClientException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+            message = "The payment has been made";
+            Message message = mHandler.obtainMessage();
+            message.sendToTarget();
+            Intent intent = new Intent(getApplicationContext(), UserReservationDetailsActivity.class);
+            startActivity(intent);
+            finish();
+            return null;
+        }
+    }
+
+    private class HttpReqTaskCancelReservation extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                final String url = "http://10.0.2.2:8080/OurTennis/cancelReservation/" + reservationId;
+                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
+                ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
+            } catch (RestClientException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+            message = "The Reservation\n has been canceled";
+            Message message = mHandler.obtainMessage();
+            message.sendToTarget();
+            Intent intent = new Intent(getApplicationContext(), UserReservationActivity.class);
+            startActivity(intent);
+            finish();
+            return null;
+        }
     }
 
 }

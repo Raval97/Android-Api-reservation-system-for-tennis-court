@@ -2,6 +2,7 @@ package com.example.tenniscourtreservation;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -26,13 +27,9 @@ import com.example.tenniscourtreservation.model.Reservation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.springframework.http.HttpAuthentication;
-import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -185,12 +182,14 @@ public class UserPaymentActivity extends Activity {
     private class HttpReqTaskPayForReservation extends AsyncTask<Void, Void, Void> {
         Long id;
 
-        public HttpReqTaskPayForReservation(Long id) {this.id = id; }
+        public HttpReqTaskPayForReservation(Long id) {
+            this.id = id;
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                final String url = "http://10.0.2.2:8080/payForReservation/"+id;
+                final String url = "http://10.0.2.2:8080/payForReservation/" + id;
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException | IllegalArgumentException e) {
@@ -199,6 +198,9 @@ public class UserPaymentActivity extends Activity {
             message = "The payment has been made";
             Message message = mHandler.obtainMessage();
             message.sendToTarget();
+            Intent intent = new Intent(getApplicationContext(), UserPaymentActivity.class);
+            startActivity(intent);
+            finish();
             return null;
         }
     }
@@ -206,18 +208,20 @@ public class UserPaymentActivity extends Activity {
     private class HttpReqTaskPayEventFee extends AsyncTask<Void, Void, Void> {
         Long paymentId;
 
-        public HttpReqTaskPayEventFee(Long id) { this.paymentId = id; }
+        public HttpReqTaskPayEventFee(Long id) {
+            this.paymentId = id;
+        }
 
         @Override
         protected Void doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                String url = "http://10.0.2.2:8080/OurTennis/payFeeOfParticipantEventFromAccount/"+ paymentId+".json";
+                String url = "http://10.0.2.2:8080/OurTennis/payFeeOfParticipantEventFromAccount/" + paymentId + ".json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET,
                         new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
-                Long eventId  = mapper.convertValue(response.getBody().get("ID"), Long.class);
-                url = "http://10.0.2.2:8080/OurTennis/payEventApplicationFee/"+eventId+".json";
+                Long eventId = mapper.convertValue(response.getBody().get("ID"), Long.class);
+                url = "http://10.0.2.2:8080/OurTennis/payEventApplicationFee/" + eventId + ".json";
                 ResponseEntity<Object> response2 = restTemplate.exchange(url, HttpMethod.GET,
                         new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException | IllegalArgumentException e) {
@@ -226,6 +230,9 @@ public class UserPaymentActivity extends Activity {
             message = "The payment has been made";
             Message message = mHandler.obtainMessage();
             message.sendToTarget();
+            Intent intent = new Intent(getApplicationContext(), UserPaymentActivity.class);
+            startActivity(intent);
+            finish();
             return null;
         }
     }

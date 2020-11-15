@@ -23,28 +23,398 @@
             style="@style/headerText"
             android:text="Reservation" />
 
-        <TextView
-            android:id="@+id/noLogged"
-            style="@style/headerText"
-            android:background="@drawable/border_style_1"
-            android:text="This page is\n available after login"
-            android:textColor="#919AC8"
-            android:textSize="22dp" />
-
         <LinearLayout
             android:id="@+id/logged"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <HorizontalScrollView
+                android:id="@+id/calendar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#0A668F">
+
+                <LinearLayout
+                    android:id="@+id/calendarExample"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/dayExample"
+                        style="@style/calendarDayButton"
+                        android:layout_margin="5dp"
+                        android:text="Sunday \n 15.11.2020" />
+
+                    <Button
+                        style="@style/calendarDayButton"
+                        android:text="Monday \n 16.11.2020" />
+
+                    <Button
+                        style="@style/calendarDayButton"
+                        android:text="Tuesday \n 16.11.2020" />
+
+                    <Button
+                        style="@style/calendarDayButton"
+                        android:text="Wednesday \n 16.11.2020" />
+
+                    <Button
+                        style="@style/calendarDayButton"
+                        android:text="Thursday \n 16.11.2020" />
+
+                    <Button
+                        style="@style/calendarDayButton"
+                        android:text="Friday \n 16.11.2020" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <Button
+                android:id="@+id/showLegend"
                 style="@style/headerText"
+                android:layout_width="match_parent"
+                android:layout_gravity="left"
+                android:layout_marginHorizontal="5dp"
                 android:background="@drawable/border_style_1"
-                android:text="Content"
+                android:gravity="left"
+                android:padding="10dp"
+                android:text="@string/reservationInfo"
                 android:textColor="#919AC8"
-                android:textSize="22dp" />
+                android:textSize="20dp" />
+
+            <TableLayout
+                android:id="@+id/legend"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="#042E2E"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp"
+                android:visibility="gone">
+
+                <TableRow
+                    android:background="#074040"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/eventTableCell"
+                        android:layout_weight="0.5"
+                        android:text="Free For Reservation:" />
+
+                    <TextView
+                        style="@style/eventTableCell"
+                        android:layout_weight="0.4"
+                        android:background="#A724BD" />
+
+                </TableRow>
+
+                <TableRow
+                    android:background="#135353"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/eventTableCell"
+                        android:layout_weight="0.5"
+                        android:text="Reserved:" />
+
+                    <TextView
+                        style="@style/eventTableCell"
+                        android:layout_weight="0.4"
+                        android:background="#E10B0B" />
+
+                </TableRow>
+
+                <TableRow
+                    android:background="#074040"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/eventTableCell"
+                        android:layout_weight="0.5"
+
+                        android:text="Suggestion Of Reservation:" />
+
+                    <TextView
+                        style="@style/eventTableCell"
+                        android:layout_weight="0.4"
+                        android:background="#C7E80E" />
+
+                </TableRow>
+
+                <TableRow
+                    android:background="#135353"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/eventTableCell"
+                        android:layout_weight="0.5"
+                        android:text="Saved Suggestion:" />
+
+                    <TextView
+                        style="@style/eventTableCell"
+                        android:layout_weight="0.4"
+                        android:background="#0C6518" />
+
+                </TableRow>
+
+                <TableRow
+                    android:background="#074040"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/eventTableCell"
+                        android:layout_weight="0.5"
+                        android:text="Suggestion To Delete" />
+
+                    <TextView
+                        style="@style/eventTableCell"
+                        android:layout_weight="0.4"
+                        android:background="#9613AC" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
+                android:background="#042E2E"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp">
+
+                <TableLayout
+                    android:id="@+id/summaryOfReservation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        style="@style/normalText"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:padding="0dp"
+                        android:text="Summary"
+                        android:textColor="#3DF1AD" />
+
+                    <TableRow
+                        android:id="@+id/headOfSummary"
+                        android:layout_marginBottom="10dp"
+                        android:paddingVertical="5dp">
+
+                        <TextView
+                            style="@style/headOfSummary"
+                            android:text="No.\n" />
+
+                        <TextView
+                            style="@style/headOfSummary"
+                            android:layout_weight="0.12"
+                            android:text="Court\n" />
+
+                        <TextView
+                            style="@style/headOfSummary"
+                            android:layout_weight="0.2"
+                            android:text="Date\n" />
+
+                        <TextView
+                            style="@style/headOfSummary"
+                            android:layout_weight="0.2"
+                            android:text="Start\ntime" />
+
+                        <TextView
+                            style="@style/headOfSummary"
+                            android:text="Time\n[h]" />
+
+                        <TextView
+                            style="@style/headOfSummary"
+                            android:text="Unit\nCost" />
+
+                        <TextView
+                            style="@style/headOfSummary"
+                            android:layout_weight="0.12"
+                            android:text="Price\n[PLN]" />
+
+                        <Button
+                            style="@style/celOfRowOfSummary"
+                            android:layout_height="37dp"
+                            android:layout_weight="0.05"
+                            android:background="#1F0588"
+                            android:text="...\n"
+                            android:textStyle="bold" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/exampleRowOfSummary"
+                        android:background="#1B5129"
+                        android:paddingVertical="5dp">
+
+                        <TextView
+                            android:id="@+id/exampleSummaryCell_01"
+                            style="@style/celOfRowOfSummary"
+                            android:text="1" />
+
+                        <TextView
+                            android:id="@+id/exampleSummaryCell_012"
+                            style="@style/celOfRowOfSummary"
+                            android:layout_weight="0.12"
+                            android:text="2" />
+
+                        <TextView
+                            android:id="@+id/exampleSummaryCell_02"
+                            style="@style/celOfRowOfSummary"
+                            android:layout_weight="0.2"
+                            android:text="2020-11-15" />
+
+                        <TextView
+                            style="@style/celOfRowOfSummary"
+                            android:layout_weight="0.2"
+                            android:text="11.30" />
+
+                        <TextView
+                            style="@style/celOfRowOfSummary"
+                            android:text="0.5" />
+
+                        <TextView
+                            style="@style/celOfRowOfSummary"
+                            android:text="40.0" />
+
+                        <TextView
+                            style="@style/celOfRowOfSummary"
+                            android:layout_weight="0.12"
+                            android:text="20.0"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/exampleSummaryCell_005"
+                            style="@style/celOfRowOfSummary"
+                            android:layout_height="25dp"
+                            android:layout_weight="0.05"
+                            android:background="#BD0B0B"
+                            android:text="X"
+                            android:textColor="#9DD813"
+                            android:textStyle="bold" />
+
+                    </TableRow>
+
+                </TableLayout>
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TableRow
+                        android:layout_marginTop="20dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/price"
+                            android:background="#281B2B"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Price:    170.45 PLN"
+                            android:textColor="#BFCC06"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/reserve"
+                            style="@style/actionButton"
+                            android:layout_margin="5dp"
+                            android:text="Next Step Of Reservation"
+                            android:textColor="#C987D8" />
+
+                        <Button
+                            android:id="@+id/refresh"
+                            style="@style/actionButton"
+                            android:layout_margin="5dp"
+                            android:text="Refresh Changes"
+                            android:textColor="#C987D8"
+                            android:visibility="gone" />
+
+                    </TableRow>
+
+                </TableLayout>
+
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/tableReservation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="30dp"
+                android:background="#042E2E"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp">
+
+                <TableRow
+                    android:id="@+id/headOfTableReservation"
+                    android:layout_marginBottom="10dp"
+                    android:background="#150957"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/headOfSchedule"
+                        android:text="Time" />
+
+                    <TextView
+                        style="@style/headOfSchedule"
+                        android:text="Court 1" />
+
+                    <TextView
+                        style="@style/headOfSchedule"
+                        android:text="Court 2" />
+
+                    <TextView
+                        style="@style/headOfSchedule"
+                        android:text="Court 3" />
+
+                    <TextView
+                        style="@style/headOfSchedule"
+                        android:text="Court 4" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/exampleRowOfTableReservation"
+                    style="@style/rowOfTable">
+
+                    <Button
+                        android:id="@+id/exampleCellOfRow"
+                        style="@style/timeAsCellOfSchedule"
+                        android:text="6.00" />
+
+                    <Button style="@style/cellOfSchedule" />
+
+                    <Button style="@style/cellOfSchedule" />
+
+                    <Button style="@style/cellOfSchedule" />
+
+                    <Button style="@style/cellOfSchedule" />
+
+                </TableRow>
+
+            </TableLayout>
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/noLogged"
+            style="@style/headerText"
+            android:background="@drawable/border_style_1"
+            android:text="This page is\n available after login"
+            android:textColor="#919AC8"
+            android:textSize="22dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

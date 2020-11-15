@@ -212,6 +212,9 @@ public class UserClubAssociationActivity extends Activity {
             message = "The payment has been made";
             Message message = mHandler.obtainMessage();
             message.sendToTarget();
+            Intent intent = new Intent(getApplicationContext(), UserClubAssociationActivity.class);
+            startActivity(intent);
+            finish();
             return null;
         }
     }
@@ -229,6 +232,9 @@ public class UserClubAssociationActivity extends Activity {
             message = "The application has been sent";
             Message message = mHandler.obtainMessage();
             message.sendToTarget();
+            Intent intent = new Intent(getApplicationContext(), UserClubAssociationActivity.class);
+            startActivity(intent);
+            finish();
             return null;
         }
     }

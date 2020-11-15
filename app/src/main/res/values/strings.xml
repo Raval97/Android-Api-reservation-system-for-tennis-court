@@ -17,4 +17,5 @@
         </b> on reservation <br> *A active club member is a person hwo pay
         regular membership fee <br> Monthly membership fee is 30 PLN ]]> </string>
     <string name="decisionClubAssociation"><![CDATA[ Application status: <br> <b>Waiting for decision<b>]]></string>
+    <string name="reservationInfo"><![CDATA[ Info   <-->]]></string>
 </resources>

@@ -122,7 +122,7 @@
                     <TextView
                         style="@style/eventTableCell"
                         android:layout_weight="0.4"
-                        android:background="#E10B0B" />
+                        android:background="#F3EDED" />
 
                 </TableRow>
 
@@ -171,7 +171,7 @@
                     <TextView
                         style="@style/eventTableCell"
                         android:layout_weight="0.4"
-                        android:background="#9613AC" />
+                        android:background="#4E0E59" />
 
                 </TableRow>
 

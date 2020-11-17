@@ -68,6 +68,13 @@ public class PriceListActivity extends Activity {
                 priceList = mapper.convertValue(jsonNode.get("priceList"), PriceList[].class);
                 logged = mapper.convertValue(jsonNode.get("logged"), Boolean.class);
                 isAdmin = mapper.convertValue(jsonNode.get("isAdmin"), Boolean.class);
+                System.out.println(jsonNode);
+                System.out.println(jsonNode.toString());
+                String s =jsonNode.asText();
+                System.out.println("test");
+                System.out.println(s);
+                System.out.println(s.toString());
+                System.out.println("test");
                 return priceList;
             } catch (IOException e) {
                 e.printStackTrace();

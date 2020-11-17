@@ -2,7 +2,9 @@ package com.example.tenniscourtreservation;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,9 +34,17 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import lombok.Data;
+
 
 public class ReservationActivity extends Activity {
 
+    static String dateParam = "2020-11-17";
+    static int selectDay = 0;
     MenuTools menuTools;
     TextView noLogged;
     LinearLayout logged;
@@ -52,9 +62,17 @@ public class ReservationActivity extends Activity {
     TableLayout tableReservation;
     TableRow exampleRowOfTableReservation;
 
-    int selectDay = 0;
     Services[] startedReservationServices;
     float price;
+    Float[] startedNumberOfHoursList;
+    Float[] reservedNumberOfHoursList;
+    Float[] reservedCourtIdList;
+    Float[] startedCourtIdList;
+    String[] startedTimeList;
+    String[] reservedTimeList;
+    List<SingleCellOfSchedule> startedCells = new ArrayList<>();
+    List<SingleCellOfSchedule> reservedCells = new ArrayList<>();
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -95,7 +113,6 @@ public class ReservationActivity extends Activity {
 
         tableReservation = (TableLayout) findViewById(R.id.tableReservation);
         exampleRowOfTableReservation = (TableRow) findViewById(R.id.exampleRowOfTableReservation);
-        createTableOfReservations();
 
     }
 
@@ -123,15 +140,19 @@ public class ReservationActivity extends Activity {
                 dayExample = day;
             }
             schedule.addView(day, dayExampleParam);
-            date = date.plusDays(1L);
 
             int finalIter = i;
+            LocalDate finalDate = date;
             day.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     selectDay = finalIter;
-                    createSchedule();
+                    dateParam = finalDate.toString();
+                    Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             });
+            date = date.plusDays(1L);
         }
         calendarContainer.removeAllViews();
         calendarContainer.addView(schedule, scheduleExampleParam);
@@ -148,23 +169,60 @@ public class ReservationActivity extends Activity {
                 exampleRowOfTableReservation.getLayoutParams();
         LinearLayout.LayoutParams cellParam = (LinearLayout.LayoutParams)
                 findViewById(R.id.exampleCellOfRow).getLayoutParams();
-        LocalTime time = LocalTime.of(6,0);
+        LocalTime time = LocalTime.of(6, 0);
 
-        tableReservation.removeView(exampleRowOfTableReservation);
+        exampleRowOfTableReservation.setVisibility(View.GONE);
+        Float[] startedNumbersHoursTemp = {0F, 0F, 0F, 0F};
+        Float[] reservedNumbersHoursTemp = {0F, 0F, 0F, 0F};
+        final ColorDrawable[] buttonColor = new ColorDrawable[1];
+        final int[] colorId = new int[1];
+        Boolean ifAllDay = (!reservedCells.isEmpty() && reservedCells.get(0).numberOfHours==24);
         for (int i = 0; i < 48; i++) {
             TableRow row = new TableRow(new ContextThemeWrapper(getApplicationContext(), rowOfTable));
             Button timeCell = new Button(getApplicationContext(), null, 0, timeAsCellOfTable);
             timeCell.setText(time.toString());
             row.addView(timeCell, cellParam);
+            while (!startedCells.isEmpty() && startedCells.get(0).time.equals(time)) {
+                startedNumbersHoursTemp[(int) (startedCells.get(0).courtId - 1)] =
+                        startedCells.get(0).numberOfHours * 2;
+                startedCells.remove(0);
+            }
+            while (!reservedCells.isEmpty() && reservedCells.get(0).time.equals(time)) {
+                reservedNumbersHoursTemp[(int) (reservedCells.get(0).courtId - 1)] =
+                        reservedCells.get(0).numberOfHours * 2;
+                reservedCells.remove(0);
+            }
             for (int j = 0; j < 4; j++) {
                 Button cell = new Button(getApplicationContext(), null, 0, cellOfTable);
+                if (ifAllDay || reservedNumbersHoursTemp[j] > 0) {
+                    cell.setBackgroundColor(Color.parseColor("#F3EDED"));
+                    reservedNumbersHoursTemp[j]--;
+                } else {
+                    if (startedNumbersHoursTemp[j] > 0) {
+                        cell.setBackgroundColor(Color.parseColor("#0C6518"));
+                        startedNumbersHoursTemp[j]--;
+                    }
+                }
+                cell.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View view) {
+                        buttonColor[0] = (ColorDrawable) cell.getBackground();
+                        colorId[0] = buttonColor[0].getColor();
+                        if (colorId[0] == Color.parseColor("#A724BD"))
+                            cell.setBackgroundColor(Color.parseColor("#C7E80E"));
+                        if (colorId[0] == Color.parseColor("#C7E80E"))
+                            cell.setBackgroundColor(Color.parseColor("#A724BD"));
+                        if (colorId[0] == Color.parseColor("#0C6518"))
+                            cell.setBackgroundColor(Color.parseColor("#4E0E59"));
+                        if (colorId[0] == Color.parseColor("#4E0E59"))
+                            cell.setBackgroundColor(Color.parseColor("#0C6518"));
+                    }
+                });
                 row.addView(cell, cellParam);
             }
             if (i == 15 || i == 33) {
                 rowParam.setMargins(0, 0, 0, 100);
                 tableReservation.addView(row, rowParam);
-            }
-            else
+            } else
                 tableReservation.addView(row);
             time = time.plusMinutes(30L);
         }
@@ -177,11 +235,17 @@ public class ReservationActivity extends Activity {
         protected Services[] doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                final String url = "http://10.0.2.2:8080/OurTennis/reservation.json";
+                final String url = "http://10.0.2.2:8080/OurTennis/reservation.json?date="+dateParam;
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 startedReservationServices = mapper.convertValue(response.getBody().get("startedReservationServices"), Services[].class);
                 price = mapper.convertValue(response.getBody().get("startedReservation").get("price"), float.class);
+                reservedNumberOfHoursList = mapper.convertValue(response.getBody().get("reservedNumberOfHoursList"), Float[].class);
+                startedNumberOfHoursList = mapper.convertValue(response.getBody().get("startedNumberOfHoursList"), Float[].class);
+                reservedCourtIdList = mapper.convertValue(response.getBody().get("reservedCourtIdList"), Float[].class);
+                startedCourtIdList = mapper.convertValue(response.getBody().get("startedCourtIdList"), Float[].class);
+                reservedTimeList = mapper.convertValue(response.getBody().get("reservedTimeList"), String[].class);
+                startedTimeList = mapper.convertValue(response.getBody().get("startedTimeList"), String[].class);
             } catch (RestClientException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
@@ -193,24 +257,36 @@ public class ReservationActivity extends Activity {
         @Override
         protected void onPostExecute(Services[] serviceList) {
             super.onPostExecute(serviceList);
+
+            for (int i = 0; i < startedCourtIdList.length; i++)
+                startedCells.add(new SingleCellOfSchedule(startedCourtIdList[i],
+                        LocalTime.parse(startedTimeList[i]), startedNumberOfHoursList[i]));
+            for (int i = 0; i < reservedCourtIdList.length; i++)
+                reservedCells.add(new SingleCellOfSchedule(reservedCourtIdList[i],
+                        LocalTime.parse(reservedTimeList[i]), reservedNumberOfHoursList[i]));
+            Collections.sort(startedCells);
+            Collections.sort(reservedCells);
+            System.out.println(reservedCells);
+            createTableOfReservations();
+
             LinearLayout.LayoutParams rowParam = (LinearLayout.LayoutParams)
                     exampleRowSummary.getLayoutParams();
-            rowParam.setMargins(0,0,0,10);
+            rowParam.setMargins(0, 0, 0, 10);
             int iter = 0;
             for (Services s : serviceList) {
                 if (iter % 2 == 0)
-                    summaryOfReservation.addView(createTableForSummary(s, "#1D8136", iter+1), rowParam);
+                    summaryOfReservation.addView(createTableForSummary(s, "#1D8136", iter + 1), rowParam);
                 else
-                    summaryOfReservation.addView(createTableForSummary(s, "#1B5129", iter+1), rowParam);
+                    summaryOfReservation.addView(createTableForSummary(s, "#1B5129", iter + 1), rowParam);
                 iter++;
             }
-            summaryOfReservation.removeView(exampleRowSummary);
-            priceText.setText("Price:   " + String.valueOf(price));
+            exampleRowSummary.setVisibility(View.GONE);
+            priceText.setText("Price:   " + String.valueOf(price) + " PLN");
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public TableRow createTableForSummary(Services s, String cellColor, int iter){
+    public TableRow createTableForSummary(Services s, String cellColor, int iter) {
         int cellOfTable = R.style.celOfRowOfSummary;
         LinearLayout.LayoutParams cell_01_Param = (LinearLayout.LayoutParams) findViewById(R.id.exampleSummaryCell_01).getLayoutParams();
         LinearLayout.LayoutParams cell_012_Param = (LinearLayout.LayoutParams) findViewById(R.id.exampleSummaryCell_012).getLayoutParams();
@@ -252,4 +328,26 @@ public class ReservationActivity extends Activity {
         return row;
     }
 
+    @Data
+    private class SingleCellOfSchedule implements Comparable<SingleCellOfSchedule> {
+        Float courtId;
+        LocalTime time;
+        Float numberOfHours;
+
+        public SingleCellOfSchedule(Float courtId, LocalTime time, Float numberOfHours) {
+            this.courtId = courtId;
+            this.time = time;
+            this.numberOfHours = numberOfHours;
+        }
+
+        @Override
+        public int compareTo(SingleCellOfSchedule ele) {
+            return this.time.compareTo(ele.time);
+        }
+
+    }
+
 }
+
+
+

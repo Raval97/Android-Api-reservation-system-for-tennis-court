@@ -12,6 +12,8 @@
         <activity android:name=".LoginInActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".ReservationActivity" />
+        <activity android:name=".ReservationDetailsActivity"
+            android:theme="@style/AppTheme2"/>
         <activity android:name=".EventActivity" />
         <activity android:name=".PriceListActivity" />
         <activity android:name=".GalleryActivity" />

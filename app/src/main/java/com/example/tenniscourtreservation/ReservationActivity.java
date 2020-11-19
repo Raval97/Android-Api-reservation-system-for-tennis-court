@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Message;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.ContextThemeWrapper;
@@ -26,15 +27,23 @@ import com.example.tenniscourtreservation.model.Services;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
@@ -125,8 +134,15 @@ public class ReservationActivity extends Activity {
 
         refresh.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                System.out.println(removedNodeArray.toString());
-                System.out.println(selectNodeArray.toString());
+                new HttpReqTaskUpdateRemovedCells().execute();
+            }
+        });
+
+        reserve.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ReservationDetailsActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -212,8 +228,8 @@ public class ReservationActivity extends Activity {
             for (int j = 0; j < 4; j++) {
                 Button cell = new Button(getApplicationContext(), null, 0, cellOfTable);
                 cell.setTag("d"+dateParam.getDayOfMonth()+"m"+dateParam.getMonthValue()+
-                        "r"+dateParam.getYear()+ "c"+(j+1)+
-                        "h"+(time.getHour()>9 ? time.getHour() : "0"+time.getHour())+
+                        "r"+dateParam.getYear()+ "_c"+(j+1)+
+                        "_h"+(time.getHour()>9 ? time.getHour() : "0"+time.getHour())+
                         "m"+(time.getMinute()>9 ? time.getMinute() : "0"+time.getMinute()));
                 if (ifAllDay || reservedNumbersHoursTemp[j] > 0) {
                     cell.setBackgroundColor(Color.parseColor("#F3EDED"));
@@ -365,6 +381,84 @@ public class ReservationActivity extends Activity {
         row.setPadding(0, 5, 0, 5);
 
         return row;
+    }
+
+    private class HttpReqTaskUpdateRemovedCells extends AsyncTask<Void, Void, Void> {
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                JSONArray array = new JSONArray();
+                removedNodeArray.forEach(ele -> array.put(ele));
+                jsonObject.put("removedNodeArray", array);
+                System.out.println(jsonObject.toString());
+
+                URL url = new URL("http://10.0.2.2:8080/saveRemovedDay");
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
+                String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());
+                String authHeaderValue = "Basic " + new String(encodedAuth);
+                httpURLConnection.setRequestProperty("Authorization", authHeaderValue);
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+                httpURLConnection.connect();
+
+                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
+                wr.writeBytes(jsonObject.toString());
+                wr.flush();
+                wr.close();
+
+                if (httpURLConnection.getResponseCode() == 204) {
+                    new HttpReqTaskUpdateSelectedCells().execute();
+                }
+
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private class HttpReqTaskUpdateSelectedCells extends AsyncTask<Void, Void, Void> {
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                JSONArray array = new JSONArray();
+                selectNodeArray.forEach(ele -> array.put(ele));
+                jsonObject.put("selectNodeArray", array);
+                System.out.println(jsonObject.toString());
+
+                URL url = new URL("http://10.0.2.2:8080/saveSelectedDay");
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
+                String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());
+                String authHeaderValue = "Basic " + new String(encodedAuth);
+                httpURLConnection.setRequestProperty("Authorization", authHeaderValue);
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+                httpURLConnection.connect();
+
+                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
+                wr.writeBytes(jsonObject.toString());
+                wr.flush();
+                wr.close();
+
+                if (httpURLConnection.getResponseCode() == 204) {
+                    Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
     @Data

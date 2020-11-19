@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2F3336"
+    tools:context=".ReservationActivity"
+    tools:ignore="ExtraText">
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/bank"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#600667"
+            android:orientation="vertical"
+            android:paddingBottom="600dp"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_style_2"
+                android:padding="10dp"
+                android:text="Cancel"
+                android:textColor="#09EFB5"
+                android:textSize="20dp" />
+
+            <TextView
+                style="@style/headerText"
+                android:text="Bank Simulator"
+                android:textSize="35dp" />
+
+            <Button
+                android:id="@+id/payFee"
+                style="@style/headerText"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/border_style_1"
+                android:text="Pay Fee"
+                android:textColor="#919AC8"
+                android:textSize="30dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30sp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="250sp"
+                    android:layout_height="80sp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/logo" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/back"
+                        android:layout_width="80sp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20sp"
+                        android:layout_marginRight="20sp"
+                        android:background="@drawable/button_menu_bg"
+                        android:text="Back"
+                        android:textColor="#fff"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/headerText"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="30dp"
+                android:text="Reservation Details" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30sp"
+                android:background="#3C2230"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp">
+
+                <TableLayout
+                    android:id="@+id/servicesList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#13677C"
+                    android:gravity="center"
+                    android:padding="5dp">
+
+                    <TextView
+                        style="@style/reservationDetailsTableCell"
+                        android:layout_weight="0.15"
+                        android:gravity="center"
+                        android:text="Services"
+                        android:textColor="#EFE30A"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+
+                    <TableRow
+                        android:layout_marginBottom="10dp"
+                        android:background="#245C27"
+                        android:padding="5dp">
+
+                        <TextView
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.15"
+                            android:gravity="center"
+                            android:text="Court"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.25"
+                            android:gravity="center"
+                            android:text="Date"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.15"
+                            android:gravity="center"
+                            android:text="Start\nTime"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.15"
+                            android:gravity="center"
+                            android:text="Time\n[h]"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.15"
+                            android:gravity="center"
+                            android:text="Cost\n[per h]"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.15"
+                            android:gravity="center"
+                            android:text="Price\n[PLN]"
+                            android:textStyle="bold" />
+
+                    </TableRow>
+
+                    <TableLayout
+                        android:id="@+id/servicesExample"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TableRow
+                            android:id="@+id/dataServices"
+                            android:background="#670A6A"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/serviceId"
+                                style="@style/reservationDetailsTableCell"
+                                android:layout_weight="0.15"
+                                android:gravity="center"
+                                android:text="1" />
+
+                            <TextView
+                                android:id="@+id/serviceData"
+                                style="@style/reservationDetailsTableCell"
+                                android:layout_weight="0.25"
+                                android:gravity="center"
+                                android:text="2020-11-15" />
+
+                            <TextView
+                                style="@style/reservationDetailsTableCell"
+                                android:layout_weight="0.15"
+                                android:gravity="center"
+                                android:text="11.30" />
+
+                            <TextView
+                                style="@style/reservationDetailsTableCell"
+                                android:layout_weight="0.15"
+                                android:gravity="center"
+                                android:text="2.5" />
+
+                            <TextView
+                                style="@style/reservationDetailsTableCell"
+                                android:layout_weight="0.15"
+                                android:gravity="center"
+                                android:text="40.00" />
+
+                            <TextView
+                                style="@style/reservationDetailsTableCell"
+                                android:layout_weight="0.15"
+                                android:gravity="center"
+                                android:text="102.00" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:id="@+id/additionsServices"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="#840888"
+                            android:padding="5dp">
+
+                            <Switch
+                                android:id="@+id/serviceAdditionBalls"
+                                style="@style/switchStyle"
+                                android:paddingRight="20dp"
+                                android:text="Balls:"/>
+
+                            <Switch
+                                android:id="@+id/serviceAdditionRocket"
+                                style="@style/switchStyle"
+                                android:paddingRight="20dp"
+                                android:text="Rocket:"/>
+
+                            <Switch
+                                android:id="@+id/serviceAdditionShoes"
+                                style="@style/switchStyle"
+                                android:text="Shoes:"/>
+
+                        </TableRow>
+                    </TableLayout>
+
+                </TableLayout>
+
+                <TableLayout
+                    android:layout_width="300dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="#13677C"
+                    android:gravity="center">
+
+                    <TableRow
+                        android:background="#AC3434"
+                        android:padding="5dp">
+
+                        <TextView
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.6"
+                            android:gravity="center"
+                            android:text="Price:"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/price"
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.4"
+                            android:gravity="center"
+                            android:text="171.00"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow
+                        android:background="#0C052E"
+                        android:padding="5dp">
+
+                        <TextView
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.6"
+                            android:gravity="center"
+                            android:text="Discount Of Club Association:"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/clubAssociation"
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.4"
+                            android:gravity="center"
+                            android:text="Yes"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow
+                        android:background="#AC3434"
+                        android:padding="5dp">
+
+                        <TextView
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.6"
+                            android:gravity="center"
+                            android:text="Final Price:"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/finalPrice"
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.4"
+                            android:gravity="center"
+                            android:text="143.35"
+                            android:textColor="#CBD812"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow
+                        android:background="#0C052E"
+                        android:padding="5dp">
+
+                        <TextView
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.6"
+                            android:gravity="center"
+                            android:text="Type Of Paying:"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/typeOfPaying"
+                            style="@style/reservationDetailsTableCell"
+                            android:layout_weight="0.4"
+                            android:gravity="center"
+                            android:text="online"
+                            android:textStyle="bold" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/action"
+                        android:background="#3C2230"
+                        android:gravity="center"
+                        android:padding="10dp">
+
+                        <Button
+                            android:id="@+id/cancelReservation"
+                            style="@style/actionButton"
+                            android:layout_width="120dp"
+                            android:layout_marginRight="10dp"
+                            android:text="Cancel Reservation"
+                            android:textColor="#919AC8" />
+
+                        <Button
+                            android:id="@+id/confirmReservation"
+                            style="@style/actionButton"
+                            android:layout_width="120dp"
+                            android:layout_marginLeft="10dp"
+                            android:text="Confirm Reservation"
+                            android:textColor="#919AC8" />
+
+                    </TableRow>
+
+                </TableLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

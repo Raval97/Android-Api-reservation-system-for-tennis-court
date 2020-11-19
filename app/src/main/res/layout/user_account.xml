@@ -24,6 +24,12 @@
             style="@style/headerText"
             android:text="Your Account" />
 
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/switch_thumb_custom"
+            android:track="@drawable/switch_track_custom" />
+
 
         <LinearLayout
             android:id="@+id/content"

@@ -77,6 +77,7 @@ public class ReservationDetailsActivity extends Activity {
     LinearLayout.LayoutParams cel_015_param;
     LinearLayout.LayoutParams cel_025_param;
     LinearLayout.LayoutParams cel_033_param;
+    LinearLayout.LayoutParams cel_01_param;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,7 +112,7 @@ public class ReservationDetailsActivity extends Activity {
 
         back.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), UserReservationActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -143,13 +144,15 @@ public class ReservationDetailsActivity extends Activity {
             cel_015_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceId).getLayoutParams();
             cel_025_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceData).getLayoutParams();
             cel_033_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceAdditionBalls).getLayoutParams();
+            cel_01_param = (LinearLayout.LayoutParams) findViewById(R.id.deleteService).getLayoutParams();
+            cel_01_param.setMargins(0,0,50,0);
         }
 
         @Override
         protected Services[] doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                final String url = "http://10.0.2.2:8080/OurTennis/makeReservation.json";
+                final String url = MenuTools.startOfUrl + "OurTennis/makeReservation.json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET,
                         new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
@@ -174,12 +177,13 @@ public class ReservationDetailsActivity extends Activity {
             typeOfPaying.setAdapter(adapter);
             typeOfPaying.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(AdapterView<?>arg0, View view, int arg2, long arg3) {
+                public void onItemSelected(AdapterView<?> arg0, View view, int arg2, long arg3) {
                     String selected_val = typeOfPaying.getSelectedItem().toString();
                     reservation.setTypeOfPaying(selected_val);
                     spinnerItems = (typeOfPaying.getSelectedItem().equals("online") ?
                             new String[]{"online", "offline"} : new String[]{"offline", "online"});
                 }
+
                 @Override
                 public void onNothingSelected(AdapterView<?> arg0) {
                     reservation.setTypeOfPaying(spinnerItems[0]);
@@ -238,6 +242,7 @@ public class ReservationDetailsActivity extends Activity {
         Switch balls = new Switch(new ContextThemeWrapper(getApplicationContext(), additionsCellOfRowStyle));
         Switch rocket = new Switch(new ContextThemeWrapper(getApplicationContext(), additionsCellOfRowStyle));
         Switch shoes = new Switch(new ContextThemeWrapper(getApplicationContext(), additionsCellOfRowStyle));
+        Button delete = new Button(getApplicationContext(), null, 0, additionsCellOfRowStyle);
 
         balls.setText("Balls");
         balls.setPadding(0, 0, 20, 0);
@@ -250,10 +255,24 @@ public class ReservationDetailsActivity extends Activity {
         shoes.setText("Shoes");
         shoes.setTextColor(Color.parseColor("#ffffff"));
         shoes.setChecked(!s.getIfShoes());
+        delete.setText("X");
+        delete.setBackgroundColor(Color.parseColor(color));
+        delete.setTextColor(Color.parseColor("#9DD813"));
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                if (services.length == 1)
+                    new HttpReqTaskCancelReservation().execute();
+                else
+                    new HttpReqTaskUpdateDeleteService(s.getId()).execute();
+            }
+        });
 
         dataRow.addView(balls, cel_033_param);
         dataRow.addView(rocket, cel_033_param);
         dataRow.addView(shoes, cel_033_param);
+        dataRow.addView(delete, cel_01_param);
+
 
         dataRow.setPadding(5, 5, 5, 5);
         dataRow.setBackgroundColor(Color.parseColor(color));
@@ -284,7 +303,7 @@ public class ReservationDetailsActivity extends Activity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                final String url = "http://10.0.2.2:8080/OurTennis/cancelReservation/" + reservation.getId();
+                final String url = MenuTools.startOfUrl + "OurTennis/cancelReservation/" + reservation.getId();
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException | IllegalArgumentException e) {
@@ -300,7 +319,7 @@ public class ReservationDetailsActivity extends Activity {
         }
     }
 
-    private class  HttpReqTaskConfirmReservation extends AsyncTask<Void, Void, Void> {
+    private class HttpReqTaskConfirmReservation extends AsyncTask<Void, Void, Void> {
 
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
@@ -309,7 +328,7 @@ public class ReservationDetailsActivity extends Activity {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("typeOfPaying", reservation.getTypeOfPaying());
 
-                URL url = new URL("http://10.0.2.2:8080/OurTennis/confirmReservation");
+                URL url = new URL(MenuTools.startOfUrl + "OurTennis/confirmReservation");
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
                 String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());
@@ -358,7 +377,7 @@ public class ReservationDetailsActivity extends Activity {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("addition", decision);
 
-                URL url = new URL("http://10.0.2.2:8080/" + additionUrl + "/" + servicesId);
+                URL url = new URL(MenuTools.startOfUrl + "" + additionUrl + "/" + servicesId);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
                 String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());
@@ -383,6 +402,29 @@ public class ReservationDetailsActivity extends Activity {
                 e.printStackTrace();
             }
 
+            return null;
+        }
+    }
+
+    private class HttpReqTaskUpdateDeleteService extends AsyncTask<Void, Void, Void> {
+        Long serviceId;
+
+        public HttpReqTaskUpdateDeleteService(Long serviceId) {
+            this.serviceId = serviceId;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                final String url = MenuTools.startOfUrl + "OurTennis/cancelReservationService/" + serviceId;
+                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
+                ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
+            } catch (RestClientException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent(getApplicationContext(), ReservationDetailsActivity.class);
+            startActivity(intent);
+            finish();
             return null;
         }
     }

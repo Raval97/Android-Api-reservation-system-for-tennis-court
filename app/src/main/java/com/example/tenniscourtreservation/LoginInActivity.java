@@ -104,7 +104,7 @@ public class LoginInActivity extends Activity {
         protected Boolean doInBackground(Void... voids) {
             ObjectMapper mapper = new ObjectMapper();
             try {
-                final String url = "http://10.0.2.2:8080/OurTennis/login.json";
+                final String url = MenuTools.startOfUrl + "OurTennis/login.json";
                 MenuTools menuTools = new MenuTools();
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);

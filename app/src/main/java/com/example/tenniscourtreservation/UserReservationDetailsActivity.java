@@ -163,7 +163,7 @@ public class UserReservationDetailsActivity extends Activity {
         protected Services[] doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                final String url = "http://10.0.2.2:8080/OurTennis/clientReservation/" + reservationId + ".json";
+                final String url = MenuTools.startOfUrl + "OurTennis/clientReservation/" + reservationId + ".json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET,
                         new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
@@ -190,6 +190,8 @@ public class UserReservationDetailsActivity extends Activity {
             statusOfPaying.setText(reservation.getStatusPaying());
             if(reservation.getStatusPaying().equals("Paid"))
                 action.setVisibility(View.GONE);
+            if(reservation.getTypeOfPaying().equals("offline"))
+                payReservation.setVisibility(View.GONE);
 
             int iter = 0;
             for (Services s : services) {
@@ -263,7 +265,7 @@ public class UserReservationDetailsActivity extends Activity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                final String url = "http://10.0.2.2:8080/payForReservation/" + reservationId;
+                final String url = MenuTools.startOfUrl + "payForReservation/" + reservationId;
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException | IllegalArgumentException e) {
@@ -284,7 +286,7 @@ public class UserReservationDetailsActivity extends Activity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                final String url = "http://10.0.2.2:8080/OurTennis/cancelReservation/" + reservationId;
+                final String url = MenuTools.startOfUrl + "OurTennis/cancelReservation/" + reservationId;
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException | IllegalArgumentException e) {

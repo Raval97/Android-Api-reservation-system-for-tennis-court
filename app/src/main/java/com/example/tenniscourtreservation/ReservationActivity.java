@@ -293,7 +293,7 @@ public class ReservationActivity extends Activity {
         protected Services[] doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                final String url = "http://10.0.2.2:8080/OurTennis/reservation.json?date=" + dateParam.toString();
+                final String url = MenuTools.startOfUrl + "OurTennis/reservation.json?date=" + dateParam.toString();
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 startedReservationServices = mapper.convertValue(response.getBody().get("startedReservationServices"), Services[].class);
@@ -374,7 +374,7 @@ public class ReservationActivity extends Activity {
         cost.setText(String.valueOf(s.getUnitCost()));
         price.setText(String.valueOf(s.getPrice()));
         delete.setText("X");
-        delete.setBackgroundColor(Color.parseColor("#BD0B0B"));
+        delete.setBackgroundColor(Color.parseColor("#2E2323"));
         delete.setTextColor(Color.parseColor("#9DD813"));
 
         delete.setOnClickListener(new View.OnClickListener() {
@@ -409,7 +409,7 @@ public class ReservationActivity extends Activity {
                 jsonObject.put("removedNodeArray", array);
                 System.out.println(jsonObject.toString());
 
-                URL url = new URL("http://10.0.2.2:8080/saveRemovedDay");
+                URL url = new URL(MenuTools.startOfUrl + "saveRemovedDay");
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
                 String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());
@@ -447,7 +447,7 @@ public class ReservationActivity extends Activity {
                 jsonObject.put("selectNodeArray", array);
                 System.out.println(jsonObject.toString());
 
-                URL url = new URL("http://10.0.2.2:8080/saveSelectedDay");
+                URL url = new URL(MenuTools.startOfUrl + "saveSelectedDay");
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
                 String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());
@@ -486,7 +486,7 @@ public class ReservationActivity extends Activity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                final String url = "http://10.0.2.2:8080/OurTennis/cancelReservationService/" + serviceId;
+                final String url = MenuTools.startOfUrl + "OurTennis/cancelReservationService/" + serviceId;
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException | IllegalArgumentException e) {

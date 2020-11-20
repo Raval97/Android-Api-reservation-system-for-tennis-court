@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2F3336"
+    android:background="@drawable/gradient_background"
     tools:context=".PriceListActivity"
     tools:ignore="ExtraText">
 
@@ -23,61 +23,73 @@
             style="@style/headerText"
             android:text="Price List" />
 
-
-        <TableLayout
-            android:id="@+id/table"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="20dp">
+            android:background="#402727"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <TableRow
-                android:background="#111737"
-                android:padding="5dp"
-                android:layout_marginBottom="10dp">
-                <TextView
-                    style="@style/priceListTableCell"
-                    android:textColor = "#fff"
-                    android:layout_weight = "0.35"
-                    android:text="@string/game_equipment" />
-                <TextView
-                    style="@style/priceListTableCell"
-                    android:textColor = "#fff"
-                    android:layout_weight = "0.6"
-                    android:text="Time" />
-                <TextView
-                    style="@style/priceListTableCell"
-                    android:textColor = "#fff"
-                    android:layout_weight = "0.15"
-                    android:text="Price \n[PLN]" />
-            </TableRow>
+            <TableLayout
+                android:id="@+id/table"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="20dp">
 
-            <TableRow
-                android:id="@+id/example"
-                android:background="#776074"
-                android:padding="5dp">
-                <TextView
-                    android:id="@+id/one"
-                    style="@style/priceListTableCell"
-                    android:layout_weight = "0.35"
-                    android:text="From monday to Friday[1h]" />
+                <TableRow
+                    android:layout_marginBottom="10dp"
+                    android:background="#111737"
+                    android:padding="5dp">
 
-                <TextView
-                    android:id="@+id/two"
-                    style="@style/priceListTableCell"
-                    android:layout_weight = "0.6"
-                    android:text="5 or more hors Tennis Pass" />
+                    <TextView
+                        style="@style/priceListTableCell"
+                        android:layout_weight="0.35"
+                        android:text="@string/game_equipment"
+                        android:textColor="#fff" />
 
-                <TextView
-                    android:id="@+id/three"
-                    style="@style/priceListTableCell"
-                    android:layout_weight = "0.15"
-                    android:text="35" />
-            </TableRow>
+                    <TextView
+                        style="@style/priceListTableCell"
+                        android:layout_weight="0.6"
+                        android:text="Time"
+                        android:textColor="#fff" />
 
-        </TableLayout>
+                    <TextView
+                        style="@style/priceListTableCell"
+                        android:layout_weight="0.15"
+                        android:text="Price \n[PLN]"
+                        android:textColor="#fff" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/example"
+                    android:background="#776074"
+                    android:padding="5dp">
+
+                    <TextView
+                        android:id="@+id/one"
+                        style="@style/priceListTableCell"
+                        android:layout_weight="0.35"
+                        android:text="From monday to Friday[1h]" />
+
+                    <TextView
+                        android:id="@+id/two"
+                        style="@style/priceListTableCell"
+                        android:layout_weight="0.6"
+                        android:text="5 or more hors Tennis Pass" />
+
+                    <TextView
+                        android:id="@+id/three"
+                        style="@style/priceListTableCell"
+                        android:layout_weight="0.15"
+                        android:text="35" />
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -64,7 +64,7 @@ public class PriceListActivity extends Activity {
         protected PriceList[] doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                JsonNode jsonNode = mapper.readTree(new URL("http://10.0.2.2:8080/ourTennis/priceList.json"));
+                JsonNode jsonNode = mapper.readTree(new URL(MenuTools.startOfUrl + "ourTennis/priceList.json"));
                 priceList = mapper.convertValue(jsonNode.get("priceList"), PriceList[].class);
                 logged = mapper.convertValue(jsonNode.get("logged"), Boolean.class);
                 isAdmin = mapper.convertValue(jsonNode.get("isAdmin"), Boolean.class);

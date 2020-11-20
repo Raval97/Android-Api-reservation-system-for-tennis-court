@@ -150,7 +150,7 @@ public class UserClubAssociationActivity extends Activity {
         protected Boolean doInBackground(Void... voids) {
             ObjectMapper mapper = new ObjectMapper();
             try {
-                final String url = "http://10.0.2.2:8080/OurTennis/clubAssociation.json";
+                final String url = MenuTools.startOfUrl + "OurTennis/clubAssociation.json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 isClubMenResponse = mapper.convertValue(response.getBody().get("isClubMen"), Boolean.class);
@@ -197,13 +197,13 @@ public class UserClubAssociationActivity extends Activity {
         protected Boolean doInBackground(Void... voids) {
             ObjectMapper mapper = new ObjectMapper();
             try {
-                String url = "http://10.0.2.2:8080/bankSimulatorForMembershipFee.json";
+                String url = MenuTools.startOfUrl + "bankSimulatorForMembershipFee.json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET,
                         new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 int id = mapper.convertValue(response.getBody().get("ID"), int.class);
                 System.out.println("id = " + id);
-                url = "http://10.0.2.2:8080/OurTennis/payMembershipFee/" + id + ".json";
+                url = MenuTools.startOfUrl + "OurTennis/payMembershipFee/" + id + ".json";
                 ResponseEntity<Object> response2 = restTemplate.exchange(url, HttpMethod.GET,
                         new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException e) {
@@ -223,7 +223,7 @@ public class UserClubAssociationActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
-                final String url = "http://10.0.2.2:8080/OurTennis/applyForMembership.json";
+                final String url = MenuTools.startOfUrl + "OurTennis/applyForMembership.json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException e) {

@@ -143,7 +143,7 @@ public class UserPaymentActivity extends Activity {
         protected Payment[] doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                final String url = "http://10.0.2.2:8080/OurTennis/payment.json";
+                final String url = MenuTools.startOfUrl + "OurTennis/payment.json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 payments = mapper.convertValue(response.getBody().get("paymentList"), Payment[].class);
@@ -189,7 +189,7 @@ public class UserPaymentActivity extends Activity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                final String url = "http://10.0.2.2:8080/payForReservation/" + id;
+                final String url = MenuTools.startOfUrl + "payForReservation/" + id;
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException | IllegalArgumentException e) {
@@ -216,12 +216,12 @@ public class UserPaymentActivity extends Activity {
         protected Void doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                String url = "http://10.0.2.2:8080/OurTennis/payFeeOfParticipantEventFromAccount/" + paymentId + ".json";
+                String url = MenuTools.startOfUrl + "OurTennis/payFeeOfParticipantEventFromAccount/" + paymentId + ".json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET,
                         new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 Long eventId = mapper.convertValue(response.getBody().get("ID"), Long.class);
-                url = "http://10.0.2.2:8080/OurTennis/payEventApplicationFee/" + eventId + ".json";
+                url = MenuTools.startOfUrl + "OurTennis/payEventApplicationFee/" + eventId + ".json";
                 ResponseEntity<Object> response2 = restTemplate.exchange(url, HttpMethod.GET,
                         new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException | IllegalArgumentException e) {

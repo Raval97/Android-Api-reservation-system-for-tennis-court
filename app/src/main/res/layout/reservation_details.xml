@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2F3336"
+    android:background="@drawable/gradient_background"
     tools:context=".ReservationActivity"
     tools:ignore="ExtraText">
 
@@ -191,8 +191,7 @@
 
                         <TableRow
                             android:id="@+id/additionsServices"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
+                            android:layout_marginLeft="20dp"
                             android:layout_marginBottom="10dp"
                             android:background="#840888"
                             android:padding="5dp">
@@ -200,19 +199,31 @@
                             <Switch
                                 android:id="@+id/serviceAdditionBalls"
                                 style="@style/switchStyle"
-                                android:paddingRight="20dp"
+                                android:paddingRight="15dp"
                                 android:text="Balls:" />
 
                             <Switch
                                 android:id="@+id/serviceAdditionRocket"
                                 style="@style/switchStyle"
-                                android:paddingRight="20dp"
-                                android:text="Rocket:" />
+                                android:paddingRight="15dp"
+                                android:text="Roct:" />
 
                             <Switch
                                 android:id="@+id/serviceAdditionShoes"
                                 style="@style/switchStyle"
                                 android:text="Shoes:" />
+
+                            <Button
+                                android:id="@+id/deleteService"
+                                style="@style/switchStyle"
+                                android:layout_height="25dp"
+                                android:layout_weight="0.1"
+                                android:background="#2E2323"
+                                android:textColor="#9DD813"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:padding="0dp"
+                                android:text="X" />
 
                         </TableRow>
                     </TableLayout>
@@ -227,7 +238,7 @@
                     android:gravity="center">
 
                     <TableRow
-                        android:background="#AC3434"
+                        android:background="@color/row1"
                         android:padding="5dp">
 
                         <TextView
@@ -247,7 +258,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:background="#0C052E"
+                        android:background="@color/row2"
                         android:padding="5dp">
 
                         <TextView
@@ -267,7 +278,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:background="#AC3434"
+                        android:background="@color/row1"
                         android:padding="5dp">
 
                         <TextView
@@ -289,7 +300,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:background="#0C052E"
+                        android:background="@color/row2"
                         android:padding="5dp">
 
                         <TextView

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2F3336"
+    android:background="@drawable/gradient_background"
     tools:context=".EventActivity"
     tools:ignore="ExtraText">
 
@@ -72,8 +72,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="20dp"
+                android:background="#402727"
                 android:paddingBottom="20dp">
 
                 <TableRow

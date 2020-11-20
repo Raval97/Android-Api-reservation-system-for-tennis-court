@@ -76,7 +76,7 @@ public class UserReservationActivity extends Activity {
         protected Reservation[] doInBackground(Void... voids) {
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                final String url = "http://10.0.2.2:8080/OurTennis/clientReservation.json";
+                final String url = MenuTools.startOfUrl + "OurTennis/clientReservation.json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET,
                         new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);

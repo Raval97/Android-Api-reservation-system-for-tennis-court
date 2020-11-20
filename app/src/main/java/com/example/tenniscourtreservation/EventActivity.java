@@ -99,7 +99,7 @@ public class EventActivity extends Activity {
         payInBank.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 new HttpReqTaskButtonAction(objectOfPaymentId,
-                        "http://10.0.2.2:8080/OurTennis/payEventApplicationFee/",
+                        MenuTools.startOfUrl + "OurTennis/payEventApplicationFee/",
                         "The payment has been made").execute();
                 bank.setVisibility(View.GONE);
                 content.setVisibility(View.VISIBLE);
@@ -148,7 +148,7 @@ public class EventActivity extends Activity {
                 ObjectMapper mapper = new ObjectMapper();
                 if (LoginInActivity.isLogged) {
                     try {
-                        final String url = "http://10.0.2.2:8080/ourTennis/events.json";
+                        final String url = MenuTools.startOfUrl + "ourTennis/events.json";
                         HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
                         HttpHeaders requestHeaders = new HttpHeaders();
                         requestHeaders.setAuthorization(authHeader);
@@ -165,7 +165,7 @@ public class EventActivity extends Activity {
                         e.printStackTrace();
                     }
                 } else {
-                    JsonNode jsonNode = mapper.readTree(new URL("http://10.0.2.2:8080/ourTennis/events.json"));
+                    JsonNode jsonNode = mapper.readTree(new URL(MenuTools.startOfUrl + "ourTennis/events.json"));
                     tournaments = mapper.convertValue(jsonNode.get("tournaments"), Tournament[].class);
                     return tournaments;
                 }
@@ -300,12 +300,12 @@ public class EventActivity extends Activity {
                 switch (eventActionButton.getText().toString()) {
                     case "Take Part In This Event":
                         new HttpReqTaskButtonAction(t.getId(),
-                                "http://10.0.2.2:8080/OurTennis/applyForParticipantEvent/",
+                                MenuTools.startOfUrl + "OurTennis/applyForParticipantEvent/",
                                 "Application has been submitted").execute();
                         break;
                     case "Cancel your application":
                         new HttpReqTaskButtonAction(t.getId(),
-                                "http://10.0.2.2:8080/OurTennis/cancelApplicationEvent/",
+                                MenuTools.startOfUrl + "OurTennis/cancelApplicationEvent/",
                                 "The application was dropped").execute();
                         break;
                     case "Pay Fee Of Participant": {
@@ -316,7 +316,7 @@ public class EventActivity extends Activity {
                     }
                     case "Cancel from participation":
                         new HttpReqTaskButtonAction(t.getId(),
-                                "http://10.0.2.2:8080/OurTennis/cancelParticipantEvent/",
+                                MenuTools.startOfUrl + "OurTennis/cancelParticipantEvent/",
                                 "Resignation from participation").execute();
                         break;
                     case "Log In":
@@ -359,7 +359,7 @@ public class EventActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     new HttpReqTaskButtonAction(t.getId(),
-                            "http://10.0.2.2:8080/OurTennis/cancelApplicationEvent/",
+                            MenuTools.startOfUrl + "OurTennis/cancelApplicationEvent/",
                             "The application was dropped").execute();
                 }
             });

@@ -193,7 +193,7 @@ public class UserAccountActivity extends Activity {
         protected Boolean doInBackground(Void... voids) {
             ObjectMapper mapper = new ObjectMapper();
             try {
-                final String url = "http://10.0.2.2:8080/OurTennis/account/1.json";
+                final String url = MenuTools.startOfUrl + "OurTennis/account/1.json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 userName = mapper.convertValue(response.getBody().get("client").get("name"), String.class);
@@ -225,7 +225,7 @@ public class UserAccountActivity extends Activity {
                 jsonObject.put("phoneNumber", phone.getText().toString());
                 jsonObject.put("username", username.getText().toString());
 
-                URL url = new URL("http://10.0.2.2:8080/OurTennis/client/edit_data/" + userID);
+                URL url = new URL(MenuTools.startOfUrl + "OurTennis/client/edit_data/" + userID);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
                 String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());
@@ -267,7 +267,7 @@ public class UserAccountActivity extends Activity {
                 String queryParams = builder.build().getEncodedQuery();
                 System.out.println(queryParams);
 
-                URL url = new URL("http://10.0.2.2:8080/OurTennis/client/changePassword/" + userID);//+"newPassword=admin2&repeatNewPassword=admin2&oldPassword=admin");
+                URL url = new URL(MenuTools.startOfUrl + "OurTennis/client/changePassword/" + userID);//+"newPassword=admin2&repeatNewPassword=admin2&oldPassword=admin");
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
                 String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());
@@ -301,7 +301,7 @@ public class UserAccountActivity extends Activity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                final String url = "http://10.0.2.2:8080/OurTennis/client/deleteAccount/" + userID + ".json";
+                final String url = MenuTools.startOfUrl + "OurTennis/client/deleteAccount/" + userID + ".json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException e) {

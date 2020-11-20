@@ -107,7 +107,7 @@ public class RegisterActivity extends Activity {
                 jsonObject.put("username", username.getText().toString());
                 jsonObject.put("password", password.getText().toString());
 
-                URL url = new URL("http://10.0.2.2:8080/add-user");
+                URL url = new URL(MenuTools.startOfUrl + "add-user");
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setDoOutput(true);
                 httpURLConnection.setRequestMethod("POST");

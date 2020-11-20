@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2F3336"
+    android:background="@drawable/gradient_background"
     tools:context=".ReservationActivity"
     tools:ignore="ExtraText">
 
@@ -351,7 +351,6 @@
                 android:id="@+id/tableReservation"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="30dp"
                 android:background="#042E2E"
                 android:paddingHorizontal="10dp"

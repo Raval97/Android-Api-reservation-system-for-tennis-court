@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2F3336"
+    android:background="@drawable/gradient_background"
     tools:context=".ReservationActivity"
     tools:ignore="ExtraText">
 
@@ -24,17 +24,11 @@
             style="@style/headerText"
             android:text="Your Account" />
 
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:thumb="@drawable/switch_thumb_custom"
-            android:track="@drawable/switch_track_custom" />
-
-
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="#402727"
             android:orientation="vertical">
 
             <LinearLayout
@@ -401,6 +395,7 @@
                     android:id="@+id/deleteSwitch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:thumb="@drawable/switch_thumb_custom"
                     android:track="@drawable/switch_track_custom" />
 
@@ -415,6 +410,7 @@
                     <TextView
                         style="@style/normalText"
                         android:gravity="center"
+                        android:layout_marginTop="0dp"
                         android:text="Please confirm your password"
                         android:textColor="#ADECEDEF"
                         android:textSize="18dp" />

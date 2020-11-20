@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2F3336"
+    android:background="@drawable/gradient_background"
     tools:context=".ReservationActivity"
     tools:ignore="ExtraText">
 
@@ -118,7 +118,7 @@
                     android:gravity="center">
 
                     <TableRow
-                        android:background="#AC3434"
+                        android:background="@color/row1"
                         android:padding="5dp">
 
                         <TextView
@@ -138,7 +138,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:background="#0C052E"
+                        android:background="@color/row2"
                         android:padding="5dp">
 
                         <TextView
@@ -158,7 +158,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:background="#AC3434"
+                        android:background="@color/row1"
                         android:padding="5dp">
 
                         <TextView
@@ -336,7 +336,7 @@
                     android:gravity="center">
 
                     <TableRow
-                        android:background="#AC3434"
+                        android:background="@color/row1"
                         android:padding="5dp">
 
                         <TextView
@@ -356,7 +356,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:background="#0C052E"
+                        android:background="@color/row2"
                         android:padding="5dp">
 
                         <TextView
@@ -376,7 +376,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:background="#AC3434"
+                        android:background="@color/row1"
                         android:padding="5dp">
 
                         <TextView
@@ -398,7 +398,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:background="#0C052E"
+                        android:background="@color/row2"
                         android:padding="5dp">
 
                         <TextView
@@ -418,7 +418,7 @@
                     </TableRow>
 
                     <TableRow
-                        android:background="#AC3434"
+                        android:background="@color/row1"
                         android:padding="5dp">
 
                         <TextView

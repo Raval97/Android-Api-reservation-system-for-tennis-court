@@ -24,7 +24,7 @@ public class MenuTools extends Activity {
     Activity activity;
     Button actualSite;
     static HttpHeaders requestHeaders = null;
-    static String startOfUrl = "http://10.0.2.2:8080/";
+    static String startOfUrl = "https://tennis-court-reservation.herokuapp.com/";
 
     public MenuTools(Activity activity, Button actualSite) {
         this.activity = activity;

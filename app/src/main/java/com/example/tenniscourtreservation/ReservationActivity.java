@@ -65,6 +65,7 @@ public class ReservationActivity extends Activity {
     Button showLegend;
     TableLayout legend;
 
+    TableLayout summary;
     TableLayout summaryOfReservation;
     TableRow exampleRowSummary;
     TextView priceText;
@@ -121,6 +122,7 @@ public class ReservationActivity extends Activity {
             }
         });
 
+        summary = (TableLayout) findViewById(R.id.summary);
         summaryOfReservation = (TableLayout) findViewById(R.id.summaryOfReservation);
         exampleRowSummary = (TableRow) findViewById(R.id.exampleRowOfSummary);
         priceText = (TextView) findViewById(R.id.price);
@@ -266,6 +268,10 @@ public class ReservationActivity extends Activity {
                         }
                         reserve.setVisibility((countOfChanges == 0) ? View.VISIBLE : View.GONE);
                         refresh.setVisibility((countOfChanges == 0) ? View.GONE : View.VISIBLE);
+                        if(startedReservationServices.length==0 && countOfChanges == 0)
+                            summary.setVisibility(View.GONE);
+                        else
+                            summary.setVisibility(View.VISIBLE);
 
                     }
                 });
@@ -310,6 +316,9 @@ public class ReservationActivity extends Activity {
         protected void onPostExecute(Services[] serviceList) {
             super.onPostExecute(serviceList);
 
+            if(serviceList.length==0)
+                summary.setVisibility(View.GONE);
+
             if(startedCourtIdList != null) {
                 for (int i = 0; i < startedCourtIdList.length; i++)
                     startedCells.add(new SingleCellOfSchedule(startedCourtIdList[i],
@@ -346,7 +355,7 @@ public class ReservationActivity extends Activity {
         LinearLayout.LayoutParams cell_01_Param = (LinearLayout.LayoutParams) findViewById(R.id.exampleSummaryCell_01).getLayoutParams();
         LinearLayout.LayoutParams cell_012_Param = (LinearLayout.LayoutParams) findViewById(R.id.exampleSummaryCell_012).getLayoutParams();
         LinearLayout.LayoutParams cell_02_Param = (LinearLayout.LayoutParams) findViewById(R.id.exampleSummaryCell_02).getLayoutParams();
-        LinearLayout.LayoutParams cell_005_Param = (LinearLayout.LayoutParams) findViewById(R.id.exampleSummaryCell_005).getLayoutParams();
+        LinearLayout.LayoutParams cell_005_Param = (LinearLayout.LayoutParams) findViewById(R.id.deleteServiceButton).getLayoutParams();
         TableRow row = new TableRow(this);
         TextView nr = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfTable));
         TextView court = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfTable));
@@ -367,6 +376,12 @@ public class ReservationActivity extends Activity {
         delete.setText("X");
         delete.setBackgroundColor(Color.parseColor("#BD0B0B"));
         delete.setTextColor(Color.parseColor("#9DD813"));
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                new HttpReqTaskUpdateDeleteService(s.getId()).execute();
+            }
+        });
 
         row.addView(nr, cell_01_Param);
         row.addView(court, cell_012_Param);
@@ -457,6 +472,29 @@ public class ReservationActivity extends Activity {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
+            return null;
+        }
+    }
+
+    private class HttpReqTaskUpdateDeleteService extends AsyncTask<Void, Void, Void> {
+        Long serviceId;
+
+        public HttpReqTaskUpdateDeleteService(Long serviceId) {
+            this.serviceId = serviceId;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                final String url = "http://10.0.2.2:8080/OurTennis/cancelReservationService/" + serviceId;
+                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
+                ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
+            } catch (RestClientException | IllegalArgumentException e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
+            startActivity(intent);
+            finish();
             return null;
         }
     }

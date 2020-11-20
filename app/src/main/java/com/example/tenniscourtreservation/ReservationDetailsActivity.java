@@ -12,9 +12,12 @@ import android.os.Message;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -25,6 +28,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.tenniscourtreservation.model.Reservation;
 import com.example.tenniscourtreservation.model.Services;
+import com.example.tenniscourtreservation.model.UserReservation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -46,15 +50,11 @@ import lombok.SneakyThrows;
 
 public class ReservationDetailsActivity extends Activity {
 
-    static Long reservationId;
     Handler mHandler;
     String message;
     MenuUserAccountTools menuTools;
     Button back;
     LinearLayout content;
-    LinearLayout bank;
-    Button cancel;
-    Button payInBank;
     TableRow action;
     Button cancelReservation;
     Button confirmReservation;
@@ -65,7 +65,8 @@ public class ReservationDetailsActivity extends Activity {
     TextView price;
     TextView clubAssociation;
     TextView finalPrice;
-    TextView typeOfPaying;
+    Spinner typeOfPaying;
+    static String[] spinnerItems = {"online", "offline"};
 
     TableLayout tableContext;
     TableLayout servicesExample;
@@ -89,38 +90,22 @@ public class ReservationDetailsActivity extends Activity {
         price = (TextView) findViewById(R.id.price);
         clubAssociation = (TextView) findViewById(R.id.clubAssociation);
         finalPrice = (TextView) findViewById(R.id.finalPrice);
-        typeOfPaying = (TextView) findViewById(R.id.typeOfPaying);
-        bank = (LinearLayout) findViewById(R.id.bank);
+        typeOfPaying = (Spinner) findViewById(R.id.typeOfPaying);
         content = (LinearLayout) findViewById(R.id.content);
-        cancel = (Button) findViewById(R.id.cancel);
-        payInBank = (Button) findViewById(R.id.payFee);
+
         action = (TableRow) findViewById(R.id.action);
         cancelReservation = (Button) findViewById(R.id.cancelReservation);
         confirmReservation = (Button) findViewById(R.id.confirmReservation);
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                bank.setVisibility(View.GONE);
-                content.setVisibility(View.VISIBLE);
-            }
-        });
-
-        payInBank.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                new HttpReqTaskPayReservationFee().execute();
-            }
-        });
-
         cancelReservation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                bank.setVisibility(View.VISIBLE);
-                content.setVisibility(View.GONE);
+                new HttpReqTaskCancelReservation().execute();
             }
         });
 
         confirmReservation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                new HttpReqTaskCancelReservation().execute();
+                new HttpReqTaskConfirmReservation().execute();
             }
         });
 
@@ -139,8 +124,6 @@ public class ReservationDetailsActivity extends Activity {
                 Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
                 ((TextView) ((LinearLayout) toast.getView()).getChildAt(0)).setGravity(Gravity.CENTER_HORIZONTAL);
                 toast.show();
-                bank.setVisibility(View.GONE);
-                content.setVisibility(View.VISIBLE);
             }
         };
 
@@ -186,7 +169,22 @@ public class ReservationDetailsActivity extends Activity {
             price.setText(String.valueOf(reservation.getPrice()));
             clubAssociation.setText(reservation.isDiscount() ? "Yes" : "No");
             finalPrice.setText(String.valueOf(reservation.getFinalPrice()));
-            typeOfPaying.setText(reservation.getTypeOfPaying());
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_text, spinnerItems);
+            adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown);
+            typeOfPaying.setAdapter(adapter);
+            typeOfPaying.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?>arg0, View view, int arg2, long arg3) {
+                    String selected_val = typeOfPaying.getSelectedItem().toString();
+                    reservation.setTypeOfPaying(selected_val);
+                    spinnerItems = (typeOfPaying.getSelectedItem().equals("online") ?
+                            new String[]{"online", "offline"} : new String[]{"offline", "online"});
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    reservation.setTypeOfPaying(spinnerItems[0]);
+                }
+            });
 
             int iter = 0;
             for (Services s : services) {
@@ -281,44 +279,63 @@ public class ReservationDetailsActivity extends Activity {
         return dataRow;
     }
 
-    private class HttpReqTaskPayReservationFee extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                final String url = "http://10.0.2.2:8080/payForReservation/" + reservationId;
-                RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
-                ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
-            } catch (RestClientException | IllegalArgumentException e) {
-                e.printStackTrace();
-            }
-            message = "The payment has been made";
-            Message message = mHandler.obtainMessage();
-            message.sendToTarget();
-            Intent intent = new Intent(getApplicationContext(), ReservationDetailsActivity.class);
-            startActivity(intent);
-            finish();
-            return null;
-        }
-    }
-
     private class HttpReqTaskCancelReservation extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... voids) {
             try {
-                final String url = "http://10.0.2.2:8080/OurTennis/cancelReservation/" + reservationId;
+                final String url = "http://10.0.2.2:8080/OurTennis/cancelReservation/" + reservation.getId();
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), Object.class);
             } catch (RestClientException | IllegalArgumentException e) {
                 e.printStackTrace();
             }
-            message = "The Reservation\n has been canceled";
-            Message message = mHandler.obtainMessage();
-            message.sendToTarget();
-            Intent intent = new Intent(getApplicationContext(), UserReservationActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
             startActivity(intent);
             finish();
+            message = "Reservation canceled";
+            Message message = mHandler.obtainMessage();
+            message.sendToTarget();
+            return null;
+        }
+    }
+
+    private class  HttpReqTaskConfirmReservation extends AsyncTask<Void, Void, Void> {
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("typeOfPaying", reservation.getTypeOfPaying());
+
+                URL url = new URL("http://10.0.2.2:8080/OurTennis/confirmReservation");
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
+                String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());
+                String authHeaderValue = "Basic " + new String(encodedAuth);
+                httpURLConnection.setRequestProperty("Authorization", authHeaderValue);
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+                httpURLConnection.connect();
+
+                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
+                wr.writeBytes(jsonObject.toString());
+                wr.flush();
+                wr.close();
+
+                if (httpURLConnection.getResponseCode() == 200) {
+                    Intent intent = new Intent(getApplicationContext(), UserReservationActivity.class);
+                    startActivity(intent);
+                    finish();
+                    message = "Reservation successful created";
+                    Message message = mHandler.obtainMessage();
+                    message.sendToTarget();
+                }
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
             return null;
         }
     }
@@ -333,6 +350,7 @@ public class ReservationDetailsActivity extends Activity {
             this.decision = decision;
             this.additionUrl = additionUrl;
         }
+
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected Void doInBackground(Void... voids) {
@@ -340,7 +358,7 @@ public class ReservationDetailsActivity extends Activity {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("addition", decision);
 
-                URL url = new URL("http://10.0.2.2:8080/" + additionUrl + "/"+servicesId);
+                URL url = new URL("http://10.0.2.2:8080/" + additionUrl + "/" + servicesId);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
                 String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());

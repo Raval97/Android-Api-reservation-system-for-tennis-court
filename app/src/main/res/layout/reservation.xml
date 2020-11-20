@@ -178,6 +178,7 @@
             </TableLayout>
 
             <TableLayout
+                android:id="@+id/summary"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="40dp"
@@ -288,7 +289,7 @@
                             android:textStyle="bold" />
 
                         <Button
-                            android:id="@+id/exampleSummaryCell_005"
+                            android:id="@+id/deleteServiceButton"
                             style="@style/celOfRowOfSummary"
                             android:layout_height="25dp"
                             android:layout_weight="0.05"

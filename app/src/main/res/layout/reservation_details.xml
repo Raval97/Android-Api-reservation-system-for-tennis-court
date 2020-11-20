@@ -15,44 +15,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/bank"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#600667"
-            android:orientation="vertical"
-            android:paddingBottom="600dp"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/border_style_2"
-                android:padding="10dp"
-                android:text="Cancel"
-                android:textColor="#09EFB5"
-                android:textSize="20dp" />
-
-            <TextView
-                style="@style/headerText"
-                android:text="Bank Simulator"
-                android:textSize="35dp" />
-
-            <Button
-                android:id="@+id/payFee"
-                style="@style/headerText"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/border_style_1"
-                android:text="Pay Fee"
-                android:textColor="#919AC8"
-                android:textSize="30dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -239,18 +201,18 @@
                                 android:id="@+id/serviceAdditionBalls"
                                 style="@style/switchStyle"
                                 android:paddingRight="20dp"
-                                android:text="Balls:"/>
+                                android:text="Balls:" />
 
                             <Switch
                                 android:id="@+id/serviceAdditionRocket"
                                 style="@style/switchStyle"
                                 android:paddingRight="20dp"
-                                android:text="Rocket:"/>
+                                android:text="Rocket:" />
 
                             <Switch
                                 android:id="@+id/serviceAdditionShoes"
                                 style="@style/switchStyle"
-                                android:text="Shoes:"/>
+                                android:text="Shoes:" />
 
                         </TableRow>
                     </TableLayout>
@@ -337,20 +299,44 @@
                             android:text="Type Of Paying:"
                             android:textStyle="bold" />
 
-                        <RadioButton
-                            android:id="@+id/typeOfPaying"
-                            style="@style/reservationDetailsTableCell"
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginRight="3dp"
                             android:layout_weight="0.4"
-                            android:gravity="center"
-                            android:text="online"
-                            android:textStyle="bold" />
+                            android:background="@drawable/spinner_border"
+                            android:orientation="horizontal">
+
+                            <Spinner
+                                android:id="@+id/typeOfPaying"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:background="@android:color/transparent"
+                                android:gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:spinnerMode="dropdown"/>
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center"
+                                android:src="@drawable/drop_for_spinner" />
+
+                        </RelativeLayout>
+
                     </TableRow>
 
                     <TableRow
                         android:id="@+id/action"
                         android:background="#3C2230"
                         android:gravity="center"
-                        android:padding="10dp">
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="30dp">
 
                         <Button
                             android:id="@+id/cancelReservation"

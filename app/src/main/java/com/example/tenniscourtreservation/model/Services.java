@@ -47,12 +47,4 @@ public class Services {
         this.price = price;
         this.court = court;
     }
-
-    public Services(LocalDate date, float numberOfHours, LocalTime time, Court court) {
-        this.date = date;
-        this.numberOfHours = numberOfHours;
-        this.time = time;
-        this.court = court;
-    }
-
 }

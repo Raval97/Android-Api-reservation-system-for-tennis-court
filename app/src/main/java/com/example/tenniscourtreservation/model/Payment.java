@@ -29,16 +29,6 @@ public class Payment implements Comparable<Payment>{
     public Payment() {
     }
 
-    public Payment(Long id, String title, LocalDate dateOfPaying, LocalDate finalPaymentDate,
-                   Float price, String statusPaying) {
-        this.id = id;
-        this.title = title;
-        this.dateOfPaying = dateOfPaying;
-        this.finalPaymentDate = finalPaymentDate;
-        this.price = price;
-        this.statusPaying = statusPaying;
-    }
-
     public Payment(Long id, String title, LocalDate dateOfPaying,
                    Float price, String statusPaying, String typeOfPaying) {
         this.id = id;

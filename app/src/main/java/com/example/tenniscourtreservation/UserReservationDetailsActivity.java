@@ -23,7 +23,6 @@ import androidx.annotation.RequiresApi;
 
 import com.example.tenniscourtreservation.model.Reservation;
 import com.example.tenniscourtreservation.model.Services;
-import com.example.tenniscourtreservation.model.UserReservation;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

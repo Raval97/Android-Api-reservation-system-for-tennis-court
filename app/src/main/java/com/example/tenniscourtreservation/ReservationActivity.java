@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Message;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
 import android.view.ContextThemeWrapper;
@@ -65,12 +64,13 @@ public class ReservationActivity extends Activity {
     Button showLegend;
     TableLayout legend;
 
-    TableLayout summary;
-    TableLayout summaryOfReservation;
+    TableLayout startedReserve;
+    TableLayout noStartedReserve;
+    TableLayout summaryOfReservationBody;
     TableRow exampleRowSummary;
     TextView priceText;
 
-    TableLayout tableReservation;
+    TableLayout tableReservationBody;
     TableRow exampleRowOfTableReservation;
     Button refresh;
     Button reserve;
@@ -122,13 +122,14 @@ public class ReservationActivity extends Activity {
             }
         });
 
-        summary = (TableLayout) findViewById(R.id.summary);
-        summaryOfReservation = (TableLayout) findViewById(R.id.summaryOfReservation);
+        startedReserve = (TableLayout) findViewById(R.id.startedReserve);
+        noStartedReserve = (TableLayout) findViewById(R.id.noStartedReserve);
+        summaryOfReservationBody = (TableLayout) findViewById(R.id.summaryOfReservationBody);
         exampleRowSummary = (TableRow) findViewById(R.id.exampleRowOfSummary);
         priceText = (TextView) findViewById(R.id.price);
         new HttpReqTaskGetData().execute();
 
-        tableReservation = (TableLayout) findViewById(R.id.tableReservation);
+        tableReservationBody = (TableLayout) findViewById(R.id.tableReservationBody);
         exampleRowOfTableReservation = (TableRow) findViewById(R.id.exampleRowOfTableReservation);
 
         refresh = (Button) findViewById(R.id.refresh);
@@ -182,9 +183,14 @@ public class ReservationActivity extends Activity {
                 public void onClick(View view) {
                     selectDay = finalIter;
                     dateParam = finalDate;
-                    Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
-                    startActivity(intent);
-                    finish();
+                    schedule.removeAllViews();
+                    createSchedule();
+                    summaryOfReservationBody.removeAllViews();
+                    tableReservationBody.removeAllViews();
+                    new HttpReqTaskGetData().execute();
+//                    Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
+//                    startActivity(intent);
+//                    finish();
                 }
             });
             date = date.plusDays(1L);
@@ -229,10 +235,10 @@ public class ReservationActivity extends Activity {
             }
             for (int j = 0; j < 4; j++) {
                 Button cell = new Button(getApplicationContext(), null, 0, cellOfTable);
-                cell.setTag("d"+dateParam.getDayOfMonth()+"m"+dateParam.getMonthValue()+
-                        "r"+dateParam.getYear()+ "_c"+(j+1)+
-                        "_h"+(time.getHour()>9 ? time.getHour() : "0"+time.getHour())+
-                        "m"+(time.getMinute()>9 ? time.getMinute() : "0"+time.getMinute()));
+                cell.setTag("d" + dateParam.getDayOfMonth() + "m" + dateParam.getMonthValue() +
+                        "r" + dateParam.getYear() + "_c" + (j + 1) +
+                        "_h" + (time.getHour() > 9 ? time.getHour() : "0" + time.getHour()) +
+                        "m" + (time.getMinute() > 9 ? time.getMinute() : "0" + time.getMinute()));
                 if (ifAllDay || reservedNumbersHoursTemp[j] > 0) {
                     cell.setBackgroundColor(Color.parseColor("#F3EDED"));
                     reservedNumbersHoursTemp[j]--;
@@ -268,10 +274,14 @@ public class ReservationActivity extends Activity {
                         }
                         reserve.setVisibility((countOfChanges == 0) ? View.VISIBLE : View.GONE);
                         refresh.setVisibility((countOfChanges == 0) ? View.GONE : View.VISIBLE);
-                        if(startedReservationServices.length==0 && countOfChanges == 0)
-                            summary.setVisibility(View.GONE);
-                        else
-                            summary.setVisibility(View.VISIBLE);
+                        if (startedReservationServices.length == 0 && countOfChanges == 0) {
+                            startedReserve.setVisibility(View.GONE);
+                            noStartedReserve.setVisibility(View.VISIBLE);
+                        } else {
+                            startedReserve.setVisibility(View.VISIBLE);
+                            noStartedReserve.setVisibility(View.GONE);
+                            priceText.setVisibility(startedReservationServices.length == 0 ? View.GONE : View.VISIBLE);
+                        }
 
                     }
                 });
@@ -279,9 +289,9 @@ public class ReservationActivity extends Activity {
             }
             if (i == 15 || i == 33) {
                 rowParam.setMargins(0, 0, 0, 100);
-                tableReservation.addView(row, rowParam);
+                tableReservationBody.addView(row, rowParam);
             } else
-                tableReservation.addView(row);
+                tableReservationBody.addView(row);
             time = time.plusMinutes(30L);
         }
 
@@ -316,16 +326,19 @@ public class ReservationActivity extends Activity {
         protected void onPostExecute(Services[] serviceList) {
             super.onPostExecute(serviceList);
 
-            if(serviceList.length==0)
-                summary.setVisibility(View.GONE);
+            if (serviceList.length == 0) {
+                startedReserve.setVisibility(View.GONE);
+                noStartedReserve.setVisibility(View.VISIBLE);
+            }
 
-            if(startedCourtIdList != null) {
+
+            if (startedCourtIdList != null) {
                 for (int i = 0; i < startedCourtIdList.length; i++)
                     startedCells.add(new SingleCellOfSchedule(startedCourtIdList[i],
                             LocalTime.parse(startedTimeList[i]), startedNumberOfHoursList[i]));
                 Collections.sort(startedCells);
             }
-            if(reservedCourtIdList != null) {
+            if (reservedCourtIdList != null) {
                 for (int i = 0; i < reservedCourtIdList.length; i++)
                     reservedCells.add(new SingleCellOfSchedule(reservedCourtIdList[i],
                             LocalTime.parse(reservedTimeList[i]), reservedNumberOfHoursList[i]));
@@ -333,15 +346,14 @@ public class ReservationActivity extends Activity {
             }
             createTableOfReservations();
 
-            LinearLayout.LayoutParams rowParam = (LinearLayout.LayoutParams)
-                    exampleRowSummary.getLayoutParams();
+            LinearLayout.LayoutParams rowParam = (LinearLayout.LayoutParams) exampleRowSummary.getLayoutParams();
             rowParam.setMargins(0, 0, 0, 10);
             int iter = 0;
             for (Services s : serviceList) {
                 if (iter % 2 == 0)
-                    summaryOfReservation.addView(createTableForSummary(s, "#1D8136", iter + 1), rowParam);
+                    summaryOfReservationBody.addView(createTableForSummary(s, "#1D8136", iter + 1), rowParam);
                 else
-                    summaryOfReservation.addView(createTableForSummary(s, "#1B5129", iter + 1), rowParam);
+                    summaryOfReservationBody.addView(createTableForSummary(s, "#1B5129", iter + 1), rowParam);
                 iter++;
             }
             exampleRowSummary.setVisibility(View.GONE);
@@ -379,7 +391,7 @@ public class ReservationActivity extends Activity {
 
         delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                new HttpReqTaskUpdateDeleteService(s.getId()).execute();
+                new HttpReqTaskDeleteService(s.getId()).execute();
             }
         });
 
@@ -476,10 +488,10 @@ public class ReservationActivity extends Activity {
         }
     }
 
-    private class HttpReqTaskUpdateDeleteService extends AsyncTask<Void, Void, Void> {
+    private class HttpReqTaskDeleteService extends AsyncTask<Void, Void, Void> {
         Long serviceId;
 
-        public HttpReqTaskUpdateDeleteService(Long serviceId) {
+        public HttpReqTaskDeleteService(Long serviceId) {
             this.serviceId = serviceId;
         }
 

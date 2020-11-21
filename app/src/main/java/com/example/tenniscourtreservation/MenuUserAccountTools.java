@@ -13,9 +13,6 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.tenniscourtreservation.model.Services;
-import com.example.tenniscourtreservation.model.UserReservation;
-
 import org.springframework.http.HttpAuthentication;
 import org.springframework.http.HttpBasicAuthentication;
 import org.springframework.http.HttpHeaders;

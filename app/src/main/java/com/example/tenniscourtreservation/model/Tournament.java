@@ -35,17 +35,4 @@ public class Tournament {
         this.dateOfEnded = dateOfEnded;
         this.entryFee = entryFee;
     }
-
-    @Override
-    public String toString() {
-        return "Tournament{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", maxCountOFParticipant=" + maxCountOFParticipant +
-                ", countOFRegisteredParticipant=" + countOFRegisteredParticipant +
-                ", dateOfStarted=" + dateOfStarted +
-                ", dateOfEnded=" + dateOfEnded +
-                ", entryFee=" + entryFee +
-                '}';
-    }
 }

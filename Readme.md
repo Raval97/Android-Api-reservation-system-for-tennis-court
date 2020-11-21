@@ -39,10 +39,13 @@
 
 #### User after login
     Reservation & Confirm Reservation 
-<div style="text-align:center">
-    <img src="https://raw.githubusercontent.com/Raval97/Android-Api-reservation-system-for-tennis-court/master/readme_screens/11.png" alt="drawing" width="200" /> 
+<p align="center">
+    <img src="https://raw.githubusercontent.com/Raval97/Android-Api-reservation-system-for-tennis-court/master/readme_screens/11.png" alt="drawing" width="200" />
     <img src="https://raw.githubusercontent.com/Raval97/Android-Api-reservation-system-for-tennis-court/master/readme_screens/12.png" alt="drawing" width="200" />
     <img src="https://raw.githubusercontent.com/Raval97/Android-Api-reservation-system-for-tennis-court/master/readme_screens/13.png" alt="drawing" width="200" />
+</p>
+
+<div style="text-align:center" align="center">
     <img src="https://raw.githubusercontent.com/Raval97/Android-Api-reservation-system-for-tennis-court/master/readme_screens/14.png" alt="drawing" width="200" />
     <img src="https://raw.githubusercontent.com/Raval97/Android-Api-reservation-system-for-tennis-court/master/readme_screens/15.png" alt="drawing" width="200" />
 </div>

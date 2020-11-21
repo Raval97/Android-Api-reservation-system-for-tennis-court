@@ -15,7 +15,7 @@
 ## Example Of Working
 
 #### User before login
-    Homepage & Price-List & Gallery & Contact & Menu
+    Homepage & Price-List & Gallery & Contact
 <div align="center">
     <img src="https://raw.githubusercontent.com/Raval97/Android-Api-reservation-system-for-tennis-court/master/readme_screens/1.png" alt="drawing" width="200" /> 
     <img src="https://raw.githubusercontent.com/Raval97/Android-Api-reservation-system-for-tennis-court/master/readme_screens/6.png" alt="drawing" width="200" />

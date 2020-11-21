@@ -186,162 +186,195 @@
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="10dp">
 
+                <TextView
+                    style="@style/normalText"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="Summary"
+                    android:textColor="#3DF1AD" />
+
                 <TableLayout
-                    android:id="@+id/summaryOfReservation"
+                    android:id="@+id/startedReserve"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:minHeight="140dp">
 
-                    <TextView
-                        style="@style/normalText"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        android:padding="0dp"
-                        android:text="Summary"
-                        android:textColor="#3DF1AD" />
+                    <TableLayout
+                        android:id="@+id/summaryOfReservation"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <TableRow
-                        android:id="@+id/headOfSummary"
-                        android:layout_marginBottom="10dp"
-                        android:paddingVertical="5dp">
+                        <TableRow
+                            android:id="@+id/headOfSummary"
+                            android:layout_marginBottom="10dp"
+                            android:paddingVertical="5dp">
 
-                        <TextView
-                            style="@style/headOfSummary"
-                            android:text="No.\n" />
+                            <TextView
+                                style="@style/headOfSummary"
+                                android:text="No.\n" />
 
-                        <TextView
-                            style="@style/headOfSummary"
-                            android:layout_weight="0.12"
-                            android:text="Court\n" />
+                            <TextView
+                                style="@style/headOfSummary"
+                                android:layout_weight="0.12"
+                                android:text="Court\n" />
 
-                        <TextView
-                            style="@style/headOfSummary"
-                            android:layout_weight="0.2"
-                            android:text="Date\n" />
+                            <TextView
+                                style="@style/headOfSummary"
+                                android:layout_weight="0.2"
+                                android:text="Date\n" />
 
-                        <TextView
-                            style="@style/headOfSummary"
-                            android:layout_weight="0.2"
-                            android:text="Start\ntime" />
+                            <TextView
+                                style="@style/headOfSummary"
+                                android:layout_weight="0.2"
+                                android:text="Start\ntime" />
 
-                        <TextView
-                            style="@style/headOfSummary"
-                            android:text="Time\n[h]" />
+                            <TextView
+                                style="@style/headOfSummary"
+                                android:text="Time\n[h]" />
 
-                        <TextView
-                            style="@style/headOfSummary"
-                            android:text="Unit\nCost" />
+                            <TextView
+                                style="@style/headOfSummary"
+                                android:text="Unit\nCost" />
 
-                        <TextView
-                            style="@style/headOfSummary"
-                            android:layout_weight="0.12"
-                            android:text="Price\n[PLN]" />
+                            <TextView
+                                style="@style/headOfSummary"
+                                android:layout_weight="0.12"
+                                android:text="Price\n[PLN]" />
 
-                        <Button
-                            style="@style/celOfRowOfSummary"
-                            android:layout_height="37dp"
-                            android:layout_weight="0.05"
-                            android:background="#1F0588"
-                            android:text="...\n"
-                            android:textStyle="bold" />
+                            <Button
+                                style="@style/celOfRowOfSummary"
+                                android:layout_height="37dp"
+                                android:layout_weight="0.05"
+                                android:background="#1F0588"
+                                android:text="...\n"
+                                android:textStyle="bold" />
 
-                    </TableRow>
+                        </TableRow>
 
-                    <TableRow
-                        android:id="@+id/exampleRowOfSummary"
-                        android:background="#1B5129"
-                        android:paddingVertical="5dp">
+                        <TableRow
+                            android:id="@+id/exampleRowOfSummary"
+                            android:background="#1B5129"
+                            android:paddingVertical="5dp">
 
-                        <TextView
-                            android:id="@+id/exampleSummaryCell_01"
-                            style="@style/celOfRowOfSummary"
-                            android:text="1" />
+                            <TextView
+                                android:id="@+id/exampleSummaryCell_01"
+                                style="@style/celOfRowOfSummary"
+                                android:text="1" />
 
-                        <TextView
-                            android:id="@+id/exampleSummaryCell_012"
-                            style="@style/celOfRowOfSummary"
-                            android:layout_weight="0.12"
-                            android:text="2" />
+                            <TextView
+                                android:id="@+id/exampleSummaryCell_012"
+                                style="@style/celOfRowOfSummary"
+                                android:layout_weight="0.12"
+                                android:text="2" />
 
-                        <TextView
-                            android:id="@+id/exampleSummaryCell_02"
-                            style="@style/celOfRowOfSummary"
-                            android:layout_weight="0.2"
-                            android:text="2020-11-15" />
+                            <TextView
+                                android:id="@+id/exampleSummaryCell_02"
+                                style="@style/celOfRowOfSummary"
+                                android:layout_weight="0.2"
+                                android:text="2020-11-15" />
 
-                        <TextView
-                            style="@style/celOfRowOfSummary"
-                            android:layout_weight="0.2"
-                            android:text="11.30" />
+                            <TextView
+                                style="@style/celOfRowOfSummary"
+                                android:layout_weight="0.2"
+                                android:text="11.30" />
 
-                        <TextView
-                            style="@style/celOfRowOfSummary"
-                            android:text="0.5" />
+                            <TextView
+                                style="@style/celOfRowOfSummary"
+                                android:text="0.5" />
 
-                        <TextView
-                            style="@style/celOfRowOfSummary"
-                            android:text="40.0" />
+                            <TextView
+                                style="@style/celOfRowOfSummary"
+                                android:text="40.0" />
 
-                        <TextView
-                            style="@style/celOfRowOfSummary"
-                            android:layout_weight="0.12"
-                            android:text="20.0"
-                            android:textStyle="bold" />
+                            <TextView
+                                style="@style/celOfRowOfSummary"
+                                android:layout_weight="0.12"
+                                android:text="20.0"
+                                android:textStyle="bold" />
 
-                        <Button
-                            android:id="@+id/deleteServiceButton"
-                            style="@style/celOfRowOfSummary"
-                            android:layout_height="25dp"
-                            android:layout_weight="0.05"
-                            android:background="#BD0B0B"
-                            android:text="X"
-                            android:textColor="#9DD813"
-                            android:textStyle="bold" />
+                            <Button
+                                android:id="@+id/deleteServiceButton"
+                                style="@style/celOfRowOfSummary"
+                                android:layout_height="25dp"
+                                android:layout_weight="0.05"
+                                android:background="#BD0B0B"
+                                android:text="X"
+                                android:textColor="#9DD813"
+                                android:textStyle="bold" />
 
-                    </TableRow>
+                        </TableRow>
+
+                        <TableLayout
+                            android:id="@+id/summaryOfReservationBody"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </TableLayout>
+
+                    </TableLayout>
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TableRow
+                            android:layout_marginTop="20dp"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/price"
+                                android:background="#281B2B"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:text="Price:    170.45 PLN"
+                                android:textColor="#BFCC06"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_marginVertical="10dp"
+                            android:gravity="center">
+
+                            <Button
+                                android:id="@+id/reserve"
+                                style="@style/actionButton"
+                                android:layout_margin="5dp"
+                                android:text="Next Step Of Reservation"
+                                android:textColor="#C987D8" />
+
+                            <Button
+                                android:id="@+id/refresh"
+                                style="@style/actionButton"
+                                android:layout_margin="5dp"
+                                android:text="Refresh Changes"
+                                android:textColor="#C987D8"
+                                android:visibility="gone" />
+
+                        </TableRow>
+
+                    </TableLayout>
 
                 </TableLayout>
 
                 <TableLayout
+                    android:id="@+id/noStartedReserve"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="140dp"
+                    android:visibility="gone">
 
-                    <TableRow
-                        android:layout_marginTop="20dp"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/price"
-                            android:background="#281B2B"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            android:text="Price:    170.45 PLN"
-                            android:textColor="#BFCC06"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_marginVertical="10dp"
-                        android:gravity="center">
-
-                        <Button
-                            android:id="@+id/reserve"
-                            style="@style/actionButton"
-                            android:layout_margin="5dp"
-                            android:text="Next Step Of Reservation"
-                            android:textColor="#C987D8" />
-
-                        <Button
-                            android:id="@+id/refresh"
-                            style="@style/actionButton"
-                            android:layout_margin="5dp"
-                            android:text="Refresh Changes"
-                            android:textColor="#C987D8"
-                            android:visibility="gone" />
-
-                    </TableRow>
+                    <TextView
+                        style="@style/normalText"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:gravity="center"
+                        android:paddingHorizontal="20dp"
+                        android:text="No choice has yet been made.\n Please select the appropriate\n reservation date to continue"
+                        android:textColor="#A683A3"
+                        android:textSize="20dp" />
 
                 </TableLayout>
 
@@ -402,6 +435,13 @@
                     <Button style="@style/cellOfSchedule" />
 
                 </TableRow>
+
+                <TableLayout
+                    android:id="@+id/tableReservationBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </TableLayout>
 
             </TableLayout>
 

@@ -44,10 +44,4 @@ public class Reservation {
         this.byAdmin = false;
     }
 
-    public Reservation(LocalDate dateOfReservation, String statusOfReservation, UserReservation userReservation) {
-        this.byAdmin = true;
-        this.dateOfReservation = dateOfReservation;
-        this.statusOfReservation = statusOfReservation;
-    }
-
 }

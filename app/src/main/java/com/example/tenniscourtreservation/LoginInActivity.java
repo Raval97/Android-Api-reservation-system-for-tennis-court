@@ -41,6 +41,7 @@ public class LoginInActivity extends Activity {
     static String password = "admin";
     static Boolean isLogged = true;
 
+    MenuTools menuTools;
     TextView loginText;
     Button back;
     Button loginButton;
@@ -55,6 +56,7 @@ public class LoginInActivity extends Activity {
         setContentView(R.layout.login);
         getActionBar().hide();
 
+        menuTools = new MenuTools();
         loginText = (TextView) findViewById(R.id.loginText);
         back = (Button) findViewById(R.id.back);
         loginButton = (Button) findViewById(R.id.login);
@@ -105,7 +107,6 @@ public class LoginInActivity extends Activity {
             ObjectMapper mapper = new ObjectMapper();
             try {
                 final String url = MenuTools.startOfUrl + "OurTennis/login.json";
-                MenuTools menuTools = new MenuTools();
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();
                 ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(menuTools.requestHeaders), JsonNode.class);
                 isLogged = mapper.convertValue(response.getBody().get("authorization"), Boolean.class);

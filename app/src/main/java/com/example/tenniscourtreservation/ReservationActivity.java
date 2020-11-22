@@ -188,9 +188,6 @@ public class ReservationActivity extends Activity {
                     summaryOfReservationBody.removeAllViews();
                     tableReservationBody.removeAllViews();
                     new HttpReqTaskGetData().execute();
-//                    Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
-//                    startActivity(intent);
-//                    finish();
                 }
             });
             date = date.plusDays(1L);
@@ -531,6 +528,3 @@ public class ReservationActivity extends Activity {
     }
 
 }
-
-
-

@@ -24,7 +24,7 @@ public class Payment implements Comparable<Payment>{
     private Float price;
     private String statusPaying;
     private String typeOfPaying = "online";
-    private Object user;
+    private Object users;
 
     public Payment() {
     }

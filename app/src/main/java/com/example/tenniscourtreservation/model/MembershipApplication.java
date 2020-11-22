@@ -8,7 +8,7 @@ import lombok.Data;
 public class MembershipApplication {
 
     private Long id;
-    private User user;
+    private User users;
     private LocalDate dateOfApplication;
     private String decision;
 
@@ -16,7 +16,7 @@ public class MembershipApplication {
     }
 
     public MembershipApplication(User user, LocalDate dateOfApplication, String decision) {
-        this.user = user;
+        this.users = user;
         this.dateOfApplication = dateOfApplication;
         this.decision = decision;
     }

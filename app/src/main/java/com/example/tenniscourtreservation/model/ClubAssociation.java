@@ -12,7 +12,7 @@ import lombok.Data;
 public class ClubAssociation {
 
     private Long id;
-    private User user;
+    private User users;
     @JsonDeserialize(using= LocalDateDeserializer.class)
     @JsonSerialize(using= LocalDateSerializer.class)
     private LocalDate dateOfJoining;
@@ -27,7 +27,7 @@ public class ClubAssociation {
     public ClubAssociation(LocalDate dateOfJoining, Boolean ifActive, User user) {
         this.dateOfJoining = dateOfJoining;
         this.ifActive = ifActive;
-        this.user= user;
+        this.users = user;
     }
 
 }

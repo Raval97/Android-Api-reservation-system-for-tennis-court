@@ -10,7 +10,7 @@ public class Client {
     private String emailAddress;
     private int phoneNumber;
     private Boolean isClubMen;
-    private User user;
+    private User users;
 
     public Client() {
     }

@@ -24,12 +24,13 @@ public class MenuTools extends Activity {
     Activity activity;
     Button actualSite;
     static HttpHeaders requestHeaders = null;
-    static String startOfUrl = "https://tennis-court-reservation.herokuapp.com/";
+    //    static String startOfUrl = "https://tennis-court-reservation.herokuapp.com/";
+    static String startOfUrl = "http://10.0.2.2:8080/";
 
     public MenuTools(Activity activity, Button actualSite) {
         this.activity = activity;
         this.actualSite = actualSite;
-        if(LoginInActivity.isLogged) {
+        if (LoginInActivity.isLogged) {
             Button login = (Button) activity.findViewById(R.id.login);
             login.setText("Account");
         }
@@ -39,7 +40,7 @@ public class MenuTools extends Activity {
     public MenuTools() {
     }
 
-    public void done(){
+    public void done() {
         login();
         menu();
         startPage();
@@ -54,7 +55,7 @@ public class MenuTools extends Activity {
         Button login = (Button) activity.findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if(LoginInActivity.isLogged) {
+                if (LoginInActivity.isLogged) {
                     Intent myIntent = new Intent(activity, UserAccountActivity.class);
                     activity.startActivityForResult(myIntent, 0);
                 } else {
@@ -65,13 +66,14 @@ public class MenuTools extends Activity {
         });
     }
 
-    public void  menu() {
+    public void menu() {
         final LinearLayout menu = (LinearLayout) activity.findViewById(R.id.menu);
         final Button menuButton = (Button) activity.findViewById(R.id.menuButton);
         final ViewGroup container = (ViewGroup) activity.findViewById(R.id.menuContainer);
 
         menuButton.setOnClickListener(new View.OnClickListener() {
             boolean visible;
+
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
@@ -151,14 +153,14 @@ public class MenuTools extends Activity {
         });
     }
 
-    public RestTemplate getDefaultRestTemplate(){
+    public RestTemplate getDefaultRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
         restTemplate.getMessageConverters().add(messageConverter);
         return restTemplate;
     }
 
-    public void setRequestHeaders(){
+    public void setRequestHeaders() {
         HttpAuthentication authHeader = new HttpBasicAuthentication(LoginInActivity.username, LoginInActivity.password);
         requestHeaders = new HttpHeaders();
         requestHeaders.setAuthorization(authHeader);

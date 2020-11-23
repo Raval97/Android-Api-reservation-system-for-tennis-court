@@ -327,7 +327,7 @@ public class ReservationDetailsActivity extends Activity {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("typeOfPaying", reservation.getTypeOfPaying());
 
-                URL url = new URL(MenuTools.startOfUrl + "OurTennis/confirmReservation");
+                URL url = new URL(MenuTools.startOfUrl + "OurTennis/confirmReservation/"+ reservation.getTypeOfPaying());
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 String userPassword = LoginInActivity.username + ":" + LoginInActivity.password;
                 String encodedAuth = Base64.getEncoder().encodeToString(userPassword.getBytes());

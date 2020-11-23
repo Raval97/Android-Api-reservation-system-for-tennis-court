@@ -20,6 +20,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.RequiresApi;
+
+import com.example.tenniscourtreservation.model.Services;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
@@ -201,15 +203,21 @@ public class UserAccountActivity extends Activity {
                 userEmail = mapper.convertValue(response.getBody().get("client").get("emailAddress"), String.class);
                 userPhoneNumber = mapper.convertValue(response.getBody().get("client").get("phoneNumber"), int.class);
                 userID = mapper.convertValue(response.getBody().get("client").get("id"), Long.class);
-                name.setText(userName);
-                surname.setText(userSurname);
-                email.setText(userEmail);
-                phone.setText("" + userPhoneNumber);
-                username.setText(LoginInActivity.username);
             } catch (RestClientException e) {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @SuppressLint("SetTextI18n")
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        protected void onPostExecute(Boolean nothing) {
+            name.setText(userName);
+            surname.setText(userSurname);
+            email.setText(userEmail);
+            phone.setText("" + userPhoneNumber);
+            username.setText(LoginInActivity.username);
         }
     }
 

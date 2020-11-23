@@ -30,10 +30,11 @@
             android:layout_height="match_parent"
             android:background="#402727"
             android:gravity="center"
+            android:paddingHorizontal="20dp"
             android:orientation="vertical">
 
             <TableRow
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20sp"
                 android:layout_marginBottom="20dp"
@@ -46,20 +47,20 @@
                     android:layout_weight="70"
                     android:text="Address:"
                     android:textColor="#F0EDF4"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:text="Chrząszczyrzewoszyce  \nul. Wesoła 12"
                     android:textColor="#F0EDF4"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
             </TableRow>
 
             <TableRow
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20sp"
                 android:layout_marginBottom="20dp"
@@ -72,20 +73,20 @@
                     android:layout_weight="70"
                     android:text="Email:"
                     android:textColor="#F0EDF4"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:text="+48 12 384 56 78"
                     android:textColor="#F0EDF4"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
             </TableRow>
 
             <TableRow
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20sp"
                 android:layout_marginBottom="20dp"
@@ -98,14 +99,14 @@
                     android:layout_weight="70"
                     android:text="Email:"
                     android:textColor="#F0EDF4"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:text="ourTennis@tennis.com"
                     android:textColor="#F0EDF4"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
             </TableRow>

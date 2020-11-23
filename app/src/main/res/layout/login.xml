@@ -14,28 +14,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="10sp"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="250sp"
+            android:layout_width="220sp"
             android:layout_height="80sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:src="@drawable/logo" />
 
-        <Button
-            android:id="@+id/back"
-            android:layout_width="80sp"
-            android:layout_height="35dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40sp"
-            android:background="@drawable/button_menu_bg"
-            android:text="BACK"
-            android:textColor="#fff"
-            android:textSize="18sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/back"
+                android:layout_width="70sp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="20sp"
+                android:layout_marginRight="10sp"
+                android:background="@drawable/button_menu_bg"
+                android:text="BACK"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+        </RelativeLayout>
 
     </LinearLayout>
+
 
     <TextView
         android:id="@+id/textView"
@@ -58,6 +66,7 @@
         android:background="#2F2A4E"
         android:hint="Username"
         android:textColor="#fff"
+        android:paddingLeft="5dp"
         android:textColorHint="#877676"
         android:textSize="25sp"
         android:drawableEnd="@drawable/ic_user"
@@ -73,6 +82,7 @@
         android:inputType="textPassword"
         android:background="#2F2A4E"
         android:hint="Password"
+        android:paddingLeft="5dp"
         android:textColor="#fff"
         android:textColorHint="#877676"
         android:textSize="25sp"

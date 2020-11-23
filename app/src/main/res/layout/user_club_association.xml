@@ -99,18 +99,19 @@
                             android:gravity="center"
                             android:text="You have paid membership fee.\n So you can take full advantage of the club member's benefits"
                             android:textColor="#BDA6CC"
-                            android:textSize="18dp"
+                            android:textSize="15dp"
                             android:textStyle="normal" />
 
                         <TextView
                             android:id="@+id/counterOfDays"
                             style="@style/normalText"
                             android:layout_margin="0dp"
+                            android:padding="10dp"
                             android:background="#684D3E"
                             android:gravity="center"
                             android:text="Your club activity will expire in: \n 30 days"
                             android:textColor="#BDA6CC"
-                            android:textSize="22dp" />
+                            android:textSize="20dp" />
 
                         <TextView
                             style="@style/normalText"

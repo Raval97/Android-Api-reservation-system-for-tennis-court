@@ -75,7 +75,8 @@ public class ReservationDetailsActivity extends Activity {
     int additionsCellOfRowStyle;
     LinearLayout.LayoutParams cel_015_param;
     LinearLayout.LayoutParams cel_025_param;
-    LinearLayout.LayoutParams cel_033_param;
+    LinearLayout.LayoutParams cel_03_param;
+    LinearLayout.LayoutParams cel_035_param;
     LinearLayout.LayoutParams cel_01_param;
 
     @Override
@@ -142,7 +143,8 @@ public class ReservationDetailsActivity extends Activity {
             additionsCellOfRowStyle = R.style.switchStyle;
             cel_015_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceId).getLayoutParams();
             cel_025_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceData).getLayoutParams();
-            cel_033_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceAdditionBalls).getLayoutParams();
+            cel_03_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceAdditionShoes).getLayoutParams();
+            cel_035_param = (LinearLayout.LayoutParams) findViewById(R.id.serviceAdditionRocket).getLayoutParams();
             cel_01_param = (LinearLayout.LayoutParams) findViewById(R.id.deleteService).getLayoutParams();
             cel_01_param.setMargins(0,0,50,0);
         }
@@ -216,7 +218,7 @@ public class ReservationDetailsActivity extends Activity {
         TextView price = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfRowStyle));
 
         court.setText(String.valueOf(s.getCourt().getId()));
-        date.setText(s.getDate().toString());
+        date.setText(String.valueOf(s.getDate()).substring(2, String.valueOf(s.getDate()).length()));
         startTime.setText(s.getTime().toString());
         time.setText(String.valueOf(s.getNumberOfHours()));
         cost.setText(String.valueOf(s.getUnitCost()));
@@ -244,17 +246,18 @@ public class ReservationDetailsActivity extends Activity {
         Button delete = new Button(getApplicationContext(), null, 0, additionsCellOfRowStyle);
 
         balls.setText("Balls");
-        balls.setPadding(0, 0, 20, 0);
+//        balls.setPadding(0, 0, 10, 0);
         balls.setTextColor(Color.parseColor("#ffffff"));
         balls.setChecked(!s.getIfBalls());
         rocket.setText("Rocket");
-        rocket.setPadding(0, 0, 20, 0);
+//        rocket.setPadding(0, 0, 10, 0);
         rocket.setTextColor(Color.parseColor("#ffffff"));
         rocket.setChecked(!s.getIfRocket());
         shoes.setText("Shoes");
         shoes.setTextColor(Color.parseColor("#ffffff"));
         shoes.setChecked(!s.getIfShoes());
         delete.setText("X");
+        delete.setTextSize(16);
         delete.setBackgroundColor(Color.parseColor(color));
         delete.setTextColor(Color.parseColor("#9DD813"));
 
@@ -267,13 +270,13 @@ public class ReservationDetailsActivity extends Activity {
             }
         });
 
-        dataRow.addView(balls, cel_033_param);
-        dataRow.addView(rocket, cel_033_param);
-        dataRow.addView(shoes, cel_033_param);
+        dataRow.addView(balls, cel_035_param);
+        dataRow.addView(rocket, cel_035_param);
+        dataRow.addView(shoes, cel_03_param);
         dataRow.addView(delete, cel_01_param);
 
 
-        dataRow.setPadding(5, 5, 5, 5);
+        dataRow.setPadding(0, 5, 5, 0);
         dataRow.setBackgroundColor(Color.parseColor(color));
 
         balls.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

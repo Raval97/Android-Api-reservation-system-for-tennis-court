@@ -29,7 +29,7 @@
 
                 <ImageView
                     android:id="@+id/logo"
-                    android:layout_width="250sp"
+                    android:layout_width="220sp"
                     android:layout_height="80sp"
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
@@ -41,20 +41,19 @@
 
                     <Button
                         android:id="@+id/back"
-                        android:layout_width="80sp"
-                        android:layout_height="35dp"
+                        android:layout_width="70sp"
+                        android:layout_height="30dp"
                         android:layout_alignParentRight="true"
                         android:layout_gravity="center"
                         android:layout_marginTop="20sp"
-                        android:layout_marginRight="20sp"
+                        android:layout_marginRight="10sp"
                         android:background="@drawable/button_menu_bg"
                         android:text="Back"
                         android:textColor="#fff"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
                 </RelativeLayout>
 
             </LinearLayout>
-
             <TextView
                 android:id="@+id/title"
                 style="@style/headerText"
@@ -161,7 +160,7 @@
                                 style="@style/reservationDetailsTableCell"
                                 android:layout_weight="0.25"
                                 android:gravity="center"
-                                android:text="2020-11-15" />
+                                android:text="20-11-15" />
 
                             <TextView
                                 style="@style/reservationDetailsTableCell"
@@ -199,30 +198,34 @@
                             <Switch
                                 android:id="@+id/serviceAdditionBalls"
                                 style="@style/switchStyle"
-                                android:paddingRight="15dp"
+                                android:paddingRight="5dp"
+                                android:layout_weight="0.35"
                                 android:text="Balls:" />
 
                             <Switch
                                 android:id="@+id/serviceAdditionRocket"
                                 style="@style/switchStyle"
-                                android:paddingRight="15dp"
-                                android:text="Roct:" />
+                                android:paddingRight="5dp"
+                                android:layout_weight="0.35"
+                                android:text="Rocket:" />
 
                             <Switch
                                 android:id="@+id/serviceAdditionShoes"
                                 style="@style/switchStyle"
+                                android:layout_weight="0.32"
                                 android:text="Shoes:" />
 
                             <Button
                                 android:id="@+id/deleteService"
                                 style="@style/switchStyle"
                                 android:layout_height="25dp"
-                                android:layout_weight="0.1"
+                                android:layout_weight="0.05"
                                 android:background="#2E2323"
                                 android:textColor="#9DD813"
                                 android:textStyle="bold"
                                 android:gravity="center"
                                 android:padding="0dp"
+                                android:textSize="16dp"
                                 android:text="X" />
 
                         </TableRow>

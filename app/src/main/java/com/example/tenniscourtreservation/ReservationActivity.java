@@ -188,9 +188,6 @@ public class ReservationActivity extends Activity {
                     summaryOfReservationBody.removeAllViews();
                     tableReservationBody.removeAllViews();
                     new HttpReqTaskGetData().execute();
-//                    Intent intent = new Intent(getApplicationContext(), ReservationActivity.class);
-//                    startActivity(intent);
-//                    finish();
                 }
             });
             date = date.plusDays(1L);
@@ -364,9 +361,9 @@ public class ReservationActivity extends Activity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public TableRow createTableForSummary(Services s, String cellColor, int iter) {
         int cellOfTable = R.style.celOfRowOfSummary;
+        LinearLayout.LayoutParams cell_008_Param = (LinearLayout.LayoutParams) findViewById(R.id.exampleSummaryCell_008).getLayoutParams();
         LinearLayout.LayoutParams cell_01_Param = (LinearLayout.LayoutParams) findViewById(R.id.exampleSummaryCell_01).getLayoutParams();
-        LinearLayout.LayoutParams cell_012_Param = (LinearLayout.LayoutParams) findViewById(R.id.exampleSummaryCell_012).getLayoutParams();
-        LinearLayout.LayoutParams cell_02_Param = (LinearLayout.LayoutParams) findViewById(R.id.exampleSummaryCell_02).getLayoutParams();
+        LinearLayout.LayoutParams cell_015_Param = (LinearLayout.LayoutParams) findViewById(R.id.exampleSummaryCell_015).getLayoutParams();
         LinearLayout.LayoutParams cell_005_Param = (LinearLayout.LayoutParams) findViewById(R.id.deleteServiceButton).getLayoutParams();
         TableRow row = new TableRow(this);
         TextView nr = new TextView(new ContextThemeWrapper(getApplicationContext(), cellOfTable));
@@ -380,7 +377,7 @@ public class ReservationActivity extends Activity {
 
         nr.setText(String.valueOf(iter));
         court.setText(String.valueOf(s.getCourt().getId()));
-        date.setText(String.valueOf(s.getDate()));
+        date.setText(String.valueOf(s.getDate()).substring(2, String.valueOf(s.getDate()).length()));
         startTime.setText(String.valueOf(s.getTime()));
         time.setText(String.valueOf(s.getNumberOfHours()));
         cost.setText(String.valueOf(s.getUnitCost()));
@@ -395,13 +392,13 @@ public class ReservationActivity extends Activity {
             }
         });
 
-        row.addView(nr, cell_01_Param);
-        row.addView(court, cell_012_Param);
-        row.addView(date, cell_02_Param);
-        row.addView(startTime, cell_02_Param);
+        row.addView(nr, cell_008_Param);
+        row.addView(court, cell_01_Param);
+        row.addView(date, cell_015_Param);
+        row.addView(startTime, cell_015_Param);
         row.addView(time, cell_01_Param);
         row.addView(cost, cell_01_Param);
-        row.addView(price, cell_012_Param);
+        row.addView(price, cell_01_Param);
         row.addView(delete, cell_005_Param);
 
         row.setBackgroundColor(Color.parseColor(cellColor));
@@ -531,6 +528,3 @@ public class ReservationActivity extends Activity {
     }
 
 }
-
-
-

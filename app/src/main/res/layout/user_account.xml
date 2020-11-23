@@ -41,35 +41,35 @@
                 <Button
                     android:id="@+id/editDateOption"
                     style="@style/headerText"
-                    android:layout_margin="15dp"
+                    android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:width="0dp"
                     android:background="@drawable/border_style_1"
                     android:text="Edit\nData"
                     android:textColor="#919AC8"
-                    android:textSize="15dp" />
+                    android:textSize="13dp" />
 
                 <Button
                     android:id="@+id/changePasswordOption"
                     style="@style/headerText"
-                    android:layout_margin="15dp"
+                    android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:width="0dp"
                     android:background="@drawable/border_style_1"
                     android:text="Change Password"
                     android:textColor="#919AC8"
-                    android:textSize="15dp" />
+                    android:textSize="13dp" />
 
                 <Button
                     android:id="@+id/deleteAccountOption"
                     style="@style/headerText"
-                    android:layout_margin="15dp"
+                    android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:width="0dp"
                     android:background="@drawable/border_style_1"
                     android:text="Delete Account"
                     android:textColor="#919AC8"
-                    android:textSize="15dp" />
+                    android:textSize="13dp" />
 
             </LinearLayout>
 
@@ -78,16 +78,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="15dp"
-                android:orientation="vertical"
                 android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                <LinearLayout
+                <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="20dp"
                     android:layout_weight="2"
                     android:orientation="horizontal">
+
+                    <TableLayout
+                        android:background="#611111"
+                        android:layout_marginBottom="20dp">
+
+                        <TextView
+                            style="@style/normalText"
+                            android:layout_width="0dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_weight="0.75"
+                            android:padding="10dp"
+                            android:text="First Name:"
+                            android:textColor="#CDBBBB"
+                            android:drawableEnd="@drawable/ic_name"
+                            android:drawableRight="@drawable/ic_name"
+                            android:textSize="20dp" />
+
+                        <EditText
+                            android:id="@+id/name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="#2F2A4E"
+
+                            android:padding="10dp"
+                            android:text="First Name"
+                            android:textColor="#fff"
+                            android:textColorHint="#877676" />
+
+                    </TableLayout>
+
+                <TableLayout
+                    android:background="#972B2B"
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         style="@style/normalText"
@@ -95,41 +130,11 @@
                         android:layout_marginTop="0dp"
                         android:layout_weight="0.75"
                         android:padding="10dp"
-                        android:textSize="20dp"
-                        android:textColor="#CDBBBB"
-                        android:text="First Name:" />
-
-                    <EditText
-                        android:id="@+id/name"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="#2F2A4E"
+                        android:text="Second Name:"
                         android:drawableEnd="@drawable/ic_name"
                         android:drawableRight="@drawable/ic_name"
-                        android:text="First Name"
-                        android:padding="10dp"
-                        android:textColor="#fff"
-                        android:textColorHint="#877676" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="2"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        style="@style/normalText"
-                        android:layout_width="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_weight="0.75"
-                        android:padding="10dp"
-                        android:textSize="20dp"
                         android:textColor="#CDBBBB"
-                        android:text="Second Name:" />
+                        android:textSize="20dp" />
 
                     <EditText
                         android:id="@+id/surname"
@@ -137,21 +142,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#2F2A4E"
-                        android:drawableEnd="@drawable/ic_name"
-                        android:drawableRight="@drawable/ic_name"
-                        android:text="Second Name"
                         android:padding="10dp"
+                        android:text="Second Name"
                         android:textColor="#fff"
                         android:textColorHint="#877676" />
 
-                </LinearLayout>
+                </TableLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="2"
-                    android:orientation="horizontal">
+                <TableLayout
+                    android:background="#611111"
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         style="@style/normalText"
@@ -159,9 +159,11 @@
                         android:layout_marginTop="0dp"
                         android:layout_weight="0.75"
                         android:padding="10dp"
-                        android:textSize="20dp"
+                        android:text="Email:"
                         android:textColor="#CDBBBB"
-                        android:text="Email:"/>
+                        android:drawableEnd="@drawable/ic_email"
+                        android:drawableRight="@drawable/ic_email"
+                        android:textSize="20dp" />
 
 
                     <EditText
@@ -170,21 +172,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#2F2A4E"
-                        android:drawableEnd="@drawable/ic_email"
-                        android:drawableRight="@drawable/ic_email"
-                        android:text="Email"
                         android:padding="10dp"
+                        android:text="Email"
                         android:textColor="#fff"
                         android:textColorHint="#877676" />
 
-                </LinearLayout>
+                </TableLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="2"
-                    android:orientation="horizontal">
+                <TableLayout
+                    android:background="#972B2B"
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         style="@style/normalText"
@@ -192,9 +189,11 @@
                         android:layout_marginTop="0dp"
                         android:layout_weight="0.75"
                         android:padding="10dp"
-                        android:textSize="20dp"
+                        android:text="Phone Number:"
                         android:textColor="#CDBBBB"
-                        android:text="Phone Number:" />
+                        android:drawableEnd="@drawable/ic_phone"
+                        android:drawableRight="@drawable/ic_phone"
+                        android:textSize="20dp" />
 
                     <EditText
                         android:id="@+id/phone"
@@ -202,21 +201,16 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#2F2A4E"
-                        android:drawableEnd="@drawable/ic_phone"
-                        android:drawableRight="@drawable/ic_phone"
-                        android:text="Phone Number"
                         android:padding="10dp"
+                        android:text="Phone Number"
                         android:textColor="#fff"
                         android:textColorHint="#877676" />
 
-                </LinearLayout>
+                </TableLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="2"
-                    android:orientation="horizontal">
+                <TableLayout
+                    android:background="#611111"
+                    android:layout_marginBottom="20dp">
 
                     <TextView
                         style="@style/normalText"
@@ -224,9 +218,11 @@
                         android:layout_marginTop="0dp"
                         android:layout_weight="0.75"
                         android:padding="10dp"
-                        android:textSize="20dp"
+                        android:text="Username:"
                         android:textColor="#CDBBBB"
-                        android:text="Username:" />
+                        android:drawableEnd="@drawable/ic_user"
+                        android:drawableRight="@drawable/ic_user"
+                        android:textSize="20dp" />
 
                     <EditText
                         android:id="@+id/username"
@@ -234,14 +230,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#2F2A4E"
-                        android:drawableEnd="@drawable/ic_user"
-                        android:drawableRight="@drawable/ic_user"
-                        android:text="Username"
                         android:padding="10dp"
+                        android:text="Username"
                         android:textColor="#fff"
                         android:textColorHint="#877676" />
 
-                </LinearLayout>
+                </TableLayout>
+
+                </TableLayout>
 
                 <Button
                     android:id="@+id/editData"
@@ -259,10 +255,10 @@
                 android:id="@+id/changePasswordContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="3"
                 android:layout_margin="15dp"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:layout_weight="3"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -275,16 +271,18 @@
                         style="@style/normalText"
                         android:layout_width="0dp"
                         android:layout_marginTop="0dp"
+                        android:paddingTop="0dp"
                         android:layout_weight="0.9"
                         android:padding="10dp"
-                        android:textSize="20dp"
+                        android:text="Actual Password:"
                         android:textColor="#CDBBBB"
-                        android:text="Actual Password:"/>
+                        android:textSize="20dp" />
 
 
                     <EditText
                         android:id="@+id/actualPassword"
                         android:layout_width="0dp"
+                        android:layout_marginTop="10dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#2F2A4E"
@@ -311,13 +309,14 @@
                         android:layout_marginTop="0dp"
                         android:layout_weight="0.9"
                         android:padding="10dp"
-                        android:textSize="20dp"
+                        android:text="New Password:"
                         android:textColor="#CDBBBB"
-                        android:text="New Password:" />
+                        android:textSize="20dp" />
 
                     <EditText
                         android:id="@+id/newPassword"
                         android:layout_width="0dp"
+                        android:layout_marginTop="10dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#2F2A4E"
@@ -344,9 +343,9 @@
                         android:layout_marginTop="0dp"
                         android:layout_weight="0.9"
                         android:padding="10dp"
-                        android:textSize="20dp"
+                        android:text="Repat Password:"
                         android:textColor="#CDBBBB"
-                        android:text="Repat Password:" />
+                        android:textSize="20dp" />
 
                     <EditText
                         android:id="@+id/repeatPassword"
@@ -354,6 +353,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="#2F2A4E"
+                        android:layout_marginTop="10dp"
                         android:drawableEnd="@drawable/ic_pass"
                         android:drawableRight="@drawable/ic_pass"
                         android:hint="password"
@@ -409,8 +409,8 @@
 
                     <TextView
                         style="@style/normalText"
-                        android:gravity="center"
                         android:layout_marginTop="0dp"
+                        android:gravity="center"
                         android:text="Please confirm your password"
                         android:textColor="#ADECEDEF"
                         android:textSize="18dp" />

@@ -110,7 +110,7 @@
 
                         <TextView
                             style="@style/priceListTableCell"
-                            android:layout_weight="0.2" />
+                            android:layout_weight="0.25" />
                     </TableRow>
 
                     <TableLayout
@@ -146,7 +146,7 @@
                             <Button
                                 android:id="@+id/showDetails"
                                 style="@style/priceListTableCell"
-                                android:layout_weight="0.2"
+                                android:layout_weight="0.25"
                                 android:text="V" />
 
                         </TableRow>

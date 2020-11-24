@@ -105,6 +105,7 @@ public class LoginInActivity extends Activity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             ObjectMapper mapper = new ObjectMapper();
+            menuTools.setRequestHeaders();
             try {
                 final String url = MenuTools.startOfUrl + "OurTennis/login.json";
                 RestTemplate restTemplate = menuTools.getDefaultRestTemplate();

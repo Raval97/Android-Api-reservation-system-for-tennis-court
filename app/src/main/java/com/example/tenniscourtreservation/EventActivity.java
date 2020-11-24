@@ -112,6 +112,9 @@ public class EventActivity extends Activity {
             @SneakyThrows
             @Override
             public void handleMessage(Message message2) {
+                Intent intent = new Intent(getApplicationContext(), EventActivity.class);
+                startActivity(intent);
+                finish();
                 Toast toast = Toast.makeText(getApplicationContext(), mHandlerMessage, Toast.LENGTH_LONG);
                 ((TextView) ((LinearLayout) toast.getView()).getChildAt(0)).setGravity(Gravity.CENTER_HORIZONTAL);
                 toast.show();

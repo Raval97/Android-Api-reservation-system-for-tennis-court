@@ -150,6 +150,7 @@ public class UserReservationDetailsActivity extends Activity {
         protected void onPreExecute() {
             tableContext = (TableLayout) findViewById(R.id.servicesList);
             servicesExample = (TableLayout) findViewById(R.id.servicesExample);
+            servicesExample.setVisibility(View.GONE);
             rowDataParam = (LinearLayout.LayoutParams) findViewById(R.id.dataServices).getLayoutParams();
             rowAdditionsParam = (LinearLayout.LayoutParams) findViewById(R.id.additionsServices).getLayoutParams();
             cellOfRowStyle = R.style.reservationDetailsTableCell;

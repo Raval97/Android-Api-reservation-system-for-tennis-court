@@ -137,6 +137,7 @@ public class ReservationDetailsActivity extends Activity {
         protected void onPreExecute() {
             tableContext = (TableLayout) findViewById(R.id.servicesList);
             servicesExample = (TableLayout) findViewById(R.id.servicesExample);
+            servicesExample.setVisibility(View.GONE);
             rowDataParam = (LinearLayout.LayoutParams) findViewById(R.id.dataServices).getLayoutParams();
             rowAdditionsParam = (LinearLayout.LayoutParams) findViewById(R.id.additionsServices).getLayoutParams();
             cellOfRowStyle = R.style.reservationDetailsTableCell;
@@ -246,11 +247,9 @@ public class ReservationDetailsActivity extends Activity {
         Button delete = new Button(getApplicationContext(), null, 0, additionsCellOfRowStyle);
 
         balls.setText("Balls");
-//        balls.setPadding(0, 0, 10, 0);
         balls.setTextColor(Color.parseColor("#ffffff"));
         balls.setChecked(!s.getIfBalls());
         rocket.setText("Rocket");
-//        rocket.setPadding(0, 0, 10, 0);
         rocket.setTextColor(Color.parseColor("#ffffff"));
         rocket.setChecked(!s.getIfRocket());
         shoes.setText("Shoes");

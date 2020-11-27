@@ -61,6 +61,7 @@ public class UserReservationActivity extends Activity {
         protected void onPreExecute() {
             tableContext = (TableLayout) findViewById(R.id.table);
             reservationExample = (TableLayout) findViewById(R.id.reservation);
+            reservationExample.setVisibility(View.GONE);
             rowStyle = R.style.eventsListTableRow;
             cellOfRowStyle = R.style.eventsListTableCell;
             tableContextParam = (LinearLayout.LayoutParams) reservationExample.getLayoutParams();

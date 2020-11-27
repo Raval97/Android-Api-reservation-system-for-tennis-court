@@ -254,6 +254,8 @@
 
                         <TableRow
                             android:id="@+id/exampleRowOfSummary"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:background="#1B5129"
                             android:paddingVertical="5dp">
 

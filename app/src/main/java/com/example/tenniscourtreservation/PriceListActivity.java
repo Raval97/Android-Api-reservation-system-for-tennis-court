@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -54,6 +55,7 @@ public class PriceListActivity extends Activity {
             cellTime = (TextView) findViewById(R.id.two);
             cellPrice = (TextView) findViewById(R.id.three);
             tableRow = (TableRow) findViewById(R.id.example);
+            tableRow.setVisibility(View.GONE);
         }
 
         public HttpReqTask(Activity activity) {
@@ -85,13 +87,16 @@ public class PriceListActivity extends Activity {
         @Override
         protected void onPostExecute(PriceList[] priceList) {
             super.onPostExecute(priceList);
-
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tableRow.getLayoutParams();
+            params.setMargins(0,0,0,10);
             int iter = 0;
             for (PriceList p : priceList) {
                 if(iter %2 ==0)
-                    context.addView(createTableRow(activity, p, R.style.priceListTableCell, R.style.priceListTableRow, "#776074"));
+                    context.addView(createTableRow(activity, p, R.style.priceListTableCell,
+                            R.style.priceListTableRow, "#1A263C"), params);
                 else
-                    context.addView(createTableRow(activity, p, R.style.priceListTableCell, R.style.priceListTableRow, "#913860"));
+                    context.addView(createTableRow(activity, p, R.style.priceListTableCell,
+                            R.style.priceListTableRow, "#404073"), params);
                 iter++;
                 context.removeView(tableRow);
             }
@@ -114,7 +119,7 @@ public class PriceListActivity extends Activity {
         price.setText(String.valueOf(p.getPrice()));
         tableRow.addView(title, params1);
         tableRow.addView(time, params2);
-        tableRow.addView(price, params3);
+        tableRow.addView(price, params3);;
         return tableRow;
     }
 

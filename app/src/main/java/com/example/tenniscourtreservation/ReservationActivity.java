@@ -126,11 +126,13 @@ public class ReservationActivity extends Activity {
         noStartedReserve = (TableLayout) findViewById(R.id.noStartedReserve);
         summaryOfReservationBody = (TableLayout) findViewById(R.id.summaryOfReservationBody);
         exampleRowSummary = (TableRow) findViewById(R.id.exampleRowOfSummary);
+        exampleRowSummary.setVisibility(View.GONE);
         priceText = (TextView) findViewById(R.id.price);
         new HttpReqTaskGetData().execute();
 
         tableReservationBody = (TableLayout) findViewById(R.id.tableReservationBody);
         exampleRowOfTableReservation = (TableRow) findViewById(R.id.exampleRowOfTableReservation);
+        exampleRowOfTableReservation.setVisibility(View.GONE);
 
         refresh = (Button) findViewById(R.id.refresh);
         reserve = (Button) findViewById(R.id.reserve);
@@ -408,6 +410,7 @@ public class ReservationActivity extends Activity {
     }
 
     private class HttpReqTaskUpdateRemovedCells extends AsyncTask<Void, Void, Void> {
+        @SuppressLint("WrongThread")
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected Void doInBackground(Void... voids) {

@@ -129,6 +129,7 @@ public class EventActivity extends Activity {
         protected void onPreExecute() {
             contextTable = (TableLayout) findViewById(R.id.table);
             eventExample = (TableLayout) findViewById(R.id.event);
+            eventExample.setVisibility(View.GONE);
             eventDetailsStyle = R.style.eventDetails;
             eventsCellStyle = R.style.eventsListTableCell;
             eventsRowStyle = R.style.eventsListTableRow;

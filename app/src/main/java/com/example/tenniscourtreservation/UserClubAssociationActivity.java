@@ -51,6 +51,7 @@ public class UserClubAssociationActivity extends Activity {
     Boolean hasActiveApplicationResponse;
     int daysOfActiveMembership;
     LinearLayout content;
+    LinearLayout context;
     LinearLayout bank;
     Button cancel;
     Button payInBank;
@@ -85,6 +86,8 @@ public class UserClubAssociationActivity extends Activity {
         decision.setText(Html.fromHtml(getString(R.string.decisionClubAssociation)));
         bank = (LinearLayout) findViewById(R.id.bank);
         content = (LinearLayout) findViewById(R.id.content);
+        context = (LinearLayout) findViewById(R.id.context);
+        context.setVisibility(View.GONE);
         cancel = (Button) findViewById(R.id.cancel);
         payInBank = (Button) findViewById(R.id.payFee);
         counterOfDays = (TextView) findViewById(R.id.counterOfDays);
@@ -166,7 +169,7 @@ public class UserClubAssociationActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean arg) {
-
+            context.setVisibility(View.VISIBLE);
             if (isClubMenResponse) {
                 isNotClubMen.setVisibility(View.GONE);
                 if (isActiveClubMenResponse) {

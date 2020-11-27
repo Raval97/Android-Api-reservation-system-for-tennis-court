@@ -122,6 +122,7 @@ public class UserPaymentActivity extends Activity {
 
             tableContext = (TableLayout) findViewById(R.id.table);
             eventExample = (TableLayout) findViewById(R.id.payment);
+            eventExample.setVisibility(View.GONE);
 
             paymentRowStyle = R.style.eventsListTableRow;
             cellOfRowStyle = R.style.eventsListTableCell;

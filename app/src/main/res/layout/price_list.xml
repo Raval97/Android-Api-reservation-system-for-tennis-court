@@ -89,7 +89,6 @@
                 </TableRow>
 
                 <TableRow
-                    android:background="#404073"
                     android:padding="5dp"
                     android:layout_marginBottom="10dp"
                     android:visibility="gone">

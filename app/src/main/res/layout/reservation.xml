@@ -316,6 +316,7 @@
                     </TableLayout>
 
                     <TableLayout
+                        android:id="@+id/summaryMain"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 

@@ -68,8 +68,10 @@ public class ReservationActivity extends Activity {
     TableLayout noStartedReserve;
     TableLayout summaryOfReservationBody;
     TableRow exampleRowSummary;
+    TableRow headOfTableReservation;
     TextView priceText;
 
+    TableLayout summary;
     TableLayout tableReservationBody;
     TableRow exampleRowOfTableReservation;
     Button refresh;
@@ -126,10 +128,14 @@ public class ReservationActivity extends Activity {
         noStartedReserve = (TableLayout) findViewById(R.id.noStartedReserve);
         summaryOfReservationBody = (TableLayout) findViewById(R.id.summaryOfReservationBody);
         exampleRowSummary = (TableRow) findViewById(R.id.exampleRowOfSummary);
+        headOfTableReservation = (TableRow) findViewById(R.id.headOfTableReservation);
+        headOfTableReservation.setVisibility(View.GONE);
         exampleRowSummary.setVisibility(View.GONE);
         priceText = (TextView) findViewById(R.id.price);
         new HttpReqTaskGetData().execute();
 
+        summary = (TableLayout) findViewById(R.id.summary);
+        summary.setVisibility(View.GONE);
         tableReservationBody = (TableLayout) findViewById(R.id.tableReservationBody);
         exampleRowOfTableReservation = (TableRow) findViewById(R.id.exampleRowOfTableReservation);
         exampleRowOfTableReservation.setVisibility(View.GONE);
@@ -324,6 +330,8 @@ public class ReservationActivity extends Activity {
         @Override
         protected void onPostExecute(Services[] serviceList) {
             super.onPostExecute(serviceList);
+            summary.setVisibility(View.VISIBLE);
+            headOfTableReservation.setVisibility(View.VISIBLE);
 
             if (serviceList.length == 0) {
                 startedReserve.setVisibility(View.GONE);

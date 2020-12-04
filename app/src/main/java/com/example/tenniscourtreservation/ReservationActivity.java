@@ -240,7 +240,8 @@ public class ReservationActivity extends Activity {
             }
             for (int j = 0; j < 4; j++) {
                 Button cell = new Button(getApplicationContext(), null, 0, cellOfTable);
-                cell.setTag("d" + dateParam.getDayOfMonth() + "m" + dateParam.getMonthValue() +
+                cell.setTag("d" + (dateParam.getDayOfMonth() > 9 ? dateParam.getDayOfMonth() : "0" +  dateParam.getDayOfMonth()) +
+                        "m" + (dateParam.getMonthValue() > 9 ? dateParam.getMonthValue() : "0" + dateParam.getMonthValue()) +
                         "r" + dateParam.getYear() + "_c" + (j + 1) +
                         "_h" + (time.getHour() > 9 ? time.getHour() : "0" + time.getHour()) +
                         "m" + (time.getMinute() > 9 ? time.getMinute() : "0" + time.getMinute()));
